@@ -32,6 +32,25 @@
   <title>typingtest</title>
   <link rel="manifest" href="manifest.json">
 
+  <script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getAnalytics } from "firebase/analytics";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAxTobYpx_e8HZi3W2XTcA4wcDAimpZoEo",
+      authDomain: "typingtest-e2ac0.firebaseapp.com",
+      projectId: "typingtest-e2ac0",
+      storageBucket: "typingtest-e2ac0.appspot.com",
+      messagingSenderId: "662182179161",
+      appId: "1:662182179161:web:074b21c8c01b78eb6b9c48",
+      measurementId: "G-GSKF2NE8LN"
+    };
+
+// Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+
   <script>
     // The value below is injected by flutter build, do not touch.
     const serviceWorkerVersion = null;
