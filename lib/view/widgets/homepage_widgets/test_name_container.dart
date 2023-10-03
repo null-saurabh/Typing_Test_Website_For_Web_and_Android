@@ -13,7 +13,7 @@ class TestNameContainer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset("assets/images/logo.png",height: 46,width: 46,),
+          Image.asset("assets/images/ssc_icon.png",height: 46,width: 46,),
           SizedBox(height: 10,),
           const Text("SSC Typing Tests",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),)
         ],

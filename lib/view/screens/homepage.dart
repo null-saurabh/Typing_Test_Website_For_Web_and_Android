@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/widgets/homepage_widgets/gridview_for_homepage.dart';
 import 'package:typingtest/view/widgets/homepage_widgets/nav_bar.dart';
 import 'package:typingtest/view/widgets/homepage_widgets/test_name_container.dart';
+import 'package:typingtest/view/widgets/topNavigationBar.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
 
 class HOMEPAGE extends StatefulWidget {
@@ -21,7 +22,7 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const NavBar(),
+            const TopNavigationBar(),
             const SizedBox(height: 25,),
             const Padding(
               padding: EdgeInsets.only(left: 50.0),

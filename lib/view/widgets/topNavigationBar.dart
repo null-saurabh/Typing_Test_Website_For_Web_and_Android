@@ -27,7 +27,7 @@ class TopNavigationBar extends StatelessWidget {
               Row(
                 children: [
                   navigationLogo(),
-                  SizedBox(width: 20,),
+                  const SizedBox(width: 20,),
                   navigationButton("Typing Test",context),
                   navigationButton("Typing Lessons",context),
                 ],
@@ -35,7 +35,9 @@ class TopNavigationBar extends StatelessWidget {
               Row(
                 children: [
                   upgradeButton(),
-                  loginButton()
+                  const SizedBox(width: 15,),
+                  loginButton(),
+                  const SizedBox(width: 20,),
                 ],
               ),
             ],
@@ -51,12 +53,13 @@ class TopNavigationBar extends StatelessWidget {
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(Colors.white),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(10)
+              side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {},
       child: Row(
         children: [
-          Image.asset("assets/images/crown.png"),
+          Image.asset("assets/images/crown.png",height: 24,width: 24,),
+          const SizedBox(width: 10,),
           const Text('Upgrade Plan', style: TextStyle(color: Color(0xff369CBC)),),
         ],
       ),
@@ -66,9 +69,9 @@ class TopNavigationBar extends StatelessWidget {
   Widget loginButton(){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all(Color(0xff369CBC)),
+          backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(10)
+              side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {},
       child: const Text('Log In', style: TextStyle(color: Colors.white),),

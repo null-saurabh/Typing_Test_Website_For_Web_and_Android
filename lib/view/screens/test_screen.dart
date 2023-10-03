@@ -4,6 +4,7 @@ import 'package:typingtest/view/widgets/test_screen_widgets/right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_nav_bar.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
+import 'package:typingtest/view/widgets/topNavigationBar.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -55,7 +56,7 @@ class _TestScreenState extends State<TestScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const TestScreenNavBar(),
+            const TopNavigationBar(),
             // const SizedBox(height: 15,),
             Row(
               children: [
