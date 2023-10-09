@@ -4,7 +4,7 @@ import 'package:typingtest/view/widgets/homepage_widgets/test_name_container.dar
 
 class DynamicGridView extends StatelessWidget {
   final double itemWidth = 250;
-  final double itemHeight = 110;
+  final double itemHeight = 150;
 
   const DynamicGridView({super.key});
 
@@ -12,7 +12,6 @@ class DynamicGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        int crossAxisCount = (constraints.maxWidth / itemWidth).floor();
 
         return GridView.builder(
           shrinkWrap: true,

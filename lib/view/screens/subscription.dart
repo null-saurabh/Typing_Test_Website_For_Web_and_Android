@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/widgets/topNavigationBar.dart';
+import 'package:typingtest/view/screens/homepage.dart';
+import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class SubscriptionPage extends StatelessWidget {
   const SubscriptionPage({super.key});
@@ -87,15 +88,15 @@ class SubscriptionPage extends StatelessWidget {
             subscriptionText(false),
             Spacer(),
             freePlan
-            ?buyButton("Get Started")
-                :recommended ? buyRecommendedButton():buyButton("Buy Now"),
+            ?buyButton("Get Started",context)
+                :recommended ? buyRecommendedButton(context):buyButton("Buy Now",context),
             SizedBox(height: 10,)
           ],
         ),
       ),
     );
   }
-  Widget buyRecommendedButton(){
+  Widget buyRecommendedButton(BuildContext context){
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -104,12 +105,14 @@ class SubscriptionPage extends StatelessWidget {
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
             ))),
-        onPressed: () async {},
+        onPressed: () async {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+        },
         child: const Text('Buy Now', style: TextStyle(color: Colors.white),),
       ),
     );
   }
-  Widget buyButton(String buyText){
+  Widget buyButton(String buyText,BuildContext context){
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
@@ -118,7 +121,9 @@ class SubscriptionPage extends StatelessWidget {
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
             ))),
-        onPressed: () async {},
+        onPressed: () async {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+        },
         child: Text(buyText, style: TextStyle(color: Color(0xff369CBC)),),
       ),
     );

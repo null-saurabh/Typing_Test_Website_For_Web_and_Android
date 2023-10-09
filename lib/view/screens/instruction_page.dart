@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/widgets/topNavigationBar.dart';
+import 'package:typingtest/view/screens/test_screen.dart';
+import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class InstructionPage extends StatelessWidget {
   const InstructionPage({super.key});
@@ -62,7 +63,7 @@ class InstructionPage extends StatelessWidget {
                     const Text("5. Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
                     const Text("6. Lorem ipsum dolor sit amet consectetur",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
                     const SizedBox(height: 20,),
-                    startButton(),
+                    startButton(context),
                   ],
                 ),
               ),
@@ -73,14 +74,16 @@ class InstructionPage extends StatelessWidget {
     );
   }
 
-  Widget startButton(){
+  Widget startButton(BuildContext context){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
-      onPressed: () async {},
+      onPressed: () async {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TestScreen()));
+      },
       child: const Text('Start Now', style: TextStyle(color: Colors.white),),
     );
   }

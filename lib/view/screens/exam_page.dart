@@ -1,7 +1,5 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/widgets/topNavigationBar.dart';
+import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class ExamPage extends StatelessWidget {
   const ExamPage({super.key});

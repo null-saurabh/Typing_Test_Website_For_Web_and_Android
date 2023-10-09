@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
-import 'package:typingtest/view_model/services/firebase_services.dart';
+// import 'package:typingtest/view_model/services/firebase_services.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
@@ -52,12 +52,14 @@ class NavBar extends StatelessWidget {
                     shape: MaterialStateProperty.all(RoundedRectangleBorder(
                         side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(10)
                     ))),
-                    onPressed: () async {try {
-                      await FirebaseServices().signInWithGoogle();
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
-                    } catch (e) {
-                      rethrow;
-                    }},
+                    onPressed: () async {
+                    //   try {
+                    //   await FirebaseServices().signInWithGoogle();
+                    //   Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+                    // } catch (e) {
+                    //   rethrow;
+                    // }
+                    },
                     child: const Text('Login/SignUp', style: TextStyle(color: Color(0xff369CBC)),),
                   ),
                 ),

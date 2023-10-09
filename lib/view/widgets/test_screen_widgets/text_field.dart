@@ -27,11 +27,11 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   Widget build(BuildContext context) {
     return Container(
       // padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 32),
-      decoration: BoxDecoration(color: Colors.white,border: Border.all()),
+      decoration: BoxDecoration(color: Colors.white,border: Border.all(color: Colors.white)),
       child: Stack(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 20,bottom:20,left: 32),
+              padding: const EdgeInsets.only(top: 20,bottom:20,left: 18,right: 18),
               child: SingleChildScrollView(
                 controller: _scrollController,
                 child: TextField(

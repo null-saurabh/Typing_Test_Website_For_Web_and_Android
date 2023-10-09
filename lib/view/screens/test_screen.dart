@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/right_row.dart';
-import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_nav_bar.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
-import 'package:typingtest/view/widgets/topNavigationBar.dart';
+import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
@@ -52,15 +51,42 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     // print(MediaQuery.of(context).size.height);
     return Scaffold(
+      backgroundColor: const Color(0xffF5FAFC),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const TopNavigationBar(),
-            // const SizedBox(height: 15,),
+            Container(
+              width: double.infinity,
+              height: 55,
+              color: const Color(0xff17414F),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 40,right: 25),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("SSC Typing Test - Grade A-1",style:TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: Colors.white),),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(color: Colors.white),
+
+                        ),
+                        child:Container(
+                          child: timer(),
+                        ) ,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
+                Expanded  (
                   flex: 8,
                   child: Center(
                     child: Padding(
@@ -68,12 +94,10 @@ class _TestScreenState extends State<TestScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          timer(),
-                          const SizedBox(height: 15),
                           Container(
                             height: MediaQuery.of(context).size.height - 125,
-                            decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.2),
+                            decoration: const BoxDecoration(
+                                color: Color(0xffF5FAFC),
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(10.0),
@@ -95,7 +119,10 @@ class _TestScreenState extends State<TestScreen> {
                 ),
                 const Expanded(
                   flex: 2,
-                  child: RightRow()
+                  child: Padding(
+                    padding: EdgeInsets.all(22.0),
+                    child: RightRow(),
+                  )
                 )
               ],
             )
@@ -106,18 +133,21 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   Widget timer(){
-    return RichText(
-      text: TextSpan(
-        children: [
-          const TextSpan(
-            text: "Time Left: ",
-            style: TextStyle(color: Colors.black, fontSize: 16.0),
-          ),
-          TextSpan(
-            text: "${_start ~/ 60}:${(_start % 60).toString().padLeft(2, '0')}",
-            style: const TextStyle(color: Colors.blue, fontSize: 16.0),
-          ),
-        ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 12,right: 12,top: 8.0,bottom: 8),
+      child: RichText(
+        text: TextSpan(
+          children: [
+            const TextSpan(
+              text: "Time Left: ",
+              style: TextStyle(color: Colors.white, fontSize: 16.0,fontWeight: FontWeight.w500),
+            ),
+            TextSpan(
+              text: "${_start ~/ 60}:${(_start % 60).toString().padLeft(2, '0')}",
+              style: const TextStyle(color: Colors.white, fontSize: 16.0,fontWeight: FontWeight.w600),
+            ),
+          ],
+        ),
       ),
     );
   }

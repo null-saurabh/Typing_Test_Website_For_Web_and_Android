@@ -19,8 +19,8 @@ class TextToWrite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // width: MediaQuery.of(context).size.width * 0.75,
-      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 32),
-      decoration: BoxDecoration(color: Colors.white,border: Border.all()),
+      padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
+      decoration: BoxDecoration(color: Colors.white,border: Border.all(color: Colors.white)),
       child: Text(sampleText,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
     );
   }

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/view/screens/exam_page.dart';
+import 'package:typingtest/view/screens/homepage.dart';
+import 'package:typingtest/view/screens/instruction_page.dart';
+import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
 
 class TopNavigationBar extends StatelessWidget {
@@ -26,7 +30,7 @@ class TopNavigationBar extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  navigationLogo(),
+                  navigationLogo(context),
                   const SizedBox(width: 20,),
                   navigationButton("Typing Test",context),
                   navigationButton("Typing Lessons",context),
@@ -34,9 +38,9 @@ class TopNavigationBar extends StatelessWidget {
               ),
               Row(
                 children: [
-                  upgradeButton(),
+                  upgradeButton(context),
                   const SizedBox(width: 15,),
-                  loginButton(),
+                  loginButton(context),
                   const SizedBox(width: 20,),
                 ],
               ),
@@ -48,14 +52,16 @@ class TopNavigationBar extends StatelessWidget {
   }
 
 
-  Widget upgradeButton(){
+  Widget upgradeButton(BuildContext context){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(Colors.white),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
-      onPressed: () async {},
+      onPressed: () async {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+      },
       child: Row(
         children: [
           Image.asset("assets/images/crown.png",height: 24,width: 24,),
@@ -66,32 +72,40 @@ class TopNavigationBar extends StatelessWidget {
     );
   }
 
-  Widget loginButton(){
+  Widget loginButton(BuildContext context){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
-      onPressed: () async {},
+      onPressed: () async {
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+      },
       child: const Text('Log In', style: TextStyle(color: Colors.white),),
     );
   }
 
-  Widget navigationLogo(){
+  Widget navigationLogo(BuildContext context){
     return Padding(
       padding: const EdgeInsets.only(left: 35.0),
-      child: Container(width: 65,
-          decoration: const BoxDecoration(
-              image: DecorationImage(image: AssetImage("assets/images/logo_text.png"))
-          )),
+      child: InkWell(
+        onTap: (){
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+
+        },
+        child: Container(width: 65,
+            decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage("assets/images/logo_text.png"))
+            )),
+      ),
     );
   }
 
   Widget navigationButton(String text, BuildContext context){
     return TextButton(
       onPressed: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TestScreen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ExamPage()));
       },
       child: Text(text, style: const TextStyle(color: Colors.black,fontSize: 15),),
     );
