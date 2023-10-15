@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
 
 
@@ -18,7 +19,7 @@ class _TestNameContainerState extends State<TestNameContainer> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const InstructionPage(),
+            builder: (context) => const ExamPage(),
           ),
         );
       },

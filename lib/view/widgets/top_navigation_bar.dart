@@ -3,6 +3,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
+import 'package:typingtest/view/screens/profile_page.dart';
 import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
 
@@ -80,7 +81,7 @@ class TopNavigationBar extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ProfilePage()));
       },
       child: const Text('Log In', style: TextStyle(color: Colors.white),),
     );

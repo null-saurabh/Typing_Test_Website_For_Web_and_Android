@@ -18,6 +18,7 @@ class ProfilePage extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(29.0),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   LeftDrawer(),
                   SizedBox(width: 29),

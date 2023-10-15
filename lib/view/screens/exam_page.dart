@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/instruction_page.dart';
 import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class ExamPage extends StatelessWidget {
@@ -36,11 +39,11 @@ class ExamPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      dailyTest("1"),
+                      dailyTest("1",context),
                       const SizedBox(width: 15),
-                      dailyTest("2"),
+                      dailyTest("2",context),
                       const SizedBox(width: 15),
-                      dailyTest("3"),
+                      dailyTest("3",context),
                     ],
                   )
                 ],
@@ -67,9 +70,9 @@ class ExamPage extends StatelessWidget {
                       itemCount: 5,
                       itemBuilder: (context, index) {
                         if (index <= 2) {
-                          return mockTestListTile(true, index + 1);
+                          return mockTestListTile(true, index + 1,context);
                         } else {
-                          return mockTestListTile(false, index + 1);
+                          return mockTestListTile(false, index + 1,context);
                         }
                       }),
                 ],
@@ -81,7 +84,7 @@ class ExamPage extends StatelessWidget {
     );
   }
 
-  Widget mockTestListTile(bool upgraded, int index) {
+  Widget mockTestListTile(bool upgraded, int index,BuildContext context) {
     return Card(
       color: Colors.white,
       elevation: 0,
@@ -91,26 +94,24 @@ class ExamPage extends StatelessWidget {
             width: 1.5,
             color: Color(0xff369CBC),
           ),
-          Expanded(
-            child: ListTile(
-              title: Text(
-                "SSC Typing Test - Grade A - $index",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-              subtitle: IntrinsicHeight(
-                child: Row(
-                  children: [
-                    rowItem("assets/images/ranking.png", "90 Marks"),
-                    requiredVerticalDivider(),
-                    rowItem("assets/images/question.png", "30 questions"),
-                    requiredVerticalDivider(),
-                    rowItem("assets/images/timer.png", "30 mins"),
-                  ],
-                ),
-              ),
-              trailing: startNowButton(),
+          ListTile(
+            title: Text(
+              "SSC Typing Test - Grade A - $index",
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
+            subtitle: IntrinsicHeight(
+              child: Row(
+                children: [
+                  rowItem("assets/images/ranking.png", "90 Marks"),
+                  requiredVerticalDivider(),
+                  rowItem("assets/images/question.png", "30 questions"),
+                  requiredVerticalDivider(),
+                  rowItem("assets/images/timer.png", "30 mins"),
+                ],
+              ),
+            ),
+            trailing: startNowButton(context),
           ),
         ]),
       ),
@@ -149,7 +150,7 @@ class ExamPage extends StatelessWidget {
     );
   }
 
-  Widget startNowButton() {
+  Widget startNowButton(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
           elevation: MaterialStateProperty.all(0),
@@ -157,7 +158,13 @@ class ExamPage extends StatelessWidget {
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               side: const BorderSide(color: Color(0xff369CBC)),
               borderRadius: BorderRadius.circular(5)))),
-      onPressed: () async {},
+      onPressed: () async {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const InstructionPage(),
+          ),
+        );
+      },
       child: const Text(
         "Start Now",
         style: TextStyle(color: Color(0xff369CBC)),
@@ -165,7 +172,7 @@ class ExamPage extends StatelessWidget {
     );
   }
 
-  Widget dailyTest(String testNumber) {
+  Widget dailyTest(String testNumber,BuildContext context) {
     return Container(
       height: 100,
       width: 275,
@@ -182,7 +189,7 @@ class ExamPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            startNowButton(),
+            startNowButton(context),
           ],
         ),
       ),

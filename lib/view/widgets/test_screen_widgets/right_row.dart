@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/ranking_page.dart';
 
 class RightRow extends StatelessWidget {
   const RightRow({
@@ -35,18 +36,22 @@ class RightRow extends StatelessWidget {
           ),
         ),
         SizedBox(height: 20,),
-        submitButton(),
+        submitButton(context),
       ],
     );
   }
-  Widget submitButton(){
+  Widget submitButton(BuildContext context){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
           shape: MaterialStateProperty.all(RoundedRectangleBorder(
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
-      onPressed: () async {},
+      onPressed: () async {
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen()));
+
+      },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),
     );
   }
