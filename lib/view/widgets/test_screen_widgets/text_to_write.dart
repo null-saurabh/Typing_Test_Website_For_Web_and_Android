@@ -18,10 +18,16 @@ class TextToWrite extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: MediaQuery.of(context).size.width * 0.75,
+      height: MediaQuery.of(context).size.height * 0.35,
       padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-      decoration: BoxDecoration(color: Colors.white,border: Border.all(color: Colors.white)),
-      child: Text(sampleText,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+      decoration: BoxDecoration(color: Colors.white,border: Border.all(color:  Color(0xff369CBC).withOpacity(0.5))),
+      child: Scrollbar(
+          interactive: false,
+          thumbVisibility: true,
+          child: SingleChildScrollView(child: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Text(sampleText,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+          ))),
     );
   }
 }

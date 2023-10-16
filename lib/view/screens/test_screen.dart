@@ -59,7 +59,7 @@ class _TestScreenState extends State<TestScreen> {
             const TopNavigationBar(),
             Container(
               width: double.infinity,
-              height: 55,
+              height: 50,
               color: const Color(0xff17414F),
               child: Padding(
                 padding: const EdgeInsets.only(left: 40,right: 25),
@@ -67,7 +67,7 @@ class _TestScreenState extends State<TestScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("SSC Typing Test - Grade A-1",style:TextStyle(fontWeight: FontWeight.w500,fontSize: 20,color: Colors.white),),
+                      const Text("SSC Typing Test - Grade A-1",style:TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -105,9 +105,7 @@ class _TestScreenState extends State<TestScreen> {
                                 children: [
                                   TextToWrite(),
                                   SizedBox(height: 20),
-                                  Expanded(
-                                    child: TextFieldContainer(),
-                                  ),
+                                  TextFieldContainer(),
                                 ],
                               ),
                             ),
