@@ -20,7 +20,7 @@ class ProfilePage extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  LeftDrawer(),
+                  LeftDrawer(isProfilePage: true,),
                   SizedBox(width: 29),
                   Expanded(
                   child:

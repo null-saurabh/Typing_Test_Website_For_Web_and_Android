@@ -20,7 +20,7 @@ class TextToWrite extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-      decoration: BoxDecoration(color: Colors.white,border: Border.all(color:  Color(0xff369CBC).withOpacity(0.5))),
+      decoration: BoxDecoration(color: Colors.white,border: Border.all(color:  const Color(0xff369CBC).withOpacity(0.5))),
       child: Scrollbar(
           interactive: false,
           thumbVisibility: true,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/ranking_page.dart';
+import 'package:typingtest/view/screens/result_screen.dart';
 import 'package:typingtest/view/screens/subscription.dart';
 
 class HistoryListTile extends StatelessWidget {
@@ -25,7 +27,7 @@ class HistoryListTile extends StatelessWidget {
             Row(
               children: [
                 leaderBoardButton(context),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 viewResultButton(context),
               ],
             )
@@ -43,7 +45,7 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResultScreen()));
       },
       child: const Text('View Result', style: TextStyle(color: Color(0xff369CBC))),
     );
@@ -57,7 +59,7 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen()));
       },
       child: const Icon(Icons.leaderboard_outlined,color:Color(0xff369CBC)),
     );

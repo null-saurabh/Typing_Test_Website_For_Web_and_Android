@@ -28,7 +28,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
       // padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 32),
-      decoration: BoxDecoration(color: Colors.white,border: Border.all(color: Color(0xff369CBC).withOpacity(0.5))),
+      decoration: BoxDecoration(color: Colors.white,border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
       child: Padding(
         padding: const EdgeInsets.only(top: 20,bottom:20,left: 18,right: 18),
         child: Scrollbar(

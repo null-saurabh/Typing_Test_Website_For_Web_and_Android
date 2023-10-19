@@ -20,7 +20,7 @@ class HistoryScreen extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  LeftDrawer(),
+                  LeftDrawer(isProfilePage: false,),
                   SizedBox(width: 29),
                   Expanded(child: HistoryContainer()),
                 ],

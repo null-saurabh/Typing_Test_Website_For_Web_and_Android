@@ -17,50 +17,78 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TopNavigationBar(),
-            ResultScreenTopHeadingBar(),
-            SizedBox(height: 10,),
+            const TopNavigationBar(),
+            const ResultScreenTopHeadingBar(),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 32),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 32),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Result",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 22,color: Colors.black),),
-                  SizedBox(height: 15,),
+                  const Text(
+                    "Result",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22,
+                        color: Colors.black),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
-                    decoration: BoxDecoration(color: Colors.white,border: Border.all(color:  Colors.white)),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10, horizontal: 18),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(color: Colors.white)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ResultBox(title: "Test Duration",value: "2 mins 34 secs",),
-                            ResultBox(title: "Net Speed",value: "0 WPM",),
-                            ResultBox(title: "Gross Speed",value: "50 Words per minute",),
-                            ResultBox(title: "Accuracy",value: "0%",),
+                            ResultBox(
+                              title: "Test Duration",
+                              value: "2 mins 34 secs",
+                            ),
+                            ResultBox(
+                              title: "Net Speed",
+                              value: "0 WPM",
+                            ),
+                            ResultBox(
+                              title: "Gross Speed",
+                              value: "50 Words per minute",
+                            ),
+                            ResultBox(
+                              title: "Accuracy",
+                              value: "0%",
+                            ),
                           ],
                         ),
-                        SizedBox(height: 15,),
-                        ResultContainer(),
-                        SizedBox(height: 15,),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const ResultContainer(),
+                        const SizedBox(
+                          height: 15,
+                        ),
                         ResultTypingParagraphContainer(),
-                        SizedBox(height: 15,),
-
-                        ResultErrorRepresentation()
-
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        const ResultErrorRepresentation()
                       ],
                     ),
                   )
                 ],
               ),
             )
-
           ],
         ),
       ),
     );
   }
 }
-

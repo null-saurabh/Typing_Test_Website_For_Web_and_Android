@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/widgets/profilepage_widgets/edit_profile.dart';
 
 class ProfileContainer extends StatelessWidget {
@@ -41,7 +40,7 @@ class ProfileContainer extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(crossAxisAlignment:CrossAxisAlignment.start,
                         children: [
-                          profileOption("Name","Alex Behron"),
+                          profileOption("Name","Alex Behrouz"),
                           const Divider(thickness: 1,color: Color(0xffEBEBEB),),
                           profileOption("Email","alexbehron@gmail.com"),
                         ],

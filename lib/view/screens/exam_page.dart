@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
 import 'package:typingtest/view/widgets/top_navigation_bar.dart';
@@ -92,7 +90,7 @@ class ExamPage extends StatelessWidget {
         child: Stack(children: [
           Container(
             width: 1.5,
-            color: Color(0xff369CBC),
+            color: const Color(0xff369CBC),
           ),
           ListTile(
             title: Text(

@@ -10,18 +10,22 @@ class SubscriptionPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5FAFC),
       body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const TopNavigationBar(),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.1,),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              priceWidget(false,true,context),
+              priceWidget(false, true, context),
               const SizedBox(width: 10),
-              priceWidget(true,false,context),
-              const SizedBox(width: 10,),
-              priceWidget(false,false,context),
+              priceWidget(true, false, context),
+              const SizedBox(
+                width: 10,
+              ),
+              priceWidget(false, false, context),
             ],
           )
         ],
@@ -29,7 +33,7 @@ class SubscriptionPage extends StatelessWidget {
     );
   }
 
-  Widget priceWidget(bool recommended,bool freePlan, BuildContext context) {
+  Widget priceWidget(bool recommended, bool freePlan, BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.18,
       height: MediaQuery.of(context).size.height * 0.625,
@@ -38,27 +42,41 @@ class SubscriptionPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-
-            if (recommended) Stack(
-                alignment: Alignment.center,
-              children:[
+            if (recommended)
+              Stack(alignment: Alignment.center, children: [
                 Image.asset(
-                      "assets/images/subscription_design_dark.png",
-                      height: 185,
-                    ),
-                const Center(child: Text("₹199/Year",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600,color: Colors.white),))
-              ]
-            ) else Stack(
-              alignment: Alignment.center,
-              children: [Image.asset(
-                      "assets/images/subscription_design_light.png",
-                      height: 185,
-                    ),
+                  "assets/images/subscription_design_dark.png",
+                  height: 185,
+                ),
+                const Center(
+                    child: Text(
+                  "₹199/Year",
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white),
+                ))
+              ])
+            else
+              Stack(alignment: Alignment.center, children: [
+                Image.asset(
+                  "assets/images/subscription_design_light.png",
+                  height: 185,
+                ),
                 freePlan
-                ?Center(child: const Text("FREE",style: TextStyle(fontSize: 29,fontWeight: FontWeight.w700,color: Color(0xff369CBC))))
-                    :Center(child: const Text("₹299/Year",style: TextStyle(fontSize: 22,fontWeight: FontWeight.w700,color: Color(0xff369CBC)))),
-              ]
-            ),
+                    ? const Center(
+                        child: Text("FREE",
+                            style: TextStyle(
+                                fontSize: 29,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff369CBC))))
+                    : const Center(
+                        child: Text("₹299/Year",
+                            style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xff369CBC)))),
+              ]),
             const SizedBox(
               height: 25,
             ),
@@ -74,57 +92,70 @@ class SubscriptionPage extends StatelessWidget {
             const SizedBox(
               height: 7.5,
             ),
-
             subscriptionText(false),
             const SizedBox(
               height: 7.5,
             ),
-
             subscriptionText(false),
             const SizedBox(
               height: 7.5,
             ),
-
             subscriptionText(false),
-            Spacer(),
+            const Spacer(),
             freePlan
-            ?buyButton("Get Started",context)
-                :recommended ? buyRecommendedButton(context):buyButton("Buy Now",context),
-            SizedBox(height: 10,)
+                ? buyButton("Get Started", context)
+                : recommended
+                    ? buyRecommendedButton(context)
+                    : buyButton("Buy Now", context),
+            const SizedBox(
+              height: 10,
+            )
           ],
         ),
       ),
     );
   }
-  Widget buyRecommendedButton(BuildContext context){
+
+  Widget buyRecommendedButton(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: ButtonStyle(elevation: MaterialStateProperty.all(0),
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
             backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
-            ))),
+                side: const BorderSide(color: Color(0xff369CBC)),
+                borderRadius: BorderRadius.circular(5)))),
         onPressed: () async {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
         },
-        child: const Text('Buy Now', style: TextStyle(color: Colors.white),),
+        child: const Text(
+          'Buy Now',
+          style: TextStyle(color: Colors.white),
+        ),
       ),
     );
   }
-  Widget buyButton(String buyText,BuildContext context){
+
+  Widget buyButton(String buyText, BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: ButtonStyle(elevation: MaterialStateProperty.all(0),
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
             backgroundColor: MaterialStateProperty.all(Colors.white),
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
-            ))),
+                side: const BorderSide(color: Color(0xff369CBC)),
+                borderRadius: BorderRadius.circular(5)))),
         onPressed: () async {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
         },
-        child: Text(buyText, style: TextStyle(color: Color(0xff369CBC)),),
+        child: Text(
+          buyText,
+          style: const TextStyle(color: Color(0xff369CBC)),
+        ),
       ),
     );
   }

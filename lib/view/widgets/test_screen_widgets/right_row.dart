@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
+import 'package:typingtest/view/screens/result_screen.dart';
 
 class RightRow extends StatelessWidget {
   const RightRow({
@@ -49,7 +50,7 @@ class RightRow extends StatelessWidget {
           ))),
       onPressed: () async {
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResultScreen()));
 
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

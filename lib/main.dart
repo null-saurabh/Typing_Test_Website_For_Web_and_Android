@@ -1,14 +1,6 @@
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/exam_page.dart';
-import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
-import 'package:typingtest/view/screens/instruction_page.dart';
-import 'package:typingtest/view/screens/profile_page.dart';
-import 'package:typingtest/view/screens/ranking_page.dart';
-import 'package:typingtest/view/screens/result_screen.dart';
-import 'package:typingtest/view/screens/subscription.dart';
-import 'package:typingtest/view/screens/test_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,10 +27,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff369CBC)),
         useMaterial3: true,
           scrollbarTheme: ScrollbarThemeData(
-        thumbColor: MaterialStateProperty.all(Color(0xff369CBC)),
+        thumbColor: MaterialStateProperty.all(const Color(0xff369CBC)),
         ),
       ),
-      home: const ResultScreen(),
+      home: const HOMEPAGE(),
     );
   }
 }
