@@ -3,6 +3,7 @@ import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view/screens/profile_page.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
+import 'package:typingtest/view/screens/subscription.dart';
 
 class LeftDrawer extends StatelessWidget {
   final bool isProfilePage;
@@ -11,39 +12,67 @@ class LeftDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 275,
+      width: 220,
       height: double.infinity,
       color: Colors.white,
       child: Column(
         children: [
           const SizedBox(height: 20),
-          const CircleAvatar(
-            backgroundColor: Color(0xff17414F),
-            radius: 31,
-            child: Text(
-              "AB",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white),
-            ),
-          ),
+          // const CircleAvatar(
+          //   backgroundColor: Color(0xff17414F),
+          //   radius: 31,
+          //   child: Text(
+          //     "AB",
+          //     style: TextStyle(
+          //         fontSize: 24,
+          //         fontWeight: FontWeight.w500,
+          //         color: Colors.white),
+          //   ),
+          // ),
           const SizedBox(
             height: 5,
           ),
-          const Text("Alex Behrouz",
+          const Text("LOGO",
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black)),
-          const Text("johnsmith@example.com",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xff929292))),
+                  fontSize: 32,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,)),
+          // const Text("johnsmith@example.com",
+          //     style: TextStyle(
+          //         fontSize: 14,
+          //         fontWeight: FontWeight.w400,
+          //         color: Color(0xff929292))),
           const SizedBox(
-            height: 29,
+            height: 20,
           ),
+          isProfilePage
+              ?drawerListTile(Icons.category_outlined, "All Tests", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          }, false)
+              :drawerListTile(Icons.category_outlined, "All Tests", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          }, true),
+          isProfilePage
+              ?drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+          }, false)
+              :drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+          }, true),
+          isProfilePage
+              ?drawerListTile(Icons.history_outlined, "Result History", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HistoryScreen()));
+          }, false)
+              :drawerListTile(Icons.history_outlined, "Result History", () {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HistoryScreen()));
+          }, true),
           isProfilePage
           ?drawerListTile(Icons.person_2_outlined, "My Profile", () {
             Navigator.of(context).push(
@@ -53,19 +82,6 @@ class LeftDrawer extends StatelessWidget {
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const ProfilePage()));
           }, false),
-          drawerListTile(Icons.leaderboard_outlined, "All Ranking", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const RankingScreen()));
-          },false),
-          isProfilePage
-          ?drawerListTile(Icons.history_outlined, "Result History", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HistoryScreen()));
-          }, false)
-          :drawerListTile(Icons.history_outlined, "Result History", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HistoryScreen()));
-          }, true),
           drawerListTile(Icons.logout_outlined, "Log out", () {
             Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const HOMEPAGE()));
@@ -78,11 +94,12 @@ class LeftDrawer extends StatelessWidget {
   Widget drawerListTile(
       IconData icon, String title, VoidCallback onTap, bool color) {
     return Container(
-      color: color ? const Color(0xff369CBC).withOpacity(0.08) : null,
+      // color: color ? const Color(0xff369CBC).withOpacity(0.08) : null,
       child: ListTile(
         leading: Icon(
           icon,
-          color: const Color(0xff369CBC),
+          // color: const Color(0xff369CBC),
+          color: Colors.grey,
         ),
         // Image.asset(
         //   icon,
@@ -92,9 +109,9 @@ class LeftDrawer extends StatelessWidget {
         title: Text(
           title,
           style: const TextStyle(
-              fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black),
+              fontWeight: FontWeight.w400, fontSize: 16.5, color: Colors.grey),
         ),
-        trailing: const Icon(Icons.navigate_next),
+        // trailing: const Icon(Icons.navigate_next),
         onTap: onTap,
       ),
     );

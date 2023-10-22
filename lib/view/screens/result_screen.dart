@@ -28,12 +28,26 @@ class ResultScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Result",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 22,
-                        color: Colors.black),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap:(){Navigator.pop(context);},
+                        child: Container(
+                          height: 32,
+                          width: 32,
+                          color: Colors.white,
+                          child: const Icon(Icons.arrow_back),
+                        ),
+                      ),
+                      SizedBox(width: 8,),
+                      const Text(
+                        "Result",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22,
+                            color: Colors.black),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 15,

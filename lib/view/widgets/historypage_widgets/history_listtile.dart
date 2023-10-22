@@ -29,6 +29,8 @@ class HistoryListTile extends StatelessWidget {
                 leaderBoardButton(context),
                 const SizedBox(width: 8),
                 viewResultButton(context),
+                const SizedBox(width: 20),
+
               ],
             )
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/homepage.dart';
+import 'package:typingtest/view/widgets/Left_drawer.dart';
 import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class SubscriptionPage extends StatelessWidget {
@@ -9,25 +10,48 @@ class SubscriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF5FAFC),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TopNavigationBar(),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.1,
+          LeftDrawer(isProfilePage: false),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // const TopNavigationBar(),
+                // SizedBox(
+                //   height: MediaQuery.of(context).size.height * 0.1,
+                // ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    "Subscriptions",
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 75),
+                  child: Row(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      priceWidget(false, true, context),
+                      const SizedBox(width: 10),
+                      priceWidget(true, false, context),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      priceWidget(false, false, context),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              priceWidget(false, true, context),
-              const SizedBox(width: 10),
-              priceWidget(true, false, context),
-              const SizedBox(
-                width: 10,
-              ),
-              priceWidget(false, false, context),
-            ],
-          )
         ],
       ),
     );
@@ -35,12 +59,14 @@ class SubscriptionPage extends StatelessWidget {
 
   Widget priceWidget(bool recommended, bool freePlan, BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.18,
-      height: MediaQuery.of(context).size.height * 0.625,
+      // constraints: BoxConstraints(minWidth: 275),
+      width: 275,
+      // height: MediaQuery.of(context).size.height * 0.625,
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             if (recommended)
               Stack(alignment: Alignment.center, children: [
@@ -101,7 +127,8 @@ class SubscriptionPage extends StatelessWidget {
               height: 7.5,
             ),
             subscriptionText(false),
-            const Spacer(),
+            // const Spacer(),
+            SizedBox(height: 50),
             freePlan
                 ? buyButton("Get Started", context)
                 : recommended

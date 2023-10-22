@@ -82,7 +82,7 @@ class InstructionPage extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const TestScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TestScreen()));
       },
       child: const Text('Start Now', style: TextStyle(color: Colors.white),),
     );

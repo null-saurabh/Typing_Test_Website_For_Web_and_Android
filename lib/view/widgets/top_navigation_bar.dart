@@ -32,17 +32,18 @@ class TopNavigationBar extends StatelessWidget {
               Row(
                 children: [
                   navigationLogo(context),
-                  const SizedBox(width: 20,),
-                  navigationButton("Typing Test",context),
-                  navigationButton("Typing Lessons",context),
+                  // const SizedBox(width: 20,),
+                  // navigationButton("Typing Test",context),
+                  // navigationButton("Typing Lessons",context),
                 ],
               ),
               Row(
                 children: [
-                  upgradeButton(context),
+                  Image.asset("assets/images/logout_icon.png",height: 36,width:36,),
+                  // upgradeButton(context),
                   const SizedBox(width: 15,),
-                  loginButton(context),
-                  const SizedBox(width: 20,),
+                  // loginButton(context),
+                  // const SizedBox(width: 20,),
                 ],
               ),
             ],

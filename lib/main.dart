@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/exam_page.dart';
+import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
+import 'package:typingtest/view/screens/profile_page.dart';
+import 'package:typingtest/view/screens/ranking_page.dart';
+import 'package:typingtest/view/screens/subscription.dart';
 
 
 void main() async {
@@ -30,7 +35,7 @@ class MyApp extends StatelessWidget {
         thumbColor: MaterialStateProperty.all(const Color(0xff369CBC)),
         ),
       ),
-      home: const HOMEPAGE(),
+      home: const RankingScreen(),
     );
   }
 }

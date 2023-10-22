@@ -50,7 +50,7 @@ class RightRow extends StatelessWidget {
           ))),
       onPressed: () async {
 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ResultScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResultScreen()));
 
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

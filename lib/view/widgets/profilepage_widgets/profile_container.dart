@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/widgets/profilepage_widgets/edit_profile.dart';
 
 class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key});
@@ -13,16 +12,16 @@ class ProfileContainer extends StatelessWidget {
           padding: const EdgeInsets.all(28.0),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "My Profile",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  editButton(context),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     const Text(
+              //       "My Profile",
+              //       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              //     ),
+              //     editButton(context),
+              //   ],
+              // ),
               const SizedBox(height: 20,),
               Row(
                 children: [
@@ -53,29 +52,6 @@ class ProfileContainer extends StatelessWidget {
           ),
         ),
       )],
-    );
-  }
-
-  Widget editButton(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-          elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              side: const BorderSide(color: Color(0xff369CBC)),
-              borderRadius: BorderRadius.circular(5)))),
-      onPressed: () async {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return EditProfileDialog();
-          },
-        );
-      },
-      child: const Text(
-        'Edit',
-        style: TextStyle(color: Colors.white),
-      ),
     );
   }
 

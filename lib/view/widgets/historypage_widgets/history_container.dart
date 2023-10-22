@@ -6,26 +6,25 @@ class HistoryContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int itemCount = 9;
+    double calculatedHeight = (66 * itemCount) + 25;
+
+    double containerHeight =
+    (calculatedHeight < MediaQuery.of(context).size.height -100)
+        ? calculatedHeight
+        : MediaQuery.of(context).size.height -100;
+
     return Container(
+      // constraints: BoxConstraints(m),
+      height: containerHeight,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(28.0),
-        child: Column(
-          children: [
-            const Text(
-              "Result History",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 20,),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context,index){
-                    return const HistoryListTile();
-                  }),
-            ),
-          ],
-        ),
+        padding: const EdgeInsets.only(left: 28.0,top: 5,bottom: 5,right: 5),
+        child: ListView.builder(
+            itemCount: itemCount,
+            itemBuilder: (context,index){
+              return const HistoryListTile();
+            }),
       ),
     );
   }

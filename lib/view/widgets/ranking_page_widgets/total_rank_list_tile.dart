@@ -19,50 +19,53 @@ class TotalRankingListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Color(0xffEBEBEB)))),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-          Padding(
-            padding: const EdgeInsets.only(left:  15.0),
-            child: _buildChildBasedOnIndex(index),
+    return Padding(
+      padding: const EdgeInsets.only(right: 15.0),
+      child: Container(
+        height: 50,
+        decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Color(0xffEBEBEB)))),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+            Padding(
+              padding: const EdgeInsets.only(left:  15.0),
+              child: _buildChildBasedOnIndex(index),
+            ),
+           Row(
+            children: [
+              CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
+              SizedBox(width: 5,),
+              Text("Floyd Miles",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
+            ],
           ),
-         Row(
-          children: [
-            CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
-            SizedBox(width: 5,),
-            Text("Floyd Miles",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
-          ],
-        ),
-        Row(
-          children: [
-            Image.asset(
-              "assets/images/flash_colored.png",
-              height: 22,
-              width: 22,
-            ),
-            const Text("98.34%",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
-          ],
+          Row(
+            children: [
+              Image.asset(
+                "assets/images/flash_colored.png",
+                height: 22,
+                width: 22,
+              ),
+              const Text("98.34%",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
+            ],
 
-        ),
-        Row(
-          children: [
-            Image.asset(
-              "assets/images/timer_colored.png",
-              height: 22,
-              width: 22,
-            ),
-            const Padding(
-              padding: EdgeInsets.only(right: 15.0),
-              child: Text("12 mins, 16 secs",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
-            ),
-          ],
+          ),
+          Row(
+            children: [
+              Image.asset(
+                "assets/images/timer_colored.png",
+                height: 22,
+                width: 22,
+              ),
+              const Padding(
+                padding: EdgeInsets.only(right: 15.0),
+                child: Text("12 mins, 16 secs",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
+              ),
+            ],
 
-        ),
-      ],
-    ));
+          ),
+        ],
+      )),
+    );
   }
   Widget _buildChildBasedOnIndex(int index) {
     if (index == 0) {
