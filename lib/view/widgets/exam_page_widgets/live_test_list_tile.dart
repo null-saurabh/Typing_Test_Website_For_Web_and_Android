@@ -24,11 +24,9 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
       child: InkWell(
         onTap: widget.status == "Started"
         ?(){
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const InstructionPage(),
-            ),
-          );
+          Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(builder: (context) => const InstructionPage()));
+
         }
         :null,
         child: Card(
@@ -111,11 +109,8 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                           context,
                           "View Result",
                           () async {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const ResultScreen(),
-                              ),
-                            );
+                            Navigator.of(context, rootNavigator: true).push(
+                                MaterialPageRoute(builder: (context) => const ResultScreen()));
                           },
                         ),
                       ],

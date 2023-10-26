@@ -8,52 +8,41 @@ class SubscriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffF5FAFC),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LeftDrawer(isProfilePage: false),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // const TopNavigationBar(),
-                // SizedBox(
-                //   height: MediaQuery.of(context).size.height * 0.1,
-                // ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    "Subscriptions",
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-                  ),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 75),
-                  child: Row(
-                    // mainAxisAlignment: MainAxisAlignment.center,
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      priceWidget(false, true, context),
-                      const SizedBox(width: 10),
-                      priceWidget(true, false, context),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      priceWidget(false, false, context),
-                    ],
-                  ),
-                )
-              ],
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        // const TopNavigationBar(),
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.1,
+        // ),
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Text(
+            "Subscriptions",
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
           ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 25,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 75),
+          child: Row(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              priceWidget(false, true, context),
+              const SizedBox(width: 10),
+              priceWidget(true, false, context),
+              const SizedBox(
+                width: 10,
+              ),
+              priceWidget(false, false, context),
+            ],
+          ),
+        )
+      ],
     );
   }
 

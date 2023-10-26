@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:typingtest/view/screens/exam_page.dart';
-import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
-import 'package:typingtest/view/screens/profile_page.dart';
-import 'package:typingtest/view/screens/ranking_page.dart';
-import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view_model/api_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 

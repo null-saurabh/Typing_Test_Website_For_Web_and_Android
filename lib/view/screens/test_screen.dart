@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/widgets/test_screen_widgets/right_row.dart';
+import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
 import 'package:typingtest/view/widgets/top_navigation_bar.dart';
@@ -19,6 +19,7 @@ class _TestScreenState extends State<TestScreen> {
   int _start = 10 * 60;
 
 
+
   @override
   void initState() {
     super.initState();
@@ -31,20 +32,31 @@ class _TestScreenState extends State<TestScreen> {
         timer.cancel();
         _submitTest();
       } else {
-        setState(() {
-          _start--;
-        });
+        if (mounted) {
+          setState(() {
+            _start--;
+          });
+        }
+
       }
     });
   }
 
   void _submitTest() {
     if (!testCompleted) {
-      setState(() {
-        testCompleted = true;
-      });
+      if (mounted) {
+        setState(() {
+          testCompleted = true;
+        });
+      }
       _timer.cancel();
     }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override

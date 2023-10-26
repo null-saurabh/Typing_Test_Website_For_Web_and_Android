@@ -1,7 +1,12 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/Homepage_screen.dart';
+import 'package:typingtest/view/screens/history_screen.dart';
+import 'package:typingtest/view/screens/profile_page.dart';
+import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/widgets/Left_drawer.dart';
-import 'package:typingtest/view/widgets/homepage_widgets/gridview_for_homepage.dart';
+
+import 'dart:html' as html;
 
 
 class HOMEPAGE extends StatefulWidget {
@@ -13,73 +18,82 @@ class HOMEPAGE extends StatefulWidget {
 
 class _HOMEPAGEState extends State<HOMEPAGE> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  String _currentPage = 'homepage';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5FAFC),
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          LeftDrawer(
-            // isProfilePage: false,
-            onItemSelected: (selectedPage) {
-              _navigatorKey.currentState!.pushReplacementNamed(selectedPage);
-            },
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // TopNavigationBar(),
-                  SizedBox(height: 20),
-                  Padding(
-                    padding: EdgeInsets.only(left: 50.0),
-                    child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10,),
-                        Image.asset("assets/images/banner.png",),
-                        SizedBox(height: 15,),
-                       DynamicGridView(),
-                      ],
-                    ),
-                  ),
-                  // if (FirebaseAuth.instance.currentUser?.displayName != null) ...[
-                  //   CircleAvatar(
-                  //     radius: 40,
-                  //     backgroundImage: NetworkImage(FirebaseAuth.instance.currentUser!.photoURL!),
-                  //   ),
-                  //   Text(FirebaseAuth.instance.currentUser!.displayName!,style: const TextStyle(fontSize: 16),),
-                  //   Center(child: SizedBox(
-                  //     height: 25,
-                  //     child: ElevatedButton(
-                  //       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
-                  //           backgroundColor: MaterialStateProperty.all(Colors.white),
-                  //           shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  //               side: const BorderSide(color: Colors.purple),borderRadius: BorderRadius.circular(10)
-                  //           ))),
-                  //       onPressed: () async {
-                  //         await FirebaseServices().signOut();
-                  //         setState(() {
-                  //
-                  //         });
-                  //       },
-                  //       child: const Text('Log Out', style: TextStyle(color: Colors.black)),
-                  //     ),
-                  //   ),),
-                  // ]
+    return WillPopScope(
+      onWillPop: () async {
+        if (_navigatorKey.currentState!.canPop()) {
+          _navigatorKey.currentState!.pop();
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xffF5FAFC),
+        body: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            LeftDrawer(
+              // isProfilePage: false,
+              onItemSelected: (selectedPage) {
+                _navigatorKey.currentState!.pushReplacementNamed(selectedPage);
+                setState(() {
+                  _currentPage = selectedPage;
+                });
+              },
+              currentPage: _currentPage,
 
-                ],
-              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Navigator(
+                key: _navigatorKey,
+                // initialRoute: 'homepage',
+                onGenerateInitialRoutes: (NavigatorState state, String initialRoute) {
+                  WidgetsBinding.instance!.addPostFrameCallback((_) {
+                    if (html.window.history.length > 1) {
+                      html.window.history.go(-html.window.history.length + 1);
+                    }
+                  });return [
+                    MaterialPageRoute(
+                      builder: (context) => HomePageScreen(),
+                    ),
+                  ];
+                },
+                onGenerateRoute: (RouteSettings settings) {
+                  WidgetBuilder builder;
+                  switch (settings.name) {
+                    case 'homepage':
+                      builder = (BuildContext _) => HomePageScreen();
+                      break;
+                    case 'history':
+                      builder = (BuildContext _) => HistoryScreen(); // Make similar changes to HistoryScreen
+                      break;
+                      case 'subscription':
+                      builder = (BuildContext _) => SubscriptionPage(); // Make similar changes to HistoryScreen
+                      break;
+                    case 'profile':
+                      builder = (BuildContext _) => ProfilePage();
+                      break;
+                  // ... other routes
+                    default:
+                      throw Exception('Invalid route: ${settings.name}');
+                  }
+                  // return MaterialPageRoute(builder: builder, settings: settings);
+                  return PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => builder(context),
+                    transitionsBuilder: (context, animation1, animation2, child) {
+                      return FadeTransition(opacity: animation1, child: child);
+                    },
+                    transitionDuration: Duration(milliseconds: 500),
+                  );
+                },
+              ),
+
+            ),
+          ],
+        ),
       ),
     );
   }

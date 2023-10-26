@@ -14,6 +14,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   // final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
   String userInput = "";
+  final _scrollController1 = ScrollController();
 
   @override
   void initState() {
@@ -34,8 +35,11 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
         child: Scrollbar(
           interactive: false,
           thumbVisibility: true,
+          controller: _scrollController1,
+
           child: SingleChildScrollView(
             // controller: _scrollController,
+            controller: _scrollController1,
 
             child: TextField(
               focusNode: _focusNode,

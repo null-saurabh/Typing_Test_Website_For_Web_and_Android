@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/result_screen.dart';
 
 class RightRow extends StatelessWidget {

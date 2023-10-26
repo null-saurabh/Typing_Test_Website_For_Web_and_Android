@@ -7,30 +7,18 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xffF5FAFC),
-      body: Row(
+    return Padding(
+      padding: EdgeInsets.all(25.0),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LeftDrawer(isProfilePage: false),
-          
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(25.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // TopNavigationBar(),
-                  Text(
-                    "Result History",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(height: 20,),
-                  HistoryContainer()
-                ],
-              ),
-            ),
+          // TopNavigationBar(),
+          Text(
+            "Result History",
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
+          SizedBox(height: 20,),
+          HistoryContainer()
         ],
       ),
     );

@@ -10,39 +10,27 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xffF5FAFC),
-      body: Row(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-
         children: [
-          LeftDrawer(isProfilePage: false),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // TopNavigationBar(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "My Profile",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      editButton(context),
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Expanded(
-                  child:
-                  ProfileContainer(),
-                  )
-                ],
+          // TopNavigationBar(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "My Profile",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
-            ),
+              editButton(context),
+            ],
           ),
+          SizedBox(height: 15,),
+          Expanded(
+            child:
+            ProfileContainer(),
+          )
         ],
       ),
     );

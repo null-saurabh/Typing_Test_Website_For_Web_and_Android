@@ -14,6 +14,7 @@ class TextToWrite extends StatefulWidget {
 class _TextToWriteState extends State<TextToWrite> {
 
   String? paragraph;
+  final _scrollController1 = ScrollController();
 
   @override
   void initState() {
@@ -48,9 +49,12 @@ class _TextToWriteState extends State<TextToWrite> {
       padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 18),
       decoration: BoxDecoration(color: Colors.white,border: Border.all(color:  const Color(0xff369CBC).withOpacity(0.5))),
       child: Scrollbar(
+        controller: _scrollController1,
           interactive: false,
           thumbVisibility: true,
-          child: SingleChildScrollView(child: Padding(
+          child: SingleChildScrollView(
+            controller: _scrollController1,
+              child: Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: Text(paragraph ?? "Loading...",style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
           ))),
