@@ -2,10 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/widgets/Left_drawer.dart';
 import 'package:typingtest/view/widgets/homepage_widgets/gridview_for_homepage.dart';
-import 'package:typingtest/view/widgets/homepage_widgets/nav_bar.dart';
-import 'package:typingtest/view/widgets/homepage_widgets/test_name_container.dart';
-import 'package:typingtest/view/widgets/top_navigation_bar.dart';
-import 'package:typingtest/view_model/services/firebase_services.dart';
+
 
 class HOMEPAGE extends StatefulWidget {
   const HOMEPAGE({super.key});
@@ -15,6 +12,8 @@ class HOMEPAGE extends StatefulWidget {
 }
 
 class _HOMEPAGEState extends State<HOMEPAGE> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +21,12 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          LeftDrawer(isProfilePage: false),
+          LeftDrawer(
+            // isProfilePage: false,
+            onItemSelected: (selectedPage) {
+              _navigatorKey.currentState!.pushReplacementNamed(selectedPage);
+            },
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 
-class UserRankListTile extends StatelessWidget {
+class UserRankListTile extends StatefulWidget {
   const UserRankListTile({super.key});
+
+  @override
+  State<UserRankListTile> createState() => _UserRankListTileState();
+}
+
+class _UserRankListTileState extends State<UserRankListTile> {
+  bool _showDetails = false;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: Container(
-        height: 120,
+        height:_showDetails ? 120 : 60,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           color: Color(0xff369CBC),
@@ -16,7 +23,6 @@ class UserRankListTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical:10),
           child: Row(
-            // mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
@@ -34,7 +40,7 @@ class UserRankListTile extends StatelessWidget {
                             color: Colors.white),
                       ),
                     ),
-                    SizedBox(width: 10,),
+                    SizedBox(width: 20,),
                     SizedBox(
                       width: 220,
                       child: Row(
@@ -68,7 +74,6 @@ class UserRankListTile extends StatelessWidget {
                ),
               Expanded(
                 child: Column(
-
                   children: [
                     Expanded(
                       child: Row(
@@ -88,11 +93,16 @@ class UserRankListTile extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 25),
-                          const Icon(Icons.arrow_drop_down,color: Colors.white,),
+                          IconButton(onPressed: () {
+                            setState(() {
+                              _showDetails = !_showDetails;
+                            });
+                          }, icon: Icon(_showDetails ? Icons.arrow_drop_up : Icons.arrow_drop_down,color: Colors.white,)),
                           const SizedBox(width: 15),
                         ],
                       ),
                     ),
+                    if (_showDetails)
                     Expanded(
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +115,7 @@ class UserRankListTile extends StatelessWidget {
                                 listTileData("Incorrect Words", "14"),
                                 listTileData("Full mistakes", "2"),
                                 listTileData("Half Mistakes ", "2"),
-                                const SizedBox(width: 110),
+                                const SizedBox(width: 110+16),
 
                               ],
                             ),
@@ -116,8 +126,6 @@ class UserRankListTile extends StatelessWidget {
                         ],
                       ),
                     ),
-
-
                   ],
                 ),
               )

@@ -2,12 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class TotalRankingListTile extends StatelessWidget {
+class TotalRankingListTile extends StatefulWidget {
   final int index;
-  TotalRankingListTile({super.key,required this.index});
+  const TotalRankingListTile({super.key,required this.index});
 
+  @override
+  State<TotalRankingListTile> createState() => _TotalRankingListTileState();
+}
 
+class _TotalRankingListTileState extends State<TotalRankingListTile> {
+  bool _showDetails = false;
   final Random _random = Random();
+
   Color _getRandomColor() {
     return Color.fromRGBO(
       _random.nextInt(256), // Red
@@ -22,51 +28,113 @@ class TotalRankingListTile extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 15.0),
       child: Container(
-        height: 50,
+        height: _showDetails ? 120 : 60,
         decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Color(0xffEBEBEB)))),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-            Padding(
-              padding: const EdgeInsets.only(left:  15.0),
-              child: _buildChildBasedOnIndex(index),
-            ),
-           Row(
-            children: [
-              CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
-              SizedBox(width: 5,),
-              Text("Floyd Miles",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
-            ],
-          ),
-          Row(
-            children: [
-              Image.asset(
-                "assets/images/flash_colored.png",
-                height: 22,
-                width: 22,
-              ),
-              const Text("98.34%",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
-            ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0),
+        child: Row(
+          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
 
-          ),
-          Row(
-            children: [
-              Image.asset(
-                "assets/images/timer_colored.png",
-                height: 22,
-                width: 22,
+          children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 5.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left:  15.0),
+                      child: _buildChildBasedOnIndex(widget.index),
+                    ),
+                    const SizedBox(width: 20,),
+                    SizedBox(
+                      width: 220,
+                      child: Row(
+                        children: [
+                          CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: const Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
+                          const SizedBox(width: 5,),
+                          const Text("Floyd Miles",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text("12 mins, 16 secs",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.black),),
-              ),
-            ],
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              listTileData("Net Speed", "32WPM"),
+                              listTileData("Gross Speed", "32WPM"),
+                              listTileData("Min. passing Speed", "32WPM"),
+                              listTileData("Accuracy", "95.95%"),
+                              listTileData("Words Typed", "234"),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 25),
+                        IconButton(onPressed: () {
+                          setState(() {
+                            _showDetails = !_showDetails;
+                          });
+                        }, icon: Icon(_showDetails ? Icons.arrow_drop_up : Icons.arrow_drop_down,color: Colors.black,)),
+                        const SizedBox(width: 15),
+                      ],
+                    ),
+                  ),
+                  if (_showDetails)
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                listTileData("Correct Words", "24"),
+                                listTileData("Incorrect Words", "14"),
+                                listTileData("Full mistakes", "2"),
+                                listTileData("Half Mistakes ", "2"),
+                                const SizedBox(width: 110+16),
 
-          ),
-        ],
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 64),
+                          // const Icon(Icons.arrow_drop_down,color: Colors.transparent,),
+                          // const SizedBox(width: 15),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            )
+          ],
+        ),
       )),
     );
   }
+  Widget listTileData(String key, String value){
+    return SizedBox(
+      width: 110,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(key,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 12,color: Colors.grey),),
+          Text(value,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.black ),)
+        ],
+      ),
+    );
+  }
+
   Widget _buildChildBasedOnIndex(int index) {
     if (index == 0) {
       return Image.asset(

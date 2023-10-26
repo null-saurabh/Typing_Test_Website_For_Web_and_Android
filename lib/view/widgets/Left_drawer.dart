@@ -6,8 +6,9 @@ import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/subscription.dart';
 
 class LeftDrawer extends StatelessWidget {
-  final bool isProfilePage;
-  const LeftDrawer({required this.isProfilePage, super.key});
+  // final bool isProfilePage;
+  final Function(String) onItemSelected;
+  const LeftDrawer({required this.onItemSelected, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +19,7 @@ class LeftDrawer extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 20),
-          // const CircleAvatar(
-          //   backgroundColor: Color(0xff17414F),
-          //   radius: 31,
-          //   child: Text(
-          //     "AB",
-          //     style: TextStyle(
-          //         fontSize: 24,
-          //         fontWeight: FontWeight.w500,
-          //         color: Colors.white),
-          //   ),
-          // ),
+
           const SizedBox(
             height: 5,
           ),
@@ -46,73 +37,95 @@ class LeftDrawer extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          isProfilePage
-              ?drawerListTile(Icons.category_outlined, "All Tests", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HOMEPAGE()));
-          }, false)
-              :drawerListTile(Icons.category_outlined, "All Tests", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HOMEPAGE()));
-          }, true),
-          isProfilePage
-              ?drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SubscriptionPage()));
-          }, false)
-              :drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SubscriptionPage()));
-          }, true),
-          isProfilePage
-              ?drawerListTile(Icons.history_outlined, "Result History", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HistoryScreen()));
-          }, false)
-              :drawerListTile(Icons.history_outlined, "Result History", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HistoryScreen()));
-          }, true),
-          isProfilePage
-          ?drawerListTile(Icons.person_2_outlined, "My Profile", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfilePage()));
-          },true)
-          :drawerListTile(Icons.person_2_outlined, "My Profile", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ProfilePage()));
-          }, false),
-          drawerListTile(Icons.logout_outlined, "Log out", () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HOMEPAGE()));
-          }, false),
+          // isProfilePage
+          //     ?drawerListTile(Icons.category_outlined, "All Tests", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          // }, false)
+          //     :drawerListTile(Icons.category_outlined, "All Tests", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          // }, true),
+          // isProfilePage
+          //     ?drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+          // }, false)
+          //     :drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const SubscriptionPage()));
+          // }, true),
+          // isProfilePage
+          //     ?drawerListTile(Icons.history_outlined, "Result History", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const HistoryScreen()));
+          // }, false)
+          //     :drawerListTile(Icons.history_outlined, "Result History", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const HistoryScreen()));
+          // }, true),
+          // isProfilePage
+          // ?drawerListTile(Icons.person_2_outlined, "My Profile", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const ProfilePage()));
+          // },true)
+          // :drawerListTile(Icons.person_2_outlined, "My Profile", () {
+          //   Navigator.of(context).push(
+          //       MaterialPageRoute(builder: (context) => const ProfilePage()));
+          // }, false),
+          drawerListTile(Icons.category_outlined, "All Tests", 'homepage', context),
+          drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", 'subscriptions', context),
+          drawerListTile(Icons.history_outlined, "Result History", 'history', context),
+          drawerListTile(Icons.person_2_outlined, "My Profile", 'profile', context),
+          drawerListTile(Icons.logout_outlined, "Log out",  'homepage', context),
         ],
       ),
     );
   }
 
-  Widget drawerListTile(
-      IconData icon, String title, VoidCallback onTap, bool color) {
+  // Widget drawerListTile(
+  //     IconData icon, String title, VoidCallback onTap, bool color) {
+  //   return Container(
+  //     // color: color ? const Color(0xff369CBC).withOpacity(0.08) : null,
+  //     child: ListTile(
+  //       leading: Icon(
+  //         icon,
+  //         // color: const Color(0xff369CBC),
+  //         color: Colors.grey,
+  //       ),
+  //       // Image.asset(
+  //       //   icon,
+  //       //   height: 22,
+  //       //   width: 22,
+  //       // ),
+  //       title: Text(
+  //         title,
+  //         style: const TextStyle(
+  //             fontWeight: FontWeight.w400, fontSize: 16.5, color: Colors.grey),
+  //       ),
+  //       // trailing: const Icon(Icons.navigate_next),
+  //       onTap: onTap,
+  //     ),
+  //   );
+  // }
+
+  Widget drawerListTile(IconData icon, String title, String pageId, BuildContext context) {
+    bool isSelected = ModalRoute.of(context)?.settings.name == pageId;
     return Container(
-      // color: color ? const Color(0xff369CBC).withOpacity(0.08) : null,
+      color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
       child: ListTile(
         leading: Icon(
           icon,
-          // color: const Color(0xff369CBC),
-          color: Colors.grey,
+          color: isSelected ? Colors.black : Colors.grey,
         ),
-        // Image.asset(
-        //   icon,
-        //   height: 22,
-        //   width: 22,
-        // ),
         title: Text(
           title,
-          style: const TextStyle(
-              fontWeight: FontWeight.w400, fontSize: 16.5, color: Colors.grey),
+          style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16.5,
+              color: isSelected ? Colors.black : Colors.grey),
         ),
-        // trailing: const Icon(Icons.navigate_next),
-        onTap: onTap,
+        onTap: () => onItemSelected(pageId),
       ),
     );
   }

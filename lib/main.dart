@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view/screens/profile_page.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/subscription.dart';
+import 'package:typingtest/view_model/api_provider.dart';
+import 'package:typingtest/view_model/services/api_services.dart';
 
 
 void main() async {
@@ -18,7 +21,11 @@ void main() async {
   //       appId: "1:662182179161:web:074b21c8c01b78eb6b9c48",
   //   )
   // );
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => TestProvider(apiService: ApiService(baseUrl: 'your_api_base_url')),
+      child: const MyApp(),
+    ),);
 }
 
 class MyApp extends StatelessWidget {
@@ -35,7 +42,7 @@ class MyApp extends StatelessWidget {
         thumbColor: MaterialStateProperty.all(const Color(0xff369CBC)),
         ),
       ),
-      home: const RankingScreen(),
+      home: const HOMEPAGE(),
     );
   }
 }
