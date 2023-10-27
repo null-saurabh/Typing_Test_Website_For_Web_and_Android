@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/result_screen.dart';
 import 'package:typingtest/view/screens/subscription.dart';
+import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class HistoryListTile extends StatelessWidget {
   const HistoryListTile({super.key});
@@ -47,8 +48,12 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(builder: (context) => const ResultScreen()));
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const ResultDialog();
+            }
+        );
         },
       child: const Text('View Result', style: TextStyle(color: Color(0xff369CBC))),
     );

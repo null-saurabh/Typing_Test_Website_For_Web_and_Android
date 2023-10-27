@@ -1,21 +1,23 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/view/screens/homepage.dart';
-import 'package:typingtest/view_model/api_provider.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: const FirebaseOptions(
-  //       apiKey: "AIzaSyAxTobYpx_e8HZi3W2XTcA4wcDAimpZoEo",
-  //       authDomain: "typingtest-e2ac0.firebaseapp.com",
-  //       projectId: "typingtest-e2ac0",
-  //       messagingSenderId: "662182179161",
-  //       appId: "1:662182179161:web:074b21c8c01b78eb6b9c48",
-  //   )
-  // );
+
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyAxTobYpx_e8HZi3W2XTcA4wcDAimpZoEo",
+        authDomain: "typingtest-e2ac0.firebaseapp.com",
+        projectId: "typingtest-e2ac0",
+        messagingSenderId: "662182179161",
+        appId: "1:662182179161:web:074b21c8c01b78eb6b9c48",
+    )
+  );
   runApp(
     ChangeNotifierProvider(
       create: (context) => TestProvider(apiService: ApiService(baseUrl: 'your_api_base_url')),

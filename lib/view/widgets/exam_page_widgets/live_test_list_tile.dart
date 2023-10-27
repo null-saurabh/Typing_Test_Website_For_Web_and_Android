@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/result_screen.dart';
+import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
+import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class LiveTestListTile extends StatefulWidget {
   final String status;
@@ -24,8 +26,16 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
       child: InkWell(
         onTap: widget.status == "Started"
         ?(){
-          Navigator.of(context, rootNavigator: true).push(
-              MaterialPageRoute(builder: (context) => const InstructionPage()));
+
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return const InstructionDialog();
+              }
+          );
+
+          // Navigator.of(context, rootNavigator: true).push(
+          //     MaterialPageRoute(builder: (context) => const InstructionPage()));
 
         }
         :null,
@@ -109,8 +119,12 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                           context,
                           "View Result",
                           () async {
-                            Navigator.of(context, rootNavigator: true).push(
-                                MaterialPageRoute(builder: (context) => const ResultScreen()));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const ResultDialog();
+                                }
+                            );
                           },
                         ),
                       ],

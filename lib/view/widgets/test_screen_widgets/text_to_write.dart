@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:typingtest/view_model/api_provider.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class TextToWrite extends StatefulWidget {
   const TextToWrite({

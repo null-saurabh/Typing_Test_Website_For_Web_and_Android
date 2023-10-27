@@ -68,7 +68,7 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
                       builder = (BuildContext _) => HomePageScreen();
                       break;
                     case 'history':
-                      builder = (BuildContext _) => HistoryScreen(); // Make similar changes to HistoryScreen
+                      builder = (BuildContext _) => HistoryScreen(popup: false,); // Make similar changes to HistoryScreen
                       break;
                       case 'subscription':
                       builder = (BuildContext _) => SubscriptionPage(); // Make similar changes to HistoryScreen
@@ -82,11 +82,8 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
                   }
                   // return MaterialPageRoute(builder: builder, settings: settings);
                   return PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => builder(context),
-                    transitionsBuilder: (context, animation1, animation2, child) {
-                      return FadeTransition(opacity: animation1, child: child);
-                    },
-                    transitionDuration: Duration(milliseconds: 500),
+                    pageBuilder: (context, _, __) => builder(context),
+                    transitionDuration: Duration.zero,
                   );
                 },
               ),
@@ -97,4 +94,5 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
       ),
     );
   }
+
 }

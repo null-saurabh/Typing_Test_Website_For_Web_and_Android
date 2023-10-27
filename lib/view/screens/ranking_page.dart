@@ -11,42 +11,40 @@ class RankingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28.0,vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // const TopNavigationBar(),
-            // const SizedBox(height: 10,),
-            Row(
-              children: [
-                InkWell(
-                  onTap:(){Navigator.pop(context);},
-                  child: Container(
-                    height: 32,
-                    width: 32,
-                    color: Colors.white,
-                    child: const Icon(Icons.arrow_back),
-                  ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 28.0,vertical: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // const TopNavigationBar(),
+          // const SizedBox(height: 10,),
+          Row(
+            children: [
+              InkWell(
+                onTap:(){Navigator.pop(context);},
+                child: Container(
+                  height: 32,
+                  width: 32,
+                  color: Colors.white,
+                  child: const Icon(Icons.arrow_back),
                 ),
-                const SizedBox(width: 10),
-                const Text(
-                  "Leader Board",
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black),
-                ),
-              ],
-            ),
-            const SizedBox(height: 15,),
-            const TitleContainer(),
-            const SizedBox(height: 15,),
-            const Expanded(child: ListViewContainer()),
+              ),
+              const SizedBox(width: 10),
+              const Text(
+                "Leader Board",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black),
+              ),
+            ],
+          ),
+          const SizedBox(height: 15,),
+          const TitleContainer(),
+          const SizedBox(height: 15,),
+          const Expanded(child: ListViewContainer()),
 
-          ],
-        ),
+        ],
       ),
     );
   }

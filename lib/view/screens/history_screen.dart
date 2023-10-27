@@ -3,7 +3,9 @@ import 'package:typingtest/view/widgets/Left_drawer.dart';
 import 'package:typingtest/view/widgets/historypage_widgets/history_container.dart';
 
 class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
+  final bool popup;
+
+  const HistoryScreen({required this.popup,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class HistoryScreen extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           SizedBox(height: 20,),
-          HistoryContainer()
+          HistoryContainer(popup: popup,)
         ],
       ),
     );

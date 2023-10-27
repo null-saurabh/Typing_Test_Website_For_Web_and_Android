@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
 import 'package:typingtest/view/widgets/exam_page_widgets/live_test_list_tile.dart';
+import 'package:typingtest/view/widgets/historypage_widgets/history_dialog.dart';
+import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 
 class ExamPage extends StatelessWidget {
   const ExamPage({super.key});
@@ -46,11 +48,19 @@ class ExamPage extends StatelessWidget {
                       ],
                     ),
                     opaqueButton(context, "History", () async {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const HistoryScreen(),
-                        ),
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const HistoryScreen(),
+                      //   ),
+                      // );
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const HistoryDialog();
+                          }
                       );
+
                     },)
 
                   ],
@@ -147,8 +157,16 @@ class ExamPage extends StatelessWidget {
               height: 10,
             ),
             opaqueButton(context, "Start Now",  () async {
-              Navigator.of(context, rootNavigator: true).push(
-                  MaterialPageRoute(builder: (context) => const InstructionPage()));
+
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const InstructionDialog();
+                  }
+              );
+
+              // Navigator.of(context, rootNavigator: true).push(
+              //     MaterialPageRoute(builder: (context) => const InstructionPage()));
             },),
           ],
         ),

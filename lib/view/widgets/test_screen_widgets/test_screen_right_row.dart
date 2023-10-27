@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/result_screen.dart';
+import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class RightRow extends StatelessWidget {
   const RightRow({
@@ -49,7 +50,14 @@ class RightRow extends StatelessWidget {
           ))),
       onPressed: () async {
 
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResultScreen()));
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ResultScreen()));
+        Navigator.pop(context);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const ResultDialog();
+            }
+        );
 
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

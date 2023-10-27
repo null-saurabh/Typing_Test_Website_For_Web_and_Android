@@ -13,7 +13,7 @@ class InstructionPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const TopNavigationBar(),
+          // const TopNavigationBar(),
           const SizedBox(height: 25),
           const Padding(
             padding: EdgeInsets.only(left: 20.0),

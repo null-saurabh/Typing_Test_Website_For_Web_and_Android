@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:typingtest/view/screens/Homepage_screen.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view/widgets/Left_drawer.dart';
 import 'package:typingtest/view/widgets/top_navigation_bar.dart';
@@ -143,8 +144,8 @@ class SubscriptionPage extends StatelessWidget {
                 side: const BorderSide(color: Color(0xff369CBC)),
                 borderRadius: BorderRadius.circular(5)))),
         onPressed: () async {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => const HomePageScreen()));
         },
         child: const Text(
           'Buy Now',
@@ -165,8 +166,8 @@ class SubscriptionPage extends StatelessWidget {
                 side: const BorderSide(color: Color(0xff369CBC)),
                 borderRadius: BorderRadius.circular(5)))),
         onPressed: () async {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
         },
         child: Text(
           buyText,
