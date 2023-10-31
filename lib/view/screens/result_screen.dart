@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_box.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_container.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_error_representation_container.dart';
-import 'package:typingtest/view/widgets/result_widgets/result_topp_heading_bar.dart';
+import 'package:typingtest/view/widgets/pop_up_top_heading_bar.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_typing_paragraph.dart';
-// import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  final String examName;
+  const ResultScreen({
+    required this.examName,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,7 @@ class ResultScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const TopNavigationBar(),
-          const ResultScreenTopHeadingBar(),
+          PopUpScreensTopHeadingBar(examName: examName,),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
@@ -33,16 +34,6 @@ class ResultScreen extends StatelessWidget {
                       children: [
                         const Row(
                           children: [
-                            // InkWell(
-                            //   onTap:(){Navigator.pop(context);},
-                            //   child: Container(
-                            //     height: 32,
-                            //     width: 32,
-                            //     color: Colors.white,
-                            //     child: const Icon(Icons.arrow_back),
-                            //   ),
-                            // ),
-                            // SizedBox(width: 8,),
                             Text(
                               "Result",
                               style: TextStyle(

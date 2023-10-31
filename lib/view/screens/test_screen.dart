@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:typingtest/model/api_model.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
-import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class TestScreen extends StatefulWidget {
-  const TestScreen({super.key});
+  final Test testData;
+  const TestScreen({required this.testData,super.key});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
@@ -111,13 +112,13 @@ class _TestScreenState extends State<TestScreen> {
                             decoration: const BoxDecoration(
                                 color: Color(0xffF5FAFC),
                             ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(10.0),
+                            child:  Padding(
+                              padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  TextToWrite(),
-                                  SizedBox(height: 20),
-                                  TextFieldContainer(),
+                                  TextToWrite(testData: widget.testData,),
+                                  const SizedBox(height: 20),
+                                  const TextFieldContainer(),
                                 ],
                               ),
                             ),
@@ -127,11 +128,11 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   flex: 2,
                   child: Padding(
-                    padding: EdgeInsets.all(22.0),
-                    child: RightRow(),
+                    padding: const EdgeInsets.all(22.0),
+                    child: RightRow(testData: widget.testData,),
                   )
                 )
               ],

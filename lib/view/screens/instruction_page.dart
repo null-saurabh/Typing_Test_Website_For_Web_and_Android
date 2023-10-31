@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:typingtest/model/api_model.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
-import 'package:typingtest/view/widgets/top_navigation_bar.dart';
+import 'package:typingtest/view/widgets/pop_up_top_heading_bar.dart';
 
 class InstructionPage extends StatelessWidget {
-  const InstructionPage({super.key});
+  final Test testData;
+  const InstructionPage({required this.testData,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,15 +15,15 @@ class InstructionPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const TopNavigationBar(),
-          const SizedBox(height: 25),
+          PopUpScreensTopHeadingBar(examName: testData.targetExam),
+          const SizedBox(height: 20),
           const Padding(
-            padding: EdgeInsets.only(left: 20.0),
+            padding: EdgeInsets.only(left: 25.0),
             child: Text("Instructions",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 24),),
           ),
           // const SizedBox(height: 10),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0,vertical: 15),
             child: Container(
               width: double.infinity ,
               color: Colors.white,
@@ -63,7 +65,7 @@ class InstructionPage extends StatelessWidget {
                     const Text("5. Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
                     const Text("6. Lorem ipsum dolor sit amet consectetur",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
                     const SizedBox(height: 20,),
-                    startButton(context),
+                    startButton(context,testData),
                   ],
                 ),
               ),
@@ -74,7 +76,7 @@ class InstructionPage extends StatelessWidget {
     );
   }
 
-  Widget startButton(BuildContext context){
+  Widget startButton(BuildContext context, Test testData){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
@@ -82,7 +84,7 @@ class InstructionPage extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const TestScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>TestScreen(testData: testData,)));
       },
       child: const Text('Start Now', style: TextStyle(color: Colors.white),),
     );

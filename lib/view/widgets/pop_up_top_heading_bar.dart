@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ResultScreenTopHeadingBar extends StatelessWidget {
-  const ResultScreenTopHeadingBar({
+class PopUpScreensTopHeadingBar extends StatelessWidget {
+  final String examName;
+  const PopUpScreensTopHeadingBar({
+    required this.examName,
     super.key,
   });
 
@@ -17,13 +19,13 @@ class ResultScreenTopHeadingBar extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(left: 40,right: 25),
-              child: const Text("SSC Typing Test - Grade A-1",style:TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
+              padding: const EdgeInsets.only(left: 25,right: 25),
+              child: Text(examName,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 15.0),
-            child: IconButton(onPressed: (){ Navigator.pop(context);}, icon: Icon(Icons.close),color: Colors.white,),
+            child: IconButton(onPressed: (){ Navigator.pop(context);}, icon: const Icon(Icons.close),color: Colors.white,),
           )
         ],
       ),

@@ -1,57 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/Homepage_screen.dart';
-import 'package:typingtest/view/screens/homepage.dart';
-import 'package:typingtest/view/widgets/Left_drawer.dart';
-import 'package:typingtest/view/widgets/top_navigation_bar.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class SubscriptionPage extends StatelessWidget {
   const SubscriptionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // const TopNavigationBar(),
-        // SizedBox(
-        //   height: MediaQuery.of(context).size.height * 0.1,
-        // ),
-        Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text(
-            "Subscriptions",
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
-          ),
-        ),
-        SizedBox(
-          height: 25,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 75),
-          child: Row(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              priceWidget(false, true, context),
-              const SizedBox(width: 10),
-              priceWidget(true, false, context),
-              const SizedBox(
-                width: 10,
-              ),
-              priceWidget(false, false, context),
-            ],
-          ),
-        )
-      ],
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) =>  buildDesktopLayout(context),
     );
   }
 
-  Widget priceWidget(bool recommended, bool freePlan, BuildContext context) {
+  Widget buildDesktopLayout(BuildContext context){
+    double width = 275;
+    if(MediaQuery.of(context).size.width < 1150)
+      {
+        width = MediaQuery.of(context).size.width * 0.22;
+      }
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(15.0),
+            child: Text(
+              "Subscriptions",
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+            ),
+          ),
+          const SizedBox(
+            height: 25,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 75),
+            child: Row(
+              children: [
+                priceWidget(false, true, context,width),
+                const SizedBox(width: 10),
+                priceWidget(true, false, context,width),
+                const SizedBox(
+                  width: 10,
+                ),
+                priceWidget(false, false, context,width),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget buildMobileLayout(BuildContext context){
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          priceWidget(false, true, context,275),
+          const SizedBox(height: 20),
+          priceWidget(true, false, context,275),
+          const SizedBox(
+           height: 20,
+          ),
+          priceWidget(false, false, context,275),
+
+        ],
+      ),
+    );
+  }
+
+
+  Widget priceWidget(bool recommended, bool freePlan, BuildContext context,double width) {
+    // print(MediaQuery.of(context).size.width);
     return Container(
       // constraints: BoxConstraints(minWidth: 275),
-      width: 275,
-      // height: MediaQuery.of(context).size.height * 0.625,
+      // width: 275,
+      width: width,
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -118,7 +144,7 @@ class SubscriptionPage extends StatelessWidget {
             ),
             subscriptionText(false),
             // const Spacer(),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             freePlan
                 ? buyButton("Get Started", context)
                 : recommended

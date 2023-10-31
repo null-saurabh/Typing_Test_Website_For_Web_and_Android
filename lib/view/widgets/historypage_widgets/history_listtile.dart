@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
-import 'package:typingtest/view/screens/result_screen.dart';
-import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class HistoryListTile extends StatelessWidget {
@@ -9,6 +8,13 @@ class HistoryListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) =>  buildDesktopLayout(context),
+    );
+  }
+
+  Widget buildDesktopLayout(BuildContext context){
     return Container(
       height: 66,
       decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Color(0xffEBEBEB)))),
@@ -40,6 +46,34 @@ class HistoryListTile extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Container(
+      height: 115,
+      decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Color(0xffEBEBEB)))),
+      child: Padding(
+        padding: const EdgeInsets.only(top:15.0,bottom: 5,left: 2,right: 2),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("SSC typing test -grade A - Test 1",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+            // SizedBox(height: 5,),
+            const Text("All SSC Typing Test",style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
+          const SizedBox(height: 15,),
+            Row(
+              children: [
+                leaderBoardButton(context),
+                const SizedBox(width: 8),
+                viewResultButton(context),
+                const SizedBox(width: 20),
+              ],
+            )
+
+          ],
+        ),
+      ),
+    );
+  }
   Widget viewResultButton(BuildContext context){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
@@ -51,7 +85,7 @@ class HistoryListTile extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const ResultDialog();
+              return const ResultDialog(examName: "SSC typing test -grade A",);
             }
         );
         },

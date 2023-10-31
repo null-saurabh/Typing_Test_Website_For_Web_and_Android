@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
-import 'package:typingtest/view/screens/instruction_page.dart';
 
 
 class TestNameContainer extends StatefulWidget {
@@ -19,7 +18,7 @@ class _TestNameContainerState extends State<TestNameContainer> {
       onTap: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const ExamPage(),
+            builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",),
           ),
         );
       },

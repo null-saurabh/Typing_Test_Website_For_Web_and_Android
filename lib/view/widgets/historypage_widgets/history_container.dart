@@ -20,7 +20,7 @@ class HistoryContainer extends StatelessWidget {
       height: popup?(MediaQuery.of(context).size.height * 0.8 )-80 : containerHeight,
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.only(left: 28.0,top: 5,bottom: 5,right: 5),
+        padding: const EdgeInsets.only(left: 10.0,top: 5,bottom: 5,right: 5),
         child: ListView.builder(
             itemCount: itemCount,
             itemBuilder: (context,index){

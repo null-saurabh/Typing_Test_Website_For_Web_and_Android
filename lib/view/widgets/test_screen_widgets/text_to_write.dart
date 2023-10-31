@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:typingtest/view_model/provider/api_provider.dart';
+import 'package:typingtest/model/api_model.dart';
+
 
 class TextToWrite extends StatefulWidget {
+  final Test testData;
+
   const TextToWrite({
+    required this.testData,
     super.key,
   });
 
@@ -13,14 +16,14 @@ class TextToWrite extends StatefulWidget {
 
 class _TextToWriteState extends State<TextToWrite> {
 
-  String? paragraph;
+  // String? paragraph;
   final _scrollController1 = ScrollController();
 
-  @override
-  void initState() {
-    super.initState();
-    fetchData();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchData();
+  // }
 
   // final String sampleText = "In the quiet town of Eldenwood, Emma wandered through the ancient forest, her footsteps barely making a sound on the fallen leaves. She had heard legends about a mysterious creature residing deep within the woods, "
   //     "and her adventurous spirit yearned to discover the truth behind the tales. Every tree stood tall and majestic, their trunks gnarled with age, and their canopies forming a dense green roof above.The sun's golden rays pierced through the gaps, "
@@ -31,16 +34,15 @@ class _TextToWriteState extends State<TextToWrite> {
   //     "The guardian led Emma to the heart of the forest, where a magnificent tree stood. Its bark shimmered with ethereal light, and its roots delved deep into the earth, drawing strength from the very core of the world. Emma understood that this tree was the source of life for the entire forest. "
   //     "With a heavy heart, she bid farewell to her newfound friend, promising to keep the forest's secret safe. As she retraced her steps, the trees seemed to bow in gratitude, and the wind whispered tales of her bravery.";
 
-  fetchData() async {
-    // Access the provider
-    TestProvider testProvider = Provider.of<TestProvider>(context, listen: false);
-    await testProvider.fetchUpcomingTests();
-    if (testProvider.tests != null && testProvider.tests!.isNotEmpty) {
-      setState(() {
-        paragraph = testProvider.tests![0].paragraph;  // Assumes you want the paragraph of the first test
-      });
-    }
-  }
+  // fetchData() async {
+  //   TestProvider testProvider = Provider.of<TestProvider>(context, listen: false);
+  //   await testProvider.refreshTests();
+  //   if (testProvider.tests != null && testProvider.tests!.isNotEmpty) {
+  //     setState(() {
+  //       paragraph = testProvider.tests![0].paragraph;  // Assumes you want the paragraph of the first test
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,7 @@ class _TextToWriteState extends State<TextToWrite> {
             controller: _scrollController1,
               child: Padding(
             padding: const EdgeInsets.only(right: 10.0),
-            child: Text(paragraph ?? "Loading...",style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+            child: Text(widget.testData.paragraph,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
           ))),
     );
   }

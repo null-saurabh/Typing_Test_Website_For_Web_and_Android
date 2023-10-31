@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/result_screen.dart';
+import 'package:typingtest/model/api_model.dart';
+// import 'package:typingtest/view/screens/result_screen.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class RightRow extends StatelessWidget {
+  final Test testData;
   const RightRow({
+    required this.testData,
     super.key,
   });
 
@@ -12,7 +15,7 @@ class RightRow extends StatelessWidget {
     return Column(
       children: [
         Container(
-          constraints: BoxConstraints(
+          constraints: const BoxConstraints(
             maxWidth: 200.0,
           ),
           width: double.infinity,
@@ -36,7 +39,7 @@ class RightRow extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 20,),
+        const SizedBox(height: 20,),
         submitButton(context),
       ],
     );
@@ -55,7 +58,7 @@ class RightRow extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const ResultDialog();
+              return ResultDialog(examName: testData.targetExam,);
             }
         );
 

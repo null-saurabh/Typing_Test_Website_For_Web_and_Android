@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/result_screen.dart';
 
 class ResultDialog extends StatelessWidget {
-  const ResultDialog({super.key});
+  final String examName;
+  const ResultDialog({
+    required this.examName,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +18,7 @@ class ResultDialog extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.95,  // Adjust as needed
           height: MediaQuery.of(context).size.height * 0.95, // Adjust as needed
-          child: const ResultScreen(),  // Your current ResultScreen content
+          child: ResultScreen(examName: examName,),  // Your current ResultScreen content
         ),
       ),
     );

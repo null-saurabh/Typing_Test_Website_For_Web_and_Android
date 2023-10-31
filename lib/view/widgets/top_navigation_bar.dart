@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/homepage.dart';
-import 'package:typingtest/view/screens/instruction_page.dart';
 import 'package:typingtest/view/screens/profile_page.dart';
 import 'package:typingtest/view/screens/subscription.dart';
-import 'package:typingtest/view/screens/test_screen.dart';
 
 class TopNavigationBar extends StatelessWidget {
   const TopNavigationBar({super.key});
@@ -107,7 +105,7 @@ class TopNavigationBar extends StatelessWidget {
   Widget navigationButton(String text, BuildContext context){
     return TextButton(
       onPressed: (){
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ExamPage()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",)));
       },
       child: Text(text, style: const TextStyle(color: Colors.black,fontSize: 15),),
     );
