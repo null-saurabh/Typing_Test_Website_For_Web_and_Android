@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_box.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_container.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_error_representation_container.dart';
@@ -13,6 +14,14 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+
+  }
+
+  Widget buildDesktopLayout(BuildContext context){
     return Scaffold(
       backgroundColor: const Color(0xffF5FAFC),
       body: Column(
@@ -98,7 +107,107 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
           )
-          
+
+        ],
+      ),
+    );
+  }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Scaffold(
+      backgroundColor: const Color(0xffF5FAFC),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          PopUpScreensTopHeadingBar(examName: examName,),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15 ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Text(
+                              "Result",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 22,
+                                  color: Colors.black),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border.all(color: Colors.white)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Column(
+                                children: [
+                                  ResultBox(
+                                    title: "Test Duration",
+                                    value: "2 mins 34 secs",
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ResultBox(
+                                    title: "Net Speed",
+                                    value: "0 WPM",
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  ResultBox(
+                                    title: "Gross Speed",
+                                    value: "50 Words per minute",
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  ResultBox(
+                                    title: "Accuracy",
+                                    value: "0%",
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              const ResultContainer(),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              ResultTypingParagraphContainer(),
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              const ResultErrorRepresentation()
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+
         ],
       ),
     );

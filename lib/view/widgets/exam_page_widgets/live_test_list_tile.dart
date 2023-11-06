@@ -64,16 +64,6 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
     super.dispose();
   }
 
-//   onTap: widget.testData.isAvailable == true
-//   ?(){
-//   showDialog(
-//   context: context,
-//   builder: (BuildContext context) {
-//   return InstructionDialog(testData: widget.testData,);
-//   }
-//   );
-// }
-//     :null,
 
   @override
   Widget build(BuildContext context) {
@@ -94,52 +84,41 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                   ? const Border(
                       left: BorderSide(
                         color: Color(0xff369CBC),
-                        width: 3.5,
+                        width: 4,
                       ),
                       bottom: BorderSide(
                         color: Color(0xff369CBC),
-                        width: 1.0,
+                        width: 1.25,
                       ),
                       right: BorderSide(
                         color: Color(0xff369CBC),
-                        width: 1.0,
+                        width: 1.25,
                       ),
                       top: BorderSide(
                         color: Color(0xff369CBC),
-                        width: 1.0,
+                        width: 1.25,
                       ),
                     )
-                  : const Border(
+                  : Border(
                       left: BorderSide(
-                        color: Color(0xff369CBC),
-                        width: 3.5,
+                        color: Color(0xff369CBC).withOpacity(0.25),
+                        width: 4,
                       ),
-                      right: BorderSide(color: Color(0xff369CBC), width: 0),
-                      top: BorderSide(color: Color(0xff369CBC), width: 0),
-                      bottom: BorderSide(color: Color(0xff369CBC), width: 0),
+                      right: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
+                      top: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
+                      bottom: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
                     )),
           child: ScreenTypeLayout.builder(
             mobile: (BuildContext context) => buildMobileListTile(),
-            desktop: (BuildContext context) =>  buildDesktopListTile(),
+            desktop: (BuildContext context) => buildDesktopListTile(),
           ),
         ),
       ),
     );
   }
 
-  Widget buildDesktopListTile(){
+  Widget buildDesktopListTile() {
     return ListTile(
-      onTap: widget.testData.isAvailable == true &&widget.testData.isAttempted == false
-          ? () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return InstructionDialog(
-                testData: widget.testData,
-              );
-            });
-      }
-          : null,
       title: Text(
         widget.testData.targetExam,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -157,120 +136,109 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
       ),
       trailing: widget.testData.isAttempted == true
           ? Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          leaderBoardButton(context),
-          const SizedBox(
-            width: 10,
-          ),
-          opaqueButton(
-            context,
-            "View Result",
-                () async {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ResultDialog(
-                      examName: widget.testData.targetExam,
-                    );
-                  });
-            },
-          ),
-        ],
-      )
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                leaderBoardButton(context),
+                const SizedBox(
+                  width: 10,
+                ),
+                opaqueButton(
+                  context,
+                  "View Result",
+                  () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ResultDialog(
+                            examName: widget.testData.targetExam,
+                          );
+                        });
+                  },
+                ),
+              ],
+            )
           : widget.testData.isAvailable == true
-          ? Column(
-        children: [
-          Container(
-            height: 27.5,
-            child: opaqueButton(context,"Start Now",() {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return InstructionDialog(
-                      testData: widget.testData,
-                    );
-                  });
-            }),
-          ),
-          SizedBox(height: 2,),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                "Ends In :",
-                style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey),
-              ),
-              // Text(
-              //   "12h : 34m : 45s",
-              //   style: TextStyle(
-              //       fontSize: 16.5,
-              //       fontWeight: FontWeight.w500,
-              //       color: Color(0xffE72A2A)),
-              // ),
-              Text(
-                _countdown,
-                style: const TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xffE72A2A)),
-              ),
-            ],
-          ),
-        ],
-      )
-          : Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(
-            Icons.lock_open_outlined,
-            color: Colors.grey,
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          const Text(
-            "Start In :",
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey),
-          ),
-          // Text(
-          //   "12h : 34m : 45s",
-          //   style: TextStyle(
-          //       fontSize: 16.5,
-          //       fontWeight: FontWeight.w500,
-          //       color: Colors.grey),
-          // ),
-          Text(
-            _countdown,
-            style: const TextStyle(
-                fontSize: 16.5,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey),
-          ),
-        ],
-      ),
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: 27.5,
+                      child: opaqueButton(context, "Start Now", () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return InstructionDialog(
+                                testData: widget.testData,
+                              );
+                            });
+                      }),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          "Ends In :",
+                          style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.grey),
+                        ),
+                        Text(
+                          _countdown,
+                          style: const TextStyle(
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xffE72A2A)),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.lock_open_outlined,
+                      color: Colors.grey,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      "Start In :",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey),
+                    ),
+                    Text(
+                      _countdown,
+                      style: const TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
+                  ],
+                ),
     );
   }
 
-  Widget buildMobileListTile(){
+  Widget buildMobileListTile() {
     return ListTile(
-      onTap: widget.testData.isAvailable == true &&widget.testData.isAttempted == false
-          ? () {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return InstructionDialog(
-                testData: widget.testData,
-              );
-            });
-      }
-          : null,
+      // onTap: widget.testData.isAvailable == true &&
+      //         widget.testData.isAttempted == false
+      //     ? () {
+      //         showDialog(
+      //             context: context,
+      //             builder: (BuildContext context) {
+      //               return InstructionDialog(
+      //                 testData: widget.testData,
+      //               );
+      //             });
+      //       }
+      //     : null,
       title: Text(
         widget.testData.targetExam,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -284,112 +252,105 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                 rowItem("assets/images/ranking.png", "350 Words"),
                 requiredVerticalDivider(),
                 rowItem("assets/images/question.png", "English"),
-                requiredVerticalDivider(),
-                rowItem("assets/images/timer.png", "30 mins"),
               ],
             ),
-            SizedBox(height: 5,),
+            rowItem("assets/images/timer.png", "30 mins"),
+            const SizedBox(
+              height: 5,
+            ),
             widget.testData.isAttempted == true
                 ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                leaderBoardButton(context),
-                const SizedBox(
-                  width: 10,
-                ),
-                opaqueButton(
-                  context,
-                  "View Result",
-                      () async {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ResultDialog(
-                            examName: widget.testData.targetExam,
-                          );
-                        });
-                  },
-                ),
-              ],
-            )
+                    // mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      leaderBoardButton(context),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      opaqueButton(
+                        context,
+                        "View Result",
+                        () async {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ResultDialog(
+                                  examName: widget.testData.targetExam,
+                                );
+                              });
+                        },
+                      ),
+                    ],
+                  )
                 : widget.testData.isAvailable == true
-                ? Row(
-              children: [
-                Container(
-                  height: 27.5,
-                  child: opaqueButton(context,"Start Now",() {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return InstructionDialog(
-                            testData: widget.testData,
-                          );
-                        });
-                  }),
-                ),
-                SizedBox(width: 10,),
-                const Text(
-                  "Ends In :",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
-                ),
-                Text(
-                  _countdown,
-                  style: const TextStyle(
-                      fontSize: 16.5,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xffE72A2A)),
-                )
-                // Text(
-                //   "12h : 34m : 45s",
-                //   style: TextStyle(
-                //       fontSize: 16.5,
-                //       fontWeight: FontWeight.w500,
-                //       color: Color(0xffE72A2A)),
-                // ),
-                ,
-              ],
-            )
-                : Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(
-                  Icons.lock_open_outlined,
-                  color: Colors.grey,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                const Text(
-                  "Start In :",
-                  style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.grey),
-                ),
-                // Text(
-                //   "12h : 34m : 45s",
-                //   style: TextStyle(
-                //       fontSize: 16.5,
-                //       fontWeight: FontWeight.w500,
-                //       color: Colors.grey),
-                // ),
-                Text(
-                  _countdown,
-                  style: const TextStyle(
-                      fontSize: 16.5,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.grey),
-                ),
-              ],
-            ),
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                "Ends In :",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey),
+                              ),
+                              Text(
+                                _countdown,
+                                style: const TextStyle(
+                                    fontSize: 16.5,
+                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xffE72A2A)),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 27.5,
+                            child: opaqueButton(context, "Start Now", () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return InstructionDialog(
+                                      testData: widget.testData,
+                                    );
+                                  });
+                            }),
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              const Text(
+                                "Start In :",
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey),
+                              ),
+                              Text(
+                                _countdown,
+                                style: const TextStyle(
+                                    fontSize: 16.5,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                          const Icon(
+                            Icons.lock_open_outlined,
+                            color: Colors.grey,
+                          ),
+                        ],
+                      ),
           ],
         ),
       ),
     );
   }
+
   Widget requiredVerticalDivider() {
     return SizedBox(
       height: 20,

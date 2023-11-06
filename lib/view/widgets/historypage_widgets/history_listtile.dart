@@ -61,6 +61,7 @@ class HistoryListTile extends StatelessWidget {
             const Text("All SSC Typing Test",style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
           const SizedBox(height: 15,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.end  ,
               children: [
                 leaderBoardButton(context),
                 const SizedBox(width: 8),

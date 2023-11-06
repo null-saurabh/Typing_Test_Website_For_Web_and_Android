@@ -8,7 +8,7 @@ class ResultBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 290,
+      width: MediaQuery.of(context).size.width >950 ? MediaQuery.of(context).size.width *0.20 >300 ?300: MediaQuery.of(context).size.width *0.20: double.infinity,
       height: 90,
       decoration: BoxDecoration(color: Color(0xff369CBC),borderRadius: BorderRadius.circular(5)),
       child: Center(

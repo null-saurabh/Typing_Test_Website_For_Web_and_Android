@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class ErrorRepresentationListTile extends StatelessWidget {
   final String title;
@@ -18,12 +19,18 @@ class ErrorRepresentationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
+  Widget buildDesktopLayout(BuildContext context){
     return Container(
       decoration: BoxDecoration(
           border: noBorder == true
               ? null
               : const Border(
-                  bottom: BorderSide(width: 1, color: Color(0xffEBEBEB)))),
+              bottom: BorderSide(width: 1, color: Color(0xffEBEBEB)))),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -75,4 +82,55 @@ class ErrorRepresentationListTile extends StatelessWidget {
       ),
     );
   }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Container(
+      decoration: BoxDecoration(
+          border: noBorder == true
+              ? null
+              : const Border(
+              bottom: BorderSide(width: 1, color: Color(0xffEBEBEB)))),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: color),
+                ),
+                if (title2)
+                  const Text(
+                    "[original_word]",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 18,
+                        color: Colors.grey),
+                  ),
+              ],
+            ),
+            Text(
+              subtitle,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w500, fontSize: 16),
+            ),
+            Text(
+              content,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 16,
+                  color: Colors.grey),
+            )
+          ],
+        ),
+      ),
+    );
+
+  }
 }
+

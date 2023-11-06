@@ -17,11 +17,11 @@ class ApiService {
   Iterable iterableData = json["data"]["list"];
   return iterableData.map((test) => Test.fromJson(test)).toList();
   } else {
-  print("API Request failed with status code: ${response.statusCode}");
+  // print("API Request failed with status code: ${response.statusCode}");
   throw Exception('Failed to load tests');
   }
   } catch (error){
-  print("API Request failed with error: $error");
+  // print("API Request failed with error: $error");
   rethrow;
   }
 }}

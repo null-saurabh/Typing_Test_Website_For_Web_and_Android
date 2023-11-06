@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/widgets/homepage_widgets/gridview_for_homepage.dart';
 
 class HomePageScreen extends StatelessWidget {
@@ -6,33 +7,60 @@ class HomePageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // TopNavigationBar(),
-          const SizedBox(height: 20),
-          const Padding(
-            padding: EdgeInsets.only(left: 50.0),
-            child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 10,),
-                Image.asset("assets/images/banner.png",),
-                const SizedBox(height: 15,),
-                const DynamicGridView(),
-              ],
-            ),
-          ),
-          // if (FirebaseAuth.instance.currentUser?.displayName != null) ...[
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) =>  buildDesktopLayout(context),
+    );
+  }
+}
+
+Widget buildDesktopLayout(BuildContext context){
+  return const SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 20),
+        Padding(
+          padding: EdgeInsets.only(left: 50.0),
+          child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
+          child: HomepageContent(),
+        ),
+      ],
+    ),
+  );
+}Widget buildMobileLayout(BuildContext context){
+  return const SingleChildScrollView(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, right: 20,bottom: 50),
+          child: HomepageContent(),
+        ),
+      ],
+    ),
+  );
+}
 
 
-        ],
-      ),
+class HomepageContent extends StatelessWidget {
+  const HomepageContent({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 10,),
+        Image.asset("assets/images/banner.png",),
+        const SizedBox(height: 15,),
+        const DynamicGridView(),
+      ],
     );
   }
 }

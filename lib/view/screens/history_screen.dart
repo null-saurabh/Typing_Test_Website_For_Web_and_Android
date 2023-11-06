@@ -20,7 +20,7 @@ class HistoryScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(MediaQuery.of(context).size.width >949)
+              if(MediaQuery.of(context).size.width >949 || popup == true)
               const Text(
                 "Result History",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),

@@ -61,6 +61,7 @@ class ExamPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
                       "Live tests",
@@ -71,7 +72,6 @@ class ExamPage extends StatelessWidget {
                       builder: (context, testProvider, child) {
                         return IconButton(
                           onPressed: () {
-                            // Call the refresh function from the TestProvider
                             testProvider.refreshTests();
                           },
                           icon: const Icon(Icons.refresh),
@@ -98,21 +98,6 @@ class ExamPage extends StatelessWidget {
                         : const CircularProgressIndicator(); // Optional: show a loader when tests is null.
                   },
                 ),
-                // ListView.builder(
-                //     shrinkWrap: true,
-                //     itemCount: 10,
-                //     physics: NeverScrollableScrollPhysics(),
-                //     itemBuilder: (context, index) {
-                //       if (index ==0 ) {
-                //         return LiveTestListTile(status:"Completed",index: index + 1);
-                //       } else if (index == 1 || index == 2){
-                //         return LiveTestListTile(status: "Started", index: index + 1);
-                //       }
-                //       else{
-                //         return LiveTestListTile(status: "Starts In", index: index + 1);
-                //       }
-                //
-                //     }),
               ],
             ),
           ),
@@ -152,15 +137,7 @@ class ExamPage extends StatelessWidget {
                     );
                   },
                 ),
-                // Row(
-                //   children: [
-                //     dailyTest("1", context),
-                //     const SizedBox(width: 15),
-                //     dailyTest("2", context),
-                //     const SizedBox(width: 15),
-                //     dailyTest("3", context),
-                //   ],
-                // ),
+
               ],
             ),
           )
@@ -201,7 +178,7 @@ class ExamPage extends StatelessWidget {
           children: [
             Text(
               "Daily Practice test - $testNumber",
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
             const SizedBox(
               height: 10,

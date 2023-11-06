@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/widgets/result_widgets/error_representation_list_tile.dart';
 
 class ResultErrorRepresentation extends StatelessWidget {
@@ -76,6 +77,12 @@ class ErrorHeadingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
+  Widget buildDesktopLayout(BuildContext context){
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -123,4 +130,58 @@ class ErrorHeadingRow extends StatelessWidget {
       ],
     );
   }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Error Representation",
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+        ),
+        const SizedBox(height: 10,),
+        Row(
+          children: [
+            Container(
+              height: 18,
+              width: 18,
+              color: const Color(0xffE92626),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            const Text(
+              "Full Mistakes",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey),
+            ),
+
+          ],
+        ),
+        const SizedBox(height: 5,),
+        Row(
+          children: [
+            Container(
+              height: 18,
+              width: 18,
+              color: const Color(0xffFF9243),
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            const Text(
+              "Half Mistakes Mistakes",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
 }

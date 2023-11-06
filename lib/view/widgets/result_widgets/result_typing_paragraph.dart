@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class ResultTypingParagraphContainer extends StatelessWidget {
   ResultTypingParagraphContainer({super.key});
@@ -18,6 +19,13 @@ class ResultTypingParagraphContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
+
+  Widget buildDesktopLayout(BuildContext context){
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
       decoration: BoxDecoration(
@@ -56,6 +64,8 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 12.5),
                                   child: Text(
+                                    textAlign: TextAlign.justify,
+
                                     sampleText,
                                     style: const TextStyle(
                                         fontSize: 16,
@@ -99,6 +109,7 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 12.5),
                                   child: Text(
                                     sampleText,
+                                    textAlign: TextAlign.justify,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
@@ -109,6 +120,102 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                   ),
                 ),
               )),
+        ],
+      ),
+    );
+  }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.withOpacity(0.25))),
+      child: Column(
+        children: [
+          Container(
+            height: 400,
+            color: const Color(0xffF5FAFC),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 15.0, horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Typing Paragraph",
+                    style: TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 320,
+                    child: Scrollbar(
+                        controller: _scrollController1,
+                        interactive: false,
+                        thumbVisibility: true,
+                        // trackVisibility: true,
+                        child: SingleChildScrollView(
+                            controller: _scrollController1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 12.5),
+                              child: Text(
+                                sampleText,
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ))),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            height: 20, // Adjust the height as needed for separation
+            color: Colors.white, // Add a white background color here
+          ),
+          Container(
+            height: 400,
+            color: const Color(0xffF5FAFC),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 15.0, horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text("Your Typed Output",
+                      style: TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.w600)),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 320,
+                    child: Scrollbar(
+                        controller: _scrollController2,
+                        interactive: false,
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                            controller: _scrollController2,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 12.5),
+                              child: Text(
+                                sampleText,
+                                textAlign: TextAlign.justify,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ))),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
