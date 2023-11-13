@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:typingtest/view/screens/homepage.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
-import 'package:typingtest/view_model/services/api_services.dart';
 
 
 void main() async {
@@ -39,11 +38,12 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => TestProvider(apiService: ApiService(baseUrl: 'your_api_base_url')),
+          create: (context) => LoginUserProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => LoginUserProvider(),
-        )
+            create: (context) => ApiProvider(
+              context.read<LoginUserProvider>(),
+            )),
       ],
       child: const MyApp(),
     ),);

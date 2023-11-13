@@ -1,147 +1,393 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/widgets/exam_page_widgets/live_test_list_tile.dart';
 import 'package:typingtest/view/widgets/historypage_widgets/history_dialog.dart';
+import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class ExamPage extends StatelessWidget {
   final String targetExamName;
-  const ExamPage({required this.targetExamName,super.key});
+  const ExamPage({required this.targetExamName, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            height: 36,
-                            width: 36,
-                            color: Colors.white,
-                            child: const Icon(Icons.arrow_back),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Text(
-                          targetExamName,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black),
-                        ),
-                      ],
-                    ),
-                    opaqueButton(
-                      context,
-                      "History",
-                      () async {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return HistoryDialog(targetExamName: targetExamName,);
-                            });
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      "Live tests",
-                      style: TextStyle(fontSize: 16.9, fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(width: 10,),
-                    Consumer<TestProvider>(
-                      builder: (context, testProvider, child) {
-                        return IconButton(
-                          onPressed: () {
-                            testProvider.refreshTests();
-                          },
-                          icon: const Icon(Icons.refresh),
-                        );
-                      },
-                    )
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
 
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Consumer<TestProvider>(
-                  builder: (context, testProvider, child) {
-                    List<Test>? tests = testProvider.tests;
-
-                    return tests != null
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: tests.length,
-                            itemBuilder: (context, index) {
-                              return LiveTestListTile(testData: tests[index]);
+  Widget buildDesktopLayout(BuildContext context) {
+    final scrollController1 = ScrollController();
+    return Scrollbar(
+      controller: scrollController1,
+      interactive: false,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        controller: scrollController1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
                             },
-                          )
-                        : const CircularProgressIndicator(); // Optional: show a loader when tests is null.
-                  },
-                ),
-              ],
+                            child: Container(
+                              height: 36,
+                              width: 36,
+                              color: Colors.white,
+                              child: const Icon(Icons.arrow_back),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            targetExamName,
+                            style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black),
+                          ),
+                        ],
+                      ),
+                      opaqueButton(
+                        context,
+                        "History",
+                        () async {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return HistoryDialog(
+                                  targetExamName: targetExamName,
+                                );
+                              });
+                        },
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Live tests",
+                        style: TextStyle(
+                            fontSize: 16.9, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Consumer<ApiProvider>(
+                        builder: (context, apiProvider, child) {
+                          return IconButton(
+                            onPressed: () {
+                              apiProvider.fetchLiveTest();
+                              print("clicked refresh fetch live test");
+                            },
+                            icon: const Icon(Icons.refresh),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Consumer<ApiProvider>(
+                    builder: (context, testProvider, child) {
+                      final data= testProvider.liveTests;
+                      if (data == null) {
+                        return const CircularProgressIndicator(); // Loading indicator
+                      }
+                      return data.data.list.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: data.data.list.length,
+                              itemBuilder: (context, index) {
+                                print(data.data.list.length);
+                                return LiveTestListTile(
+                                    testData: data.data.list[index]);
+                              },
+                            )
+                          : const Text(
+                              "No test available"); // Optional: show a loader when tests is null.
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          // Divider(
-          //   thickness: 1,
-          //   color: const Color(0xff369CBC).withOpacity(0.75),
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Practice Tests",
-                  style: TextStyle(fontSize: 16.9, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 19,
-                ),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    int crossAxisCount =constraints.maxWidth ~/ 250; // Number of items per row
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Practice Tests",
+                          style: TextStyle(
+                              fontSize: 16.9, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Consumer<ApiProvider>(
+                          builder: (context, apiProvider, child) {
+                            return IconButton(
+                              onPressed: () {
+                                apiProvider.fetchPracticeTest();
+                                print("clicked refresh fetch live test");
+                              },
+                              icon: const Icon(Icons.refresh),
+                            );
+                          },
+                        )
+                      ]),
+                  const SizedBox(
+                    height: 19,
+                  ),
+                  Consumer<ApiProvider>(builder: (context, apiProvider, child) {
+                    final data = apiProvider.practiceTests;
 
-                    return GridView.builder(
+                    if (data == null) {
+                      return const CircularProgressIndicator(); // Loading indicator
+                    }
+                    print(data.data.list.length);
+                    return data.data.list.isNotEmpty
+                    ?GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 325,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        childAspectRatio: 250 / 100,
+                        childAspectRatio: 275 / 129,
                       ),
-                      itemCount: 5,
+                      itemCount: data.data.list.length,
                       itemBuilder: (context, index) {
-                        return dailyTest((index+1).toString(), context);
+                        // return dailyTest(data.data.list[index], context);
+                        return dailyTest(data.data.list[index],
+                            context);
                       },
-                    );
-                  },
-                ),
+                    )
+                        :const Text(
+                        "No test available");
+                  }),
 
-              ],
+
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  // return GridView.builder(
+  //   shrinkWrap: true,
+  //   physics: const NeverScrollableScrollPhysics(),
+  //   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+  //     maxCrossAxisExtent: 4,
+  //     crossAxisSpacing: 20,
+  //     mainAxisSpacing: 20,
+  //     childAspectRatio: 250 / 100,
+  //   ),
+  //   itemCount: data.data.list.length,
+  //   itemBuilder: (context, index) {
+  //     // return dailyTest(data.data.list[index], context)
+  //     Text(data.data.list[0].targetExam!);
+  //   },
+  // );
+  // LayoutBuilder(
+  //   builder: (context, constraints) {
+  //     int crossAxisCount =constraints.maxWidth ~/ 250; // Number of items per row
+  //
+  //     return GridView.builder(
+  //       shrinkWrap: true,
+  //       physics: const NeverScrollableScrollPhysics(),
+  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+  //         crossAxisCount: crossAxisCount,
+  //         crossAxisSpacing: 20,
+  //         mainAxisSpacing: 20,
+  //         childAspectRatio: 250 / 100,
+  //       ),
+  //       itemCount: 5,
+  //       itemBuilder: (context, index) {
+  //         return dailyTest((index+1).toString(), context);
+  //       },
+  //     );
+  //   },
+  // ),
+
+  Widget buildMobileLayout(BuildContext context) {
+    final scrollController1 = ScrollController();
+    return Scrollbar(
+      controller: scrollController1,
+      interactive: false,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        controller: scrollController1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Live tests",
+                        style: TextStyle(
+                            fontSize: 16.9, fontWeight: FontWeight.w600),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Consumer<ApiProvider>(
+                        builder: (context, apiProvider, child) {
+                          return IconButton(
+                            onPressed: () {
+                              apiProvider.fetchLiveTest();
+                            },
+                            icon: const Icon(Icons.refresh),
+                          );
+                        },
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Consumer<ApiProvider>(
+                    builder: (context, testProvider, child) {
+                      final data = testProvider.liveTests;
+
+                      if (data == null) {
+                        return const CircularProgressIndicator(); // Loading indicator
+                      }
+
+                      return data.data.list.isNotEmpty
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: data.data.list.length,
+                              itemBuilder: (context, index) {
+                                return LiveTestListTile(
+                                    testData: data.data.list[index]);
+                              },
+                            )
+                          : const CircularProgressIndicator(); // Optional: show a loader when tests is null.
+                    },
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Practice Tests",
+                          style: TextStyle(
+                              fontSize: 16.9, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Consumer<ApiProvider>(
+                          builder: (context, apiProvider, child) {
+                            return IconButton(
+                              onPressed: () {
+                                apiProvider.fetchPracticeTest();
+                                print("clicked refresh fetch live test");
+                              },
+                              icon: const Icon(Icons.refresh),
+                            );
+                          },
+                        )
+                      ]),
+                  const SizedBox(
+                    height: 19,
+                  ),
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Consumer<ApiProvider>(
+                        builder: (context, apiProvider, child) {
+                          final data = apiProvider.practiceTests;
+
+                          if (data == null) {
+                            return const CircularProgressIndicator(); // Loading indicator
+                          }
+
+                          int crossAxisCount = constraints.maxWidth ~/
+                              250; // Number of items per row
+
+                          return data.data.list.isNotEmpty
+                          ?GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20,
+                              childAspectRatio: 250 / 100,
+                            ),
+                            itemCount: data.data.list.length,
+                            itemBuilder: (context, index) {
+                              return dailyTest(data.data.list[index],
+                                  context);
+                            },
+                          )
+                              : const Text(
+                              "No test available");
+                        },
+                      );
+                    },
+                  ),
+                  // LayoutBuilder(
+                  //   builder: (context, constraints) {
+                  //     int crossAxisCount =constraints.maxWidth ~/ 250; // Number of items per row
+                  //
+                  //     return GridView.builder(
+                  //       shrinkWrap: true,
+                  //       physics: const NeverScrollableScrollPhysics(),
+                  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //         crossAxisCount: crossAxisCount,
+                  //         crossAxisSpacing: 20,
+                  //         mainAxisSpacing: 20,
+                  //         childAspectRatio: 250 / 100,
+                  //       ),
+                  //       itemCount: 5,
+                  //       itemBuilder: (context, index) {
+                  //         return dailyTest((index+1).toString(), context);
+                  //       },
+                  //     );
+                  //   },
+                  // ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -166,7 +412,7 @@ class ExamPage extends StatelessWidget {
     );
   }
 
-  Widget dailyTest(String testNumber, BuildContext context) {
+  Widget dailyTest(LiveTestData testData, BuildContext context) {
     return Container(
       height: 100,
       width: 275,
@@ -177,7 +423,7 @@ class ExamPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Daily Practice test - $testNumber",
+              testData.testName!,
               style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
             const SizedBox(
@@ -187,6 +433,13 @@ class ExamPage extends StatelessWidget {
               context,
               "Start Now",
               () async {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return InstructionDialog(
+                        testData: testData,
+                      );
+                    });
               },
             ),
           ],

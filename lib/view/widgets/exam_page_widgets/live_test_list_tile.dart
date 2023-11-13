@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class LiveTestListTile extends StatefulWidget {
-  final Test testData;
+  final LiveTestData testData;
   const LiveTestListTile({required this.testData, super.key});
 
   @override
@@ -32,11 +32,11 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
 
   void _updateCountdown() {
     DateTime now = DateTime.now();
-    DateTime startDateTime = DateTime.parse(widget.testData.startDatetime);
-    DateTime endDateTime = DateTime.parse(widget.testData.endDatetime);
+    DateTime startDateTime = DateTime.parse(widget.testData.startDatetime!);
+    DateTime endDateTime = DateTime.parse(widget.testData.endDatetime!);
 
     DateTime targetTime =
-        widget.testData.isAvailable ? endDateTime : startDateTime;
+        widget.testData.isAvailable! ? endDateTime : startDateTime;
     if (now.isAfter(targetTime)) {
       _timer?.cancel();
     } else {
@@ -101,12 +101,12 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                     )
                   : Border(
                       left: BorderSide(
-                        color: Color(0xff369CBC).withOpacity(0.25),
+                        color: const Color(0xff369CBC).withOpacity(0.25),
                         width: 4,
                       ),
-                      right: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
-                      top: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
-                      bottom: BorderSide(color: Color(0xff369CBC).withOpacity(0.25), width: 1.25),
+                      right: BorderSide(color: const Color(0xff369CBC).withOpacity(0.25), width: 1.25),
+                      top: BorderSide(color: const Color(0xff369CBC).withOpacity(0.25), width: 1.25),
+                      bottom: BorderSide(color: const Color(0xff369CBC).withOpacity(0.25), width: 1.25),
                     )),
           child: ScreenTypeLayout.builder(
             mobile: (BuildContext context) => buildMobileListTile(),
@@ -120,7 +120,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
   Widget buildDesktopListTile() {
     return ListTile(
       title: Text(
-        widget.testData.targetExam,
+        widget.testData.targetExam!,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
       ),
       subtitle: IntrinsicHeight(
@@ -150,7 +150,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                         context: context,
                         builder: (BuildContext context) {
                           return ResultDialog(
-                            examName: widget.testData.targetExam,
+                            examName: widget.testData.targetExam!,
                           );
                         });
                   },
@@ -240,7 +240,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
       //       }
       //     : null,
       title: Text(
-        widget.testData.targetExam,
+        widget.testData.targetExam!,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
       ),
       subtitle: IntrinsicHeight(
@@ -275,7 +275,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                               context: context,
                               builder: (BuildContext context) {
                                 return ResultDialog(
-                                  examName: widget.testData.targetExam,
+                                  examName: widget.testData.targetExam!,
                                 );
                               });
                         },
@@ -393,7 +393,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
               borderRadius: BorderRadius.circular(5)))),
       onPressed: () async {
         Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const RankingScreen()));
+            MaterialPageRoute(builder: (context) => RankingScreen(testId: widget.testData.testId!,)));
       },
       child: const Icon(Icons.leaderboard_outlined, color: Color(0xff369CBC)),
     );

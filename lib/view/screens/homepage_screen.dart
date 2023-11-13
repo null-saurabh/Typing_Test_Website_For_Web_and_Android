@@ -15,32 +15,48 @@ class HomePageScreen extends StatelessWidget {
 }
 
 Widget buildDesktopLayout(BuildContext context){
-  return const SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 20),
-        Padding(
-          padding: EdgeInsets.only(left: 50.0),
-          child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
-          child: HomepageContent(),
-        ),
-      ],
+  final scrollController1 = ScrollController();
+  return Scrollbar(
+    controller: scrollController1,
+    interactive: false,
+    thumbVisibility: true,
+    child: SingleChildScrollView(
+      controller: scrollController1,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.only(left: 50.0),
+            child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
+            child: HomepageContent(),
+          ),
+        ],
+      ),
     ),
   );
-}Widget buildMobileLayout(BuildContext context){
-  return const SingleChildScrollView(
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(left: 20.0, right: 20,bottom: 50),
-          child: HomepageContent(),
-        ),
-      ],
+}
+
+Widget buildMobileLayout(BuildContext context){
+  final scrollController1 = ScrollController();
+  return Scrollbar(
+    controller: scrollController1,
+    interactive: false,
+    thumbVisibility: true,
+    child: SingleChildScrollView(
+      controller: scrollController1,
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 15.0, right: 15,bottom: 50),
+            child: HomepageContent(),
+          ),
+        ],
+      ),
     ),
   );
 }

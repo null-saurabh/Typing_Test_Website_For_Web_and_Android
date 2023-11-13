@@ -102,7 +102,7 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310,)));
       },
       child: const Icon(Icons.leaderboard_outlined,color:Color(0xff369CBC)),
     );

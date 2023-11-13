@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/screens/instruction_page.dart';
 
 class InstructionDialog extends StatelessWidget {
-  final Test testData;
+  final LiveTestData testData;
   const InstructionDialog({required this.testData,super.key});
 
   @override

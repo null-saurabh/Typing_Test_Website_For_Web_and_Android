@@ -127,7 +127,7 @@ class ResultTypingParagraphContainer extends StatelessWidget {
 
   Widget buildMobileLayout(BuildContext context){
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 18),
+      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.withOpacity(0.25))),

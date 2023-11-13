@@ -18,55 +18,73 @@ class SubscriptionPage extends StatelessWidget {
       {
         width = MediaQuery.of(context).size.width * 0.22;
       }
+    final scrollController1 = ScrollController();
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(15.0),
-            child: Text(
-              "Subscriptions",
-              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+    return Scrollbar(
+      controller: scrollController1,
+      interactive: false,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        controller: scrollController1,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(15.0),
+              child: Text(
+                "Subscriptions",
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 24),
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 25,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 75),
-            child: Row(
-              children: [
-                priceWidget(false, true, context,width),
-                const SizedBox(width: 10),
-                priceWidget(true, false, context,width),
-                const SizedBox(
-                  width: 10,
-                ),
-                priceWidget(false, false, context,width),
-              ],
+            const SizedBox(
+              height: 25,
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.only(left: 75),
+              child: Row(
+                children: [
+                  priceWidget(false, true, context,width),
+                  const SizedBox(width: 10),
+                  priceWidget(true, false, context,width),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  priceWidget(false, false, context,width),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
 
   Widget buildMobileLayout(BuildContext context){
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          priceWidget(false, true, context,275),
-          const SizedBox(height: 20),
-          priceWidget(true, false, context,275),
-          const SizedBox(
-           height: 20,
-          ),
-          priceWidget(false, false, context,275),
+    final scrollController1 = ScrollController();
 
-        ],
+    return Scrollbar(
+      controller: scrollController1,
+      interactive: false,
+      thumbVisibility: true,
+      child: SingleChildScrollView(
+        controller: scrollController1,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              priceWidget(false, true, context,275),
+              const SizedBox(height: 20),
+              priceWidget(true, false, context,275),
+              const SizedBox(
+               height: 20,
+              ),
+              priceWidget(false, false, context,275),
+
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -1,59 +1,116 @@
 
 import 'package:flutter/foundation.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
+import 'package:typingtest/model/ranking_modal.dart';
+import 'package:typingtest/model/result_api_modal.dart';
+import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 
-class TestProvider with ChangeNotifier {
-  final ApiService apiService;
-  List<Test>? _tests;
+class ApiProvider with ChangeNotifier {
+  final ApiService apiService = ApiService();
+  LiveTest? _liveTests;
+  LiveTest? _practiceTests;
+  String? userEmail;
 
-  TestProvider({required this.apiService}) {
-    _initialFetch();
-  }
+  final LoginUserProvider _userProvider;
 
-  List<Test>? get tests => _tests;
+  ApiProvider(this._userProvider);
 
-  void _initialFetch() async {
+  LiveTest? get liveTests => _liveTests;
+  LiveTest? get practiceTests => _practiceTests;
+
+
+  Future<void> fetchLiveTest() async {
+    final userEmail = _userProvider.userEmail;
+
+    if (userEmail == null) {
+      // print("useremail is null");
+      throw Exception('User is not logged in');
+    }
+
     try {
-      _tests = await apiService.fetchUpcomingTests();
-      print("1");
+      // print("in try of provider live tests");
+      final response = await apiService.liveTestData(userEmail);
+      _liveTests = response;
       notifyListeners();
-    } catch (error) {
-      // Handle errors if needed, for example, by setting an error state
-      // print(error);
+    } catch (e) {
       rethrow;
-      // Optionally notify listeners here if you want to reflect an error state in the UI
     }
   }
 
-  Future<void> refreshTests() async {
-    _tests = await apiService.fetchUpcomingTests();
-    notifyListeners();
+  Future<void> fetchPracticeTest() async {
+    final userEmail = _userProvider.userEmail;
+    // print(userEmail);
+    if (userEmail == null) {
+      // print("useremail is null");
+      throw Exception('User is not logged in');
+    }
+    try {
+      // print("trying practice in provider");
+      final response = await apiService.practiceTestData(userEmail);
+      _practiceTests = response;
+      notifyListeners();
+    } catch (e) {
+      rethrow;
+    }
   }
+
+  Future<List<ResultData>> fetchOneResult(int testId) async {
+    final userEmail = _userProvider.userEmail;
+    if (userEmail == null) {
+      // print("useremail is null");
+      throw Exception('User is not logged in');
+    }
+
+    try {
+      // print("trying practice in provider");
+      final response = await apiService.oneResult(userEmail,testId);
+      notifyListeners();
+      return response.data!;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<RankingData>> fetchRanking(int testId) async {
+    final userEmail = _userProvider.userEmail;
+    if (userEmail == null) {
+      // print("useremail is null");
+      throw Exception('User is not logged in');
+    }
+    try {
+      print("trying ranking in provider");
+      final response = await apiService.rankingLeaderBoard(userEmail,testId);
+      return response.data!;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }
 
 
 
 
+// ApiProvider() {
+//   _initialFetchLiveTest();
+// }
 
-
-
-// import 'package:flutter/foundation.dart';
-// import 'package:typingtest/model/api_model.dart';
-// import 'package:typingtest/view_model/services/api_services.dart';
-//
-// class TestProvider with ChangeNotifier {
-//   final ApiService apiService;
-//
-//   TestProvider({required this.apiService});
-//
-//   List<Test>? _tests;
-//
-//   List<Test>? get tests => _tests;
-//
-//   fetchUpcomingTests() async {
+// Future<void> _initialFetch() async {
+//   try {
 //     _tests = await apiService.fetchUpcomingTests();
+//     print("1");
 //     notifyListeners();
+//   } catch (error) {
+//     // Handle errors if needed, for example, by setting an error state
+//     // print(error);
+//     rethrow;
+//     // Optionally notify listeners here if you want to reflect an error state in the UI
 //   }
 // }
 
+// Future<void> refreshTests() async {
+//   _tests = await apiService.fetchUpcomingTests();
+//   notifyListeners();
+// }

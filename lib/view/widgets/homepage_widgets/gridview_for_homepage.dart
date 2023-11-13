@@ -40,8 +40,8 @@ Widget buildMobileLayout(BuildContext context){
     physics: const NeverScrollableScrollPhysics(),
     gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
       maxCrossAxisExtent: 250,
-      crossAxisSpacing: 20,
-      mainAxisSpacing: 20,
+      crossAxisSpacing: 15,
+      mainAxisSpacing: 15,
       childAspectRatio: 250 / 175,
     ),
     itemCount: 12,

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/view/widgets/Left_drawer.dart';
 import 'package:typingtest/view/widgets/profilepage_widgets/edit_profile.dart';
 import 'package:typingtest/view/widgets/profilepage_widgets/profile_container.dart';
-import 'package:typingtest/view/widgets/top_navigation_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) =>  buildDesktopLayout(context),
+    );
+  }
+
+  Widget buildDesktopLayout(BuildContext context){
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -26,8 +31,34 @@ class ProfilePage extends StatelessWidget {
               editButton(context),
             ],
           ),
-          SizedBox(height: 15,),
-          Expanded(
+          const SizedBox(height: 15,),
+          const Expanded(
+            child:
+            ProfileContainer(),
+          )
+        ],
+      ),
+    );
+  }
+  Widget buildMobileLayout(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0,vertical: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // TopNavigationBar(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                "My Profile",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              ),
+              editButton(context),
+            ],
+          ),
+          const SizedBox(height: 15,),
+          const Expanded(
             child:
             ProfileContainer(),
           )
@@ -52,11 +83,11 @@ class ProfilePage extends StatelessWidget {
           },
         );
       },
-      child: Row(
+      child: const Row(
         children: [
           Icon(Icons.edit_outlined,color: Colors.white,size: 20,),
           SizedBox(width: 5,),
-          const Text(
+          Text(
             'Edit',
             style: TextStyle(color: Colors.white,),
           ),

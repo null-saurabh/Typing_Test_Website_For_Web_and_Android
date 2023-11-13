@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/ranking_modal.dart';
 
 class TotalRankingListTile extends StatefulWidget {
   final int index;
-  const TotalRankingListTile({super.key,required this.index});
+  final RankingData data;
+  const TotalRankingListTile({super.key,required this.index,required this.data});
 
   @override
   State<TotalRankingListTile> createState() => _TotalRankingListTileState();
@@ -22,6 +24,21 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
       _random.nextInt(256), // Blue
       1, // Alpha
     );
+  }
+
+  String getInitials(String fullName) {
+    List<String> names = fullName.split(" ");
+    String initials = "";
+
+    if (names.isNotEmpty) {
+      initials += names[0][0];
+    }
+
+    if (names.length > 1) {
+      initials += names[1][0];
+    }
+
+    return initials.toUpperCase();
   }
 
   @override
@@ -61,9 +78,9 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                         width: 220,
                         child: Row(
                           children: [
-                            CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: const Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
+                            CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: Text(getInitials(widget.data.userName!),style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
                             const SizedBox(width: 5,),
-                            const Text("Floyd Miles",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
+                            Text(widget.data.userName!,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
                           ],
                         ),
                       )
@@ -82,11 +99,11 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  listTileData("Net Speed", "32WPM"),
-                                  listTileData("Gross Speed", "32WPM"),
-                                  listTileData("Min. passing Speed", "32WPM"),
-                                  listTileData("Accuracy", "95.95%"),
-                                  listTileData("Words Typed", "234"),
+                                  listTileData("Net Speed", widget.data.nwpm!.toString()),
+                                  listTileData("Gross Speed", widget.data.gwpm!.toString()),
+                                  listTileData("Min. passing Speed", widget.data.minimumSpeed!.toString()),
+                                  listTileData("Accuracy", widget.data.accuracy!.toInt().toString()),
+                                  listTileData("Words Typed", widget.data.wordsTyped!.toString()),
                                 ],
                               ),
                             ),
@@ -109,10 +126,10 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    listTileData("Correct Words", "24"),
-                                    listTileData("Incorrect Words", "14"),
-                                    listTileData("Full mistakes", "2"),
-                                    listTileData("Half Mistakes ", "2"),
+                                    listTileData("Correct Words", widget.data.wordsCorrect!.toString()),
+                                    listTileData("Incorrect Words", widget.data.wordIncorrect!.toString()),
+                                    listTileData("Full mistakes", widget.data.fullMistakes!.toString()),
+                                    listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
                                     const SizedBox(width: 110+16),
 
                                   ],
@@ -165,9 +182,9 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                           children: [
                             Row(
                               children: [
-                                CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: const Text("FM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
+                                CircleAvatar(radius: 14 ,backgroundColor: _getRandomColor(),child: Text(getInitials(widget.data.userName!),style: const TextStyle(color: Colors.white,fontWeight: FontWeight.w500,fontSize: 12),),),
                                 const SizedBox(width: 5,),
-                                const Text("kuldeep singh",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
+                                Text(widget.data.userName!,style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w500,color: Colors.black),),
                               ],
                             ),
                             IconButton(onPressed: () {
@@ -179,12 +196,12 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                         ),
                       ),
 
-                      const Row(
+                      Row(
                         children: [
                           // SizedBox(width: 33,),
-                          Text("Net Speed:",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.grey),),
-                          SizedBox(width: 10,),
-                          Text("32 WPM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.black ),)
+                          const Text("Net Speed:",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.grey),),
+                          const SizedBox(width: 10,),
+                          Text(widget.data.nwpm!.toString(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.black ),)
                         ],
                       ),
                       if (_showDetails)
@@ -196,13 +213,13 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                           Column(
                             crossAxisAlignment:CrossAxisAlignment.start,
                             children: [
-                              listTileData("Gross Speed", "32WPM"),
+                              listTileData("Gross Speed", widget.data.gwpm!.toString()),
                               const SizedBox(height:5,),
-                              listTileData("Min. passing Speed", "32WPM"),
+                              listTileData("Min. passing Speed", widget.data.minimumSpeed!.toString()),
                               const SizedBox(height:5,),
-                              listTileData("Correct Words", "24"),
+                              listTileData("Correct Words", widget.data.wordsCorrect!.toString()),
                               const SizedBox(height:5,),
-                              listTileData("Full mistakes", "2"),
+                              listTileData("Full mistakes",widget.data.fullMistakes!.toString()),
                             ],
                           ),
                           Row(
@@ -210,13 +227,13 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  listTileData("Accuracy", "95.95%"),
+                                  listTileData("Accuracy", widget.data.accuracy!.toInt().toString()),
                                   const SizedBox(height:5,),
-                                  listTileData("Words Typed", "234"),
+                                  listTileData("Words Typed", widget.data.wordsTyped!.toString()),
                                   const SizedBox(height:5,),
-                                  listTileData("Incorrect Words", "14"),
+                                  listTileData("Incorrect Words", widget.data.wordIncorrect!.toString()),
                                   const SizedBox(height:5,),
-                                  listTileData("Half Mistakes ", "2"),
+                                  listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
 
                                 ],
                               ),
@@ -238,7 +255,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
 
   Widget listTileData(String key, String value){
     return SizedBox(
-      // width: 110,
+      width: 110,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,

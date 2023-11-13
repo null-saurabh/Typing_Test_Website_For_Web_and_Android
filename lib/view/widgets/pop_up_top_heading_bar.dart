@@ -16,11 +16,11 @@ class PopUpScreensTopHeadingBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Align(
-            alignment: Alignment.centerLeft,
+          Container(
+            width: MediaQuery.of(context).size.width* 0.85 - 140,
             child: Padding(
-              padding: const EdgeInsets.only(left: 25,right: 25),
-              child: Text(examName,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
+              padding: const EdgeInsets.only(left: 25),
+              child: Text(examName,maxLines:2,overflow:TextOverflow.ellipsis,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
             ),
           ),
           Padding(

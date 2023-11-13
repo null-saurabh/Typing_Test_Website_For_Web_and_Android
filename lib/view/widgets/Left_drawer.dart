@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
 
 class LeftDrawer extends StatelessWidget {
@@ -41,8 +43,11 @@ class LeftDrawer extends StatelessWidget {
   }
 
   Widget drawerListTile(IconData icon, String title, String pageId, LoginUserProvider userProvider) {
+    final ApiService apiService = ApiService();
+
     return Builder(
       builder: (context) {
+        final apiProvider = Provider.of<ApiProvider>(context);
         bool isSelected = currentPage == pageId;
         return Container(
           color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
@@ -56,6 +61,10 @@ class LeftDrawer extends StatelessWidget {
               } else if (pageId == 'login') {
                 final user = await FirebaseAuthService.instance.signInWithGoogle();
                 userProvider.setUser(user);
+                print("user set");
+                await apiService.registerUser(user!.email ?? '', user.displayName ?? '');
+                await apiProvider.fetchLiveTest();
+                await apiProvider.fetchPracticeTest();
               } else {
                 onItemSelected(pageId);
               }

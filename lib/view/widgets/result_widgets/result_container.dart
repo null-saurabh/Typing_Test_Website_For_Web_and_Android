@@ -107,7 +107,7 @@ class ResultContainer extends StatelessWidget {
                 SizedBox(height: 5,),
                 ScoreList(
                   title: "Total Words Typed",
-                  value: ": 34",
+                  value: ": 340",
                 ),
                 ScoreList(
                   title: "Correct Words Typed",
@@ -182,7 +182,7 @@ class ScoreList extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
         ),
         SizedBox(
-            width: 50,
+            width: 58,
             child: Text(
               value,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600),

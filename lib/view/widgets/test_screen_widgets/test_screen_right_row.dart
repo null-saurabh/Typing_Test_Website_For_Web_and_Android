@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
 // import 'package:typingtest/view/screens/result_screen.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class RightRow extends StatelessWidget {
-  final Test testData;
+  final LiveTestData testData;
   const RightRow({
     required this.testData,
     super.key,
@@ -58,7 +58,7 @@ class RightRow extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ResultDialog(examName: testData.targetExam,);
+              return ResultDialog(examName: testData.targetExam!,);
             }
         );
 

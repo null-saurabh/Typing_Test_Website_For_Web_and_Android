@@ -15,6 +15,8 @@ class HistoryContainer extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context){
+    final scrollController1 = ScrollController();
+
     int itemCount = 15;
     double calculatedHeight = (66 * itemCount) + 25;
 
@@ -27,16 +29,24 @@ class HistoryContainer extends StatelessWidget {
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0,top: 5,bottom: 5,right: 5),
-        child: ListView.builder(
-            itemCount: itemCount,
-            itemBuilder: (context,index){
-              return const HistoryListTile();
-            }),
+        child: Scrollbar(
+          controller: scrollController1,
+          interactive: false,
+          thumbVisibility: true,
+          child: ListView.builder(
+            controller: scrollController1,
+              itemCount: itemCount,
+              itemBuilder: (context,index){
+                return const HistoryListTile();
+              }),
+        ),
       ),
     );
   }
 
   Widget buildMobileLayout(BuildContext context){
+
+    final scrollController1 = ScrollController();
 
     int itemCount = 15;
     double calculatedHeight = (66 * itemCount) + 25;
@@ -51,11 +61,17 @@ class HistoryContainer extends StatelessWidget {
       color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0,top: 5,bottom: 5,right: 5),
-        child: ListView.builder(
-            itemCount: itemCount,
-            itemBuilder: (context,index){
-              return const HistoryListTile();
-            }),
+        child: Scrollbar(
+          controller: scrollController1,
+          interactive: false,
+          thumbVisibility: true,
+          child: ListView.builder(
+            controller: scrollController1,
+              itemCount: itemCount,
+              itemBuilder: (context,index){
+                return const HistoryListTile();
+              }),
+        ),
       ),
     );
   }

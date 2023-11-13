@@ -95,25 +95,21 @@ class ErrorRepresentationListTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18,
-                      color: color),
-                ),
-                if (title2)
-                  const Text(
-                    "[original_word]",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18,
-                        color: Colors.grey),
-                  ),
-              ],
+            Text(
+              title,
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: color),
             ),
+            if (title2)
+              const Text(
+                "[original_word]",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    color: Colors.grey),
+              ),
             Text(
               subtitle,
               style: const TextStyle(

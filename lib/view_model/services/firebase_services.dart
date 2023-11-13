@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:typingtest/view_model/services/api_services.dart';
 
 class FirebaseAuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final ApiService _apiService = ApiService();
 
   // Private constructor
   FirebaseAuthService._();
@@ -21,6 +23,11 @@ class FirebaseAuthService {
       try {
         final UserCredential userCredential = await _auth.signInWithPopup(authProvider);
         user = userCredential.user;
+        //
+        // if (user != null) {
+        //   await _apiService.registerUser(user.email ?? '', user.displayName ?? '');
+        // }
+
       } catch (e) {
         rethrow;
       }
@@ -37,6 +44,11 @@ class FirebaseAuthService {
         try {
           final UserCredential userCredential = await _auth.signInWithCredential(credential);
           user = userCredential.user;
+
+          // if (user != null) {
+          //   await _apiService.registerUser(user.email ?? '', user.displayName ?? '');
+          // }
+
         } on FirebaseAuthException {
           rethrow;
         }

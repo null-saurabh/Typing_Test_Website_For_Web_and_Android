@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:typingtest/model/api_model.dart';
+import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
 
 class TestScreen extends StatefulWidget {
-  final Test testData;
+  final LiveTestData testData;
   const TestScreen({required this.testData,super.key});
 
   @override
@@ -62,7 +63,13 @@ class _TestScreenState extends State<TestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(MediaQuery.of(context).size.height);
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
+
+  Widget buildDesktopLayout(BuildContext context){
     return Scaffold(
       backgroundColor: const Color(0xffF5FAFC),
       body: SingleChildScrollView(
@@ -80,16 +87,14 @@ class _TestScreenState extends State<TestScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("SSC Typing Test - Grade A-1",style:TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
+                      Text(widget.testData.targetExam!,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),),
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           border: Border.all(color: Colors.white),
 
                         ),
-                        child:Container(
-                          child: timer(),
-                        ) ,
+                        child:timer() ,
                       )
                     ],
                   ),
@@ -110,7 +115,7 @@ class _TestScreenState extends State<TestScreen> {
                           Container(
                             height: MediaQuery.of(context).size.height - 125,
                             decoration: const BoxDecoration(
-                                color: Color(0xffF5FAFC),
+                              color: Color(0xffF5FAFC),
                             ),
                             child:  Padding(
                               padding: const EdgeInsets.all(10.0),
@@ -129,16 +134,76 @@ class _TestScreenState extends State<TestScreen> {
                   ),
                 ),
                 Expanded(
-                  flex: 2,
-                  child: Padding(
-                    padding: const EdgeInsets.all(22.0),
-                    child: RightRow(testData: widget.testData,),
-                  )
+                    flex: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(22.0),
+                      child: RightRow(testData: widget.testData,),
+                    )
                 )
               ],
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Scaffold(
+      backgroundColor: const Color(0xffF5FAFC),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // const TopNavigationBar(),
+          Container(
+            width: double.infinity,
+            height: 50,
+            color: const Color(0xff17414F),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width - 190,
+                        child: Text(widget.testData.targetExam!,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),)),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(color: Colors.white),
+
+                      ),
+                      child:timer() ,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        TextToWrite(testData: widget.testData,),
+                        const SizedBox(height: 20),
+                        const TextFieldContainer(),
+                      ],
+                    ),
+                  ),
+                  Center(
+                    child: RightRow(testData: widget.testData,),
+                  ),
+                ],
+              ),
+            ),
+          )
+
+        ],
       ),
     );
   }
@@ -165,20 +230,4 @@ class _TestScreenState extends State<TestScreen> {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-// if (testCompleted) ...[
-//   const SizedBox(height: 20),
-//   Text("Accuracy: ${accuracy.toStringAsFixed(2)}%"),
-//   // Show other metrics here.
-// ],
 

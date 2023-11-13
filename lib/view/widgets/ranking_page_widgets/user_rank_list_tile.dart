@@ -278,7 +278,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
 
   Widget listTileData(String key, String value){
     return SizedBox(
-      // width: 110,
+      width: 110,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
