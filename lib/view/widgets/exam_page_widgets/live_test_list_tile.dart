@@ -150,7 +150,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                         context: context,
                         builder: (BuildContext context) {
                           return ResultDialog(
-                            examName: widget.testData.targetExam!,
+                          testId: widget.testData.testId!,
                           );
                         });
                   },
@@ -275,7 +275,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                               context: context,
                               builder: (BuildContext context) {
                                 return ResultDialog(
-                                  examName: widget.testData.targetExam!,
+                                  testId: widget.testData.testId!,
                                 );
                               });
                         },

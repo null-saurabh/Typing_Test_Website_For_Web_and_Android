@@ -37,7 +37,7 @@ class HistoryContainer extends StatelessWidget {
             controller: scrollController1,
               itemCount: itemCount,
               itemBuilder: (context,index){
-                return const HistoryListTile();
+                return HistoryListTile(popup: popup,);
               }),
         ),
       ),
@@ -69,7 +69,7 @@ class HistoryContainer extends StatelessWidget {
             controller: scrollController1,
               itemCount: itemCount,
               itemBuilder: (context,index){
-                return const HistoryListTile();
+                return HistoryListTile(popup: popup,);
               }),
         ),
       ),

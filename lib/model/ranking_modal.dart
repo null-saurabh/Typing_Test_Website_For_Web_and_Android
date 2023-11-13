@@ -43,7 +43,7 @@ class RankingData {
   int? marksObtained;
   int? nwpm;
   int? ncpm;
-  int? gwpm;
+  double? gwpm;
   int? gcpm;
   int? backspaceCount;
   double? accuracy;

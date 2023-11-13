@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
+import 'package:typingtest/view/widgets/ranking_page_widgets/ranking_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class HistoryListTile extends StatelessWidget {
-  const HistoryListTile({super.key});
+  final bool popup;
+
+  const HistoryListTile({required this.popup,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,7 @@ class HistoryListTile extends StatelessWidget {
             ),
             Row(
               children: [
-                leaderBoardButton(context),
+                leaderBoardButton(context,popup),
                 const SizedBox(width: 8),
                 viewResultButton(context),
                 const SizedBox(width: 20),
@@ -63,7 +66,7 @@ class HistoryListTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end  ,
               children: [
-                leaderBoardButton(context),
+                leaderBoardButton(context,popup),
                 const SizedBox(width: 8),
                 viewResultButton(context),
                 const SizedBox(width: 20),
@@ -86,7 +89,7 @@ class HistoryListTile extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const ResultDialog(examName: "SSC typing test -grade A",);
+              return const ResultDialog(testId: 6344);
             }
         );
         },
@@ -94,7 +97,7 @@ class HistoryListTile extends StatelessWidget {
     );
   }
 
-  Widget leaderBoardButton(BuildContext context){
+  Widget leaderBoardButton(BuildContext context, bool popup){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -102,7 +105,16 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310,)));
+        popup
+        ? showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const RankingDialog(
+                testId: 6310,
+              );
+            })
+        : Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310)));
+
       },
       child: const Icon(Icons.leaderboard_outlined,color:Color(0xff369CBC)),
     );

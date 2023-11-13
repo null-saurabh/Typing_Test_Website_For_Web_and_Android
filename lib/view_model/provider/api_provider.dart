@@ -61,11 +61,9 @@ class ApiProvider with ChangeNotifier {
       // print("useremail is null");
       throw Exception('User is not logged in');
     }
-
     try {
       // print("trying practice in provider");
       final response = await apiService.oneResult(userEmail,testId);
-      notifyListeners();
       return response.data!;
     } catch (e) {
       rethrow;
@@ -75,12 +73,11 @@ class ApiProvider with ChangeNotifier {
   Future<List<RankingData>> fetchRanking(int testId) async {
     final userEmail = _userProvider.userEmail;
     if (userEmail == null) {
-      // print("useremail is null");
       throw Exception('User is not logged in');
     }
     try {
-      print("trying ranking in provider");
       final response = await apiService.rankingLeaderBoard(userEmail,testId);
+      print("trying ranking in provider");
       return response.data!;
     } catch (e) {
       rethrow;

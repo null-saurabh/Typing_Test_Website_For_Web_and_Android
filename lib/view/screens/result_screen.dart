@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_box.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_container.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_error_representation_container.dart';
@@ -7,9 +8,9 @@ import 'package:typingtest/view/widgets/pop_up_top_heading_bar.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_typing_paragraph.dart';
 
 class ResultScreen extends StatelessWidget {
-  final String examName;
+  final ResultData result;
   const ResultScreen({
-    required this.examName,
+    required this.result,
     super.key});
 
   @override
@@ -29,7 +30,7 @@ class ResultScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PopUpScreensTopHeadingBar(examName: examName,),
+          PopUpScreensTopHeadingBar(examName: result.testName!,),
           Expanded(
             child: Scrollbar(
               controller: scrollController1,
@@ -72,31 +73,31 @@ class ResultScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Row(
+                                Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    ResultBox(
+                                    const ResultBox(
                                       title: "Test Duration",
                                       value: "2 mins 34 secs",
                                     ),
                                     ResultBox(
                                       title: "Net Speed",
-                                      value: "0 WPM",
+                                      value: result.nwpm.toString(),
                                     ),
                                     ResultBox(
                                       title: "Gross Speed",
-                                      value: "50 Words per minute",
+                                      value: result.gwpm.toString(),
                                     ),
                                     ResultBox(
                                       title: "Accuracy",
-                                      value: "0%",
+                                      value: result.accuracy.toString(),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                const ResultContainer(),
+                                ResultContainer(result: result,),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -130,7 +131,7 @@ class ResultScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          PopUpScreensTopHeadingBar(examName: examName,),
+          PopUpScreensTopHeadingBar(examName: result.testName!,),
           Expanded(
             child: Scrollbar(
               controller: scrollController1,
@@ -173,39 +174,39 @@ class ResultScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Column(
+                                Column(
                                   children: [
-                                    ResultBox(
+                                    const ResultBox(
                                       title: "Test Duration",
                                       value: "2 mins 34 secs",
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     ResultBox(
                                       title: "Net Speed",
-                                      value: "0 WPM",
+                                      value: result.nwpm.toString(),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     ResultBox(
                                       title: "Gross Speed",
-                                      value: "50 Words per minute",
+                                      value: result.gwpm.toString(),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 15,
                                     ),
                                     ResultBox(
                                       title: "Accuracy",
-                                      value: "0%",
+                                      value: result.accuracy.toString(),
                                     ),
                                   ],
                                 ),
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                const ResultContainer(),
+                                ResultContainer(result: result,),
                                 const SizedBox(
                                   height: 15,
                                 ),

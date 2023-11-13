@@ -58,7 +58,7 @@ class RightRow extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return ResultDialog(examName: testData.targetExam!,);
+              return const ResultDialog(testId: 6344);
             }
         );
 

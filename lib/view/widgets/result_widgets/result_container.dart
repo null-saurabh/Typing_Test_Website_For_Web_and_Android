@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 
 class ResultContainer extends StatelessWidget {
-  const ResultContainer({super.key});
+  final ResultData result;
+  const ResultContainer({required this.result,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class ResultContainer extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.withOpacity(0.25))),
-      child: const Row(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -26,62 +28,62 @@ class ResultContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Words",
+                const Text("Words",
                     style:
                     TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 ScoreList(
                   title: "Total Words Typed",
-                  value: ": 34",
+                  value: ": ${result.wordsTyped}",
                 ),
                 ScoreList(
                   title: "Correct Words Typed",
-                  value: ": 5",
+                  value: ": ${result.wordsCorrect}",
                 ),
                 ScoreList(
                   title: "Incorrect Words Typed",
-                  value: ": 23",
+                  value: ": ${result.wordIncorrect}",
                 ),
-                ScoreList(
+                const ScoreList(
                   title: "Omitted Words",
-                  value: ": 4",
+                  value: ": null",
                 ),
                 ScoreList(
-                  title: "Effective Correct Words",
-                  value: ": 0",
+                  title: "Backspace Count",
+                  value: ": ${result.backspaceCount}",
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
 
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           SizedBox(
             width: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Mistakes",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 ScoreList(
                   title: "Errors",
-                  value: ": 34",
+                  value: ": ${result.fullMistakes! + result.halfMistakes!}",
                 ),
                 ScoreList(
                   title: "Full Mistakes",
-                  value: ": 5",
+                  value: ": ${result.fullMistakes}",
                 ),
                 ScoreList(
                   title: "Half Mistakes",
-                  value: ": 23",
+                  value: ": ${result.halfMistakes}",
                 ),
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );
@@ -93,7 +95,7 @@ class ResultContainer extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.grey.withOpacity(0.25))),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
@@ -101,57 +103,57 @@ class ResultContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Words",
+                const Text("Words",
                     style:
                     TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 ScoreList(
                   title: "Total Words Typed",
-                  value: ": 340",
+                  value: ": ${result.wordsTyped}",
                 ),
                 ScoreList(
                   title: "Correct Words Typed",
-                  value: ": 5",
+                  value: ": ${result.wordsCorrect}",
                 ),
                 ScoreList(
                   title: "Incorrect Words Typed",
-                  value: ": 23",
+                  value: ": ${result.wordIncorrect}",
                 ),
-                ScoreList(
+                const ScoreList(
                   title: "Omitted Words",
-                  value: ": 4",
+                  value: ": null",
                 ),
                 ScoreList(
-                  title: "Effective Correct Words",
-                  value: ": 0",
+                  title: "Backspace Count",
+                  value: ": ${result.backspaceCount}",
                 ),
-                SizedBox(height: 15,),
+                const SizedBox(height: 15,),
 
               ],
             ),
           ),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           SizedBox(
             // width: 300,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   "Mistakes",
                   style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 ScoreList(
                   title: "Errors",
-                  value: ": 34",
+                  value: ": ${result.fullMistakes! + result.halfMistakes!}",
                 ),
                 ScoreList(
                   title: "Full Mistakes",
-                  value: ": 5",
+                  value: ": ${result.fullMistakes}",
                 ),
                 ScoreList(
                   title: "Half Mistakes",
-                  value: ": 23",
+                  value: ": ${result.halfMistakes}",
                 ),
               ],
             ),
