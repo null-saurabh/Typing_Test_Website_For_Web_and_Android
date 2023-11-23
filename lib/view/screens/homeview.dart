@@ -11,14 +11,14 @@ import 'package:typingtest/view/widgets/Left_drawer.dart';
 
 
 
-class HOMEPAGE extends StatefulWidget {
-  const HOMEPAGE({Key? key}) : super(key: key);
+class HOMEVIEW extends StatefulWidget {
+  const HOMEVIEW({Key? key}) : super(key: key);
 
   @override
-  State<HOMEPAGE> createState() => _HOMEPAGEState();
+  State<HOMEVIEW> createState() => _HOMEVIEWState();
 }
 
-class _HOMEPAGEState extends State<HOMEPAGE> {
+class _HOMEVIEWState extends State<HOMEVIEW> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   String _currentPage = 'homepage';
 
@@ -103,7 +103,10 @@ class _HOMEPAGEState extends State<HOMEPAGE> {
                 );
               },
             ),
-          ),
+          )
+          // Expanded(
+          //   child: buildPage(),
+          // ),
         ],
       ),
     );

@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:responsive_builder/responsive_builder.dart';
 // import 'package:typingtest/view/screens/exam_page.dart';
-// import 'package:typingtest/view/screens/homepage.dart';
+// import 'package:typingtest/view/screens/homeview.dart';
 // import 'package:typingtest/view/screens/profile_page.dart';
 // import 'package:typingtest/view/screens/subscription.dart';
 //

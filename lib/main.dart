@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:typingtest/view/screens/homepage.dart';
+import 'package:typingtest/view/screens/homeview.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         thumbColor: MaterialStateProperty.all(const Color(0xff369CBC)),
         ),
       ),
-      home: const HOMEPAGE(),
+      home: const HOMEVIEW(),
     );
   }
 }
