@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/view/screens/homeview.dart';
+import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/services/navigation_service.dart';
 
 
 void main() async {
@@ -33,6 +35,7 @@ void main() async {
         )
     );
   }
+  setupLocator();
 
   runApp(
     MultiProvider(
@@ -44,6 +47,9 @@ void main() async {
             create: (context) => ApiProvider(
               context.read<LoginUserProvider>(),
             )),
+        ChangeNotifierProvider.value(
+          value: locator<NavigationService>(),
+        ),
       ],
       child: const MyApp(),
     ),);

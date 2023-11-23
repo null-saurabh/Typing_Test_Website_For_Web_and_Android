@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
+import 'package:typingtest/view_model/services/navigation_service.dart';
 
 class LeftDrawer extends StatelessWidget {
-  final Function(String) onItemSelected;
-  final String currentPage;
   const LeftDrawer(
-      {required this.onItemSelected, required this.currentPage, super.key});
+      {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<LoginUserProvider>(builder: (context, userProvider, child) {
+    return Consumer2<LoginUserProvider,NavigationService>(builder: (context, userProvider,navigationService, child) {
       final isLoggedIn = userProvider.user != null;
+      final currentRoute = navigationService.currentPage;
+
       return Container(
         width: 220,
         height: double.infinity,
@@ -31,26 +33,26 @@ class LeftDrawer extends StatelessWidget {
               Text(userProvider.user!.email ?? 'No Email', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey)),
             ],
             const SizedBox(height: 20),
-            drawerListTile(Icons.category_outlined, "All Tests", 'homepage', userProvider),
-            drawerListTile(Icons.menu_book_rounded, "Learn Typing", 'learn', userProvider),
-            drawerListTile(Icons.account_balance_wallet_outlined, "Subscriptions", 'subscription', userProvider),
-            drawerListTile(Icons.history_outlined, "Result History", 'history', userProvider),
-            drawerListTile(Icons.person_2_outlined, "My Profile", 'profile', userProvider),
-            isLoggedIn ? drawerListTile(Icons.logout_outlined, "Log Out", 'logout', userProvider) : drawerListTile(Icons.login_outlined, "Log In", 'login', userProvider),
+            drawerListTile(context,Icons.category_outlined, "All Tests", 'homepage', userProvider, navigationService),
+            drawerListTile(context,Icons.menu_book_rounded, "Learn Typing", 'learn', userProvider, navigationService),
+            drawerListTile(context,Icons.account_balance_wallet_outlined, "Subscriptions", 'subscription',userProvider, navigationService),
+            drawerListTile(context,Icons.history_outlined, "Result History", 'history', userProvider, navigationService),
+            drawerListTile(context,Icons.person_2_outlined, "My Profile", 'profile', userProvider, navigationService),
+            isLoggedIn ? drawerListTile(context,Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService) : drawerListTile(context,Icons.login_outlined, "Log In", 'login', userProvider, navigationService),
           ],
         ),
       );
     });
   }
 
-  Widget drawerListTile(IconData icon, String title, String pageId, LoginUserProvider userProvider) {
+  Widget drawerListTile(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationService navigationService) {
     final ApiService apiService = ApiService();
+    final apiProvider = Provider.of<ApiProvider>(context);
+    final currentRoute = navigationService.currentPage;
+    bool isSelected = currentRoute == pageId;
+    print("currentRoute: $currentRoute, pageId: $pageId");
 
-    return Builder(
-      builder: (context) {
-        final apiProvider = Provider.of<ApiProvider>(context);
-        bool isSelected = currentPage == pageId;
-        return Container(
+    return Container(
           color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
           child: ListTile(
             leading: Icon(icon, color: isSelected ? const Color(0xff369CBC) : Colors.grey),
@@ -67,12 +69,12 @@ class LeftDrawer extends StatelessWidget {
                 await apiProvider.fetchLiveTest();
                 await apiProvider.fetchPracticeTest();
               } else {
-                onItemSelected(pageId);
+                print("in drawer");
+                // onItemSelected(pageId);
+                locator<NavigationService>().navigateTo(pageId);
               }
             },
           ),
         );
-      },
-    );
   }
 }
