@@ -14,7 +14,8 @@ import 'package:typingtest/view_model/services/navigation_service.dart';
 
 
 class HOMEVIEW extends StatefulWidget {
-  const HOMEVIEW({Key? key}) : super(key: key);
+  final Widget child;
+  const HOMEVIEW({required this.child,Key? key}) : super(key: key);
 
   @override
   State<HOMEVIEW> createState() => _HOMEVIEWState();
@@ -50,11 +51,12 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
         children: [
           LeftDrawer(),
           Expanded(
-            child: Navigator(
-              key: locator<NavigationService>().navigatorKey,
-              initialRoute: homePageRoute,
-              onGenerateRoute: generateRoute,
-            ),
+            child: widget.child
+            // Navigator(
+            //   key: locator<NavigationService>().navigatorKey,
+            //   initialRoute: homePageRoute,
+            //   onGenerateRoute: generateRoute,
+            // ),
           )
         ],
       ),

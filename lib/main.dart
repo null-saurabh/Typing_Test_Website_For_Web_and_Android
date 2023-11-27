@@ -1,11 +1,15 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/view/screens/homeview.dart';
 import 'package:typingtest/view_model/locator.dart';
+import 'package:typingtest/view_model/not_found.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/route_names.dart';
+import 'package:typingtest/view_model/router.dart';
 import 'package:typingtest/view_model/services/navigation_service.dart';
 
 
@@ -69,7 +73,11 @@ class MyApp extends StatelessWidget {
         thumbColor: MaterialStateProperty.all(const Color(0xff369CBC)),
         ),
       ),
-      home: const HOMEVIEW(),
+      builder: (context,child) => HOMEVIEW(child: child!,),
+      navigatorKey: locator<NavigationService>().navigatorKey,
+        initialRoute: homePageRoute,
+      onGenerateRoute: locator<FluroRouter>().generator,
+        // onGenerateRoute: generateRoute,
     );
   }
 }

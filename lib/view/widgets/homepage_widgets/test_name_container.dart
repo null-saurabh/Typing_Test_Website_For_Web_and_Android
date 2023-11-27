@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
+import 'package:typingtest/view_model/services/navigation_service.dart';
+
+import '../../../view_model/locator.dart';
 
 
 class TestNameContainer extends StatefulWidget {
@@ -16,11 +19,12 @@ class _TestNameContainerState extends State<TestNameContainer> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",),
-          ),
-        );
+        locator<NavigationService>().navigateToExamPage(context, "SSC_Typing_Tests");
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",),
+        //   ),
+        // );
       },
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovering = true),

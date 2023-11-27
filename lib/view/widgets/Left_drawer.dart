@@ -8,8 +8,9 @@ import 'package:typingtest/view_model/services/firebase_services.dart';
 import 'package:typingtest/view_model/services/navigation_service.dart';
 
 class LeftDrawer extends StatelessWidget {
+
   const LeftDrawer(
-      {super.key});
+      {super.key,});
 
   @override
   Widget build(BuildContext context) {

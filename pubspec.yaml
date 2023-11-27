@@ -38,6 +38,7 @@ dependencies:
   google_sign_in: ^6.1.5
   firebase_auth: ^4.10.0
   get_it:
+  fluro:
 
 dev_dependencies:
   flutter_test:
