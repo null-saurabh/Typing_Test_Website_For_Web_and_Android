@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
+import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_to_write.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
+import 'package:typingtest/view_model/provider/save_test_provider.dart';
 
 class TestScreen extends StatefulWidget {
   final LiveTestData testData;
@@ -19,13 +23,20 @@ class _TestScreenState extends State<TestScreen> {
   bool testCompleted = false;
   late Timer _timer;
   int _start = 10 * 60;
-
+  late DateTime _startTime;
 
 
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    Future.delayed(Duration.zero, () {
+      Provider.of<TestModelProvider>(context, listen: false).startNewTest();
+      Provider.of<TestModelProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
+
+    });
+    _startTime = DateTime.now();
+      _startTimer();
+
   }
 
   void _startTimer() {
@@ -44,7 +55,7 @@ class _TestScreenState extends State<TestScreen> {
     });
   }
 
-  void _submitTest() {
+  void _submitTest() async {
     if (!testCompleted) {
       if (mounted) {
         setState(() {
@@ -52,8 +63,43 @@ class _TestScreenState extends State<TestScreen> {
         });
       }
       _timer.cancel();
+      final DateTime now = DateTime.now();
+      final Duration elapsed = now.difference(_startTime);
+      Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
+      Provider.of<TestModelProvider>(context, listen: false).submitTest();
+
+      final String timeTaken = Provider.of<TestModelProvider>(context, listen: false).testModel.timeTaken.toString();
+      final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm;
+      // final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backspaceCount;
+      final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy;
+      // final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped;
+      // final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords;
+      // final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords;
+      // final String fullMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.fullMistake;
+      // final String halfMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.halfMistake;
+      final String testId = widget.testData.testId.toString();
+      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, "1", accuracy, "1", "1", "1", "1", "1", testId);
+
+
+      Navigator.pop(context);
+      await Future.microtask(() {
+      if (widget.testData.type == "PRACTICE") {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return ResultDialog(testId: widget.testData.testId!);
+            }
+        );
+      }
+      else {
+        showTestEndedDialog(context);
+      }
+      });
+      // calculateWPMAndAccuracy();
+      // saveResult();
     }
   }
+
 
   @override
   void dispose() {
@@ -123,7 +169,10 @@ class _TestScreenState extends State<TestScreen> {
                                 children: [
                                   TextToWrite(testData: widget.testData,),
                                   const SizedBox(height: 20),
-                                  const TextFieldContainer(),
+                                  TextFieldContainer(onTextChanged: (typedText) {
+                                    Provider.of<TestModelProvider>(context, listen: false)
+                                        .updateTypedText(typedText);
+                                  },),
                                 ],
                               ),
                             ),
@@ -137,7 +186,7 @@ class _TestScreenState extends State<TestScreen> {
                     flex: 2,
                     child: Padding(
                       padding: const EdgeInsets.all(22.0),
-                      child: RightRow(testData: widget.testData,),
+                      child: RightRow(testData: widget.testData,startTime: _startTime,),
                     )
                 )
               ],
@@ -191,12 +240,15 @@ class _TestScreenState extends State<TestScreen> {
                       children: [
                         TextToWrite(testData: widget.testData,),
                         const SizedBox(height: 20),
-                        const TextFieldContainer(),
+                        TextFieldContainer(onTextChanged: (typedText) {
+                          Provider.of<TestModelProvider>(context, listen: false)
+                              .updateTypedText(typedText);
+                        }),
                       ],
                     ),
                   ),
                   Center(
-                    child: RightRow(testData: widget.testData,),
+                    child: RightRow(testData: widget.testData,startTime: _startTime),
                   ),
                 ],
               ),
@@ -205,6 +257,32 @@ class _TestScreenState extends State<TestScreen> {
 
         ],
       ),
+    );
+  }
+
+  void showTestEndedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Test Submited'),
+          content: const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('You can check your result in history after test Ends.'),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 

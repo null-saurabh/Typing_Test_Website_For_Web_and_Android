@@ -16,31 +16,33 @@ class LeftDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer2<LoginUserProvider,NavigationService>(builder: (context, userProvider,navigationService, child) {
       final isLoggedIn = userProvider.user != null;
-      final currentRoute = navigationService.currentPage;
+      // final currentRoute = navigationService.currentPage;
 
       return Container(
         width: 220,
         height: double.infinity,
         color: Colors.white,
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-            const SizedBox(height: 5),
-            const Text("LOGO", style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, color: Colors.black)),
-            // const SizedBox(height: 20),
-            if (isLoggedIn) ...[
-              Text(userProvider.user!.displayName ?? 'No Name', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black)),
-              // const SizedBox(height: 5),
-              Text(userProvider.user!.email ?? 'No Email', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey)),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              const SizedBox(height: 5),
+              const Text("LOGO", style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, color: Colors.black)),
+              // const SizedBox(height: 20),
+              if (isLoggedIn) ...[
+                Text(userProvider.user!.displayName ?? 'No Name', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black)),
+                // const SizedBox(height: 5),
+                Text(userProvider.user!.email ?? 'No Email', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey)),
+              ],
+              const SizedBox(height: 20),
+              drawerListTile(context,Icons.category_outlined, "All Tests", 'homepage', userProvider, navigationService),
+              drawerListTile(context,Icons.menu_book_rounded, "Learn Typing", 'learn', userProvider, navigationService),
+              drawerListTile(context,Icons.account_balance_wallet_outlined, "Subscriptions", 'subscription',userProvider, navigationService),
+              drawerListTile(context,Icons.history_outlined, "Result History", 'history', userProvider, navigationService),
+              drawerListTile(context,Icons.person_2_outlined, "My Profile", 'profile', userProvider, navigationService),
+              isLoggedIn ? drawerListTile(context,Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService) : drawerListTile(context,Icons.login_outlined, "Log In", 'login', userProvider, navigationService),
             ],
-            const SizedBox(height: 20),
-            drawerListTile(context,Icons.category_outlined, "All Tests", 'homepage', userProvider, navigationService),
-            drawerListTile(context,Icons.menu_book_rounded, "Learn Typing", 'learn', userProvider, navigationService),
-            drawerListTile(context,Icons.account_balance_wallet_outlined, "Subscriptions", 'subscription',userProvider, navigationService),
-            drawerListTile(context,Icons.history_outlined, "Result History", 'history', userProvider, navigationService),
-            drawerListTile(context,Icons.person_2_outlined, "My Profile", 'profile', userProvider, navigationService),
-            isLoggedIn ? drawerListTile(context,Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService) : drawerListTile(context,Icons.login_outlined, "Log In", 'login', userProvider, navigationService),
-          ],
+          ),
         ),
       );
     });

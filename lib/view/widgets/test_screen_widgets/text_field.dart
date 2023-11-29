@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class TextFieldContainer extends StatefulWidget {
+  final Function(String) onTextChanged;
+
   const TextFieldContainer({
+    required this.onTextChanged,
     super.key,
   });
 
@@ -43,7 +46,13 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 
             child: TextField(
               focusNode: _focusNode,
-              onChanged: (value) => setState(() => userInput = value),
+              onChanged: (value) {
+                setState(() {
+                  userInput = value;
+                });
+                // Notify the parent widget (TestScreen) about the changes
+                widget.onTextChanged(value);
+              },
               maxLines: null,
               decoration: const InputDecoration.collapsed(hintText: "Start typing here..."),
             ),
@@ -53,6 +62,12 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     );
   }
 }
+
+
+
+
+
+
 // Positioned(
 //     right: 0,
 //     top: 0,

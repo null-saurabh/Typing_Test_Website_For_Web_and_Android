@@ -13,6 +13,8 @@ class ResultErrorRepresentation extends StatelessWidget {
           color: Colors.white,
           border: Border.all(color: Colors.grey.withOpacity(0.25))),
       child: const Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ErrorHeadingRow(),
           SizedBox(

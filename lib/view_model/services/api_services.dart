@@ -66,7 +66,46 @@ class ApiService {
     }
   }
 
+  Future<bool> saveResult(String emailId, String timeTaken, String speed, String backspaceCount, String accuracy, String wordsTyped, String correctWords, String incorrectWords, String fullMistake, String halfMistake,String testId ) async {
+    var headers = {
+      'Accept': 'application/json',
+      'Cookie': 'XSRF-TOKEN=eyJpdiI6IkZHYjJZZnJsQzY2dmI1dEZ3alBISEE9PSIsInZhbHVlIjoiUk5MSUtrWE5oUWFtcTVDVjNWVmh3ZEhvMkVNWWU1T090L2RZVkpkQjc4THVudk5FKzR5V3RPZkJHRCt2VitDQ1J0amYzNzU3MTJSYlFweGluVUsvRnQ0RHl5eTRBVWpoSU9rdDhKZGpYS21BTzBQaHJ6OCtFMHZUbEJBN0NMbVIiLCJtYWMiOiIwNjJhZWZmMTU3OTM1YWVlYmU2NzY2ZjNlM2JiMjEzNWZkMjJmOTU0MjFjMzQ4NThlMjUyYjg2MGE2OTdhNjQyIn0%3D; typing_master_session=eyJpdiI6Inl1bS9Ya0dwa0VtRTBJNVQxKzJzb3c9PSIsInZhbHVlIjoidWgxcTZIMXBYcThWcnJYSEJCRHFQK0lZVlFCNm1IeWVDY25DVkNiNitPa3BYRWZpWkxWNlNWelhnWjU1U2c5ZTdJU1dTeFY3eDVaZkFZL3ZKY1BFakl4QWFONWpGM3JRbjB3K0g1SzNmN2hMS05JbFhTd3NJZVZxcWpiVlYyS0QiLCJtYWMiOiJkMGVhMDIxN2Y5ZGExZGU4YzYzNzJhYjJiNzMxNGE4NzA3MGU4ODk3NzUxMDM4N2Y5MDg1NDEzODI1MmE1MTNjIn0%3D'
+    };
 
+    var request = http.MultipartRequest('POST', Uri.parse('https://www.a1typing.in/api/public/api/v1/result'));
+    request.fields.addAll({
+      'time_taken': timeTaken,
+      'marks_obtained': '0',
+      'nwpm': speed,
+      'ncpm': '0',
+      'gwpm': '0',
+      'gcpm': '0',
+      'backspace_count': backspaceCount,
+      'accuracy': accuracy,
+      'words_typed': wordsTyped,
+      'words_correct': correctWords,
+      'word_incorrect': incorrectWords,
+      'full_mistakes': fullMistake,
+      'half_mistakes': halfMistake,
+      'product_id': emailId,
+      'test_id': testId
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    if (response.statusCode == 201) {
+      print("save result api final");
+      print(await response.stream.bytesToString());
+      return true;
+    }
+    else {
+      print("failed");
+      print(response.reasonPhrase);
+      return true;
+    }
+  }
 
 
   Future<bool> registerUser(String emailId, String userName) async {
@@ -99,7 +138,6 @@ class ApiService {
       return true;
     }
     else {
-      // print("passfailo");
       print(response.reasonPhrase);
       return true;
     }

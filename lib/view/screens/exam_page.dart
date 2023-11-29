@@ -426,21 +426,27 @@ class ExamPage extends StatelessWidget {
               testData.testName!,
               style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            opaqueButton(
-              context,
-              "Start Now",
-              () async {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return InstructionDialog(
-                        testData: testData,
-                      );
-                    });
-              },
+            // const SizedBox(
+            //   height: 10,
+            // ),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                opaqueButton(
+                  context,
+                  "Start Now",
+                  () async {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return InstructionDialog(
+                            testData: testData,
+                          );
+                        });
+                  },
+                ),
+              ],
             ),
           ],
         ),

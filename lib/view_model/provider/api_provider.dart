@@ -84,30 +84,51 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<bool> saveResult(
+      String timeTaken,
+      String speed,
+      String backspaceCount,
+      String accuracy,
+      String wordsTyped,
+      String correctWords,
+      String incorrectWords,
+      String fullMistake,
+      String halfMistake,
+      String testId,
+      ) async {
+
+    final userEmail = _userProvider.userEmail;
+
+    if (userEmail == null) {
+      throw Exception('User is not logged in');
+    }
+
+    try {
+      print("in provider");
+
+      final response = await apiService.saveResult(
+        userEmail,
+        timeTaken,
+        speed,
+        backspaceCount,
+        accuracy,
+        wordsTyped,
+        correctWords,
+        incorrectWords,
+        fullMistake,
+        halfMistake,
+        testId,
+      );
+
+      // Do something with the result if needed
+      return response;
+    } catch (e) {
+      print("Error saving result: $e");
+      return false;
+    }
+  }
+
 
 }
 
 
-
-
-// ApiProvider() {
-//   _initialFetchLiveTest();
-// }
-
-// Future<void> _initialFetch() async {
-//   try {
-//     _tests = await apiService.fetchUpcomingTests();
-//     print("1");
-//     notifyListeners();
-//   } catch (error) {
-//     // Handle errors if needed, for example, by setting an error state
-//     // print(error);
-//     rethrow;
-//     // Optionally notify listeners here if you want to reflect an error state in the UI
-//   }
-// }
-
-// Future<void> refreshTests() async {
-//   _tests = await apiService.fetchUpcomingTests();
-//   notifyListeners();
-// }

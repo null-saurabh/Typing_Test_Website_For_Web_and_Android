@@ -8,6 +8,7 @@ import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/not_found.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/provider/save_test_provider.dart';
 import 'package:typingtest/view_model/route_names.dart';
 import 'package:typingtest/view_model/router.dart';
 import 'package:typingtest/view_model/services/navigation_service.dart';
@@ -51,6 +52,9 @@ void main() async {
             create: (context) => ApiProvider(
               context.read<LoginUserProvider>(),
             )),
+        ChangeNotifierProvider(
+          create: (context) => TestModelProvider(),
+        ),
         ChangeNotifierProvider.value(
           value: locator<NavigationService>(),
         ),

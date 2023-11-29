@@ -1,12 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/Homepage_screen.dart';
-import 'package:typingtest/view/screens/exam_page.dart';
-import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/learn_typing.dart';
-import 'package:typingtest/view/screens/profile_page.dart';
-import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view_model/locator.dart';
 
 class NavigationService extends ChangeNotifier {
