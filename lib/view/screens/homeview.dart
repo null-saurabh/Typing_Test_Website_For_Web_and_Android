@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart' hide WidgetBuilder;
 import 'package:typingtest/view/widgets/Left_drawer.dart';
+import 'package:typingtest/view_model/provider/login_provider.dart';
 
 
 
@@ -15,6 +18,15 @@ class HOMEVIEW extends StatefulWidget {
 
 class _HOMEVIEWState extends State<HOMEVIEW> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+
+  // @override
+  // void initState() {
+  //   final userProvider = Provider.of<LoginUserProvider>(context, listen: false);
+  //   if (userProvider.user == null){
+  //     GoRouter.of(context).go('/welcome');
+  //   }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +46,6 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
     );
   }
 
-  bool showLeftDrawer(BuildContext context) {
-    final currentRoute = ModalRoute.of(context)?.settings.name;
-    return currentRoute != '/welcome';
-  }
 
   Widget buildDesktopLayout(BuildContext context) {
     return Scaffold(
@@ -45,7 +53,7 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (showLeftDrawer(context)) const LeftDrawer(),
+          const LeftDrawer(),
           Expanded(
             child: widget.child
           )
@@ -68,7 +76,7 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
           },
         ),
       ),
-      drawer: showLeftDrawer(context) ? const LeftDrawer() : null,
+      // drawer: const LeftDrawer(),
       backgroundColor: const Color(0xffF5FAFC),
       body: widget.child
 

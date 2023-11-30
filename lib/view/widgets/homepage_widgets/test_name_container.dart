@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view_model/services/navigation_service.dart';
 
@@ -14,12 +15,15 @@ class TestNameContainer extends StatefulWidget {
 
 class _TestNameContainerState extends State<TestNameContainer> {
   bool _isHovering = false;
-
+ 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        locator<NavigationService>().navigateToExamPage(context, "SSC_Typing_Tests");
+        GoRouter router = GoRouter.of(context);
+        router.goNamed('exam',pathParameters: {'examName' : 'SSC_Typing_Tests'});
+        // locator<NavigationProvider>().navigateToExamPage(context, "SSC_Typing_Tests");
+
         // Navigator.of(context).push(
         //   MaterialPageRoute(
         //     builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",),

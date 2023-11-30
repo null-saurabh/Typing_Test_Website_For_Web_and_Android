@@ -40,17 +40,17 @@ class ExamPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Container(
-                              height: 36,
-                              width: 36,
-                              color: Colors.white,
-                              child: const Icon(Icons.arrow_back),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     Navigator.pop(context);
+                          //   },
+                          //   child: Container(
+                          //     height: 36,
+                          //     width: 36,
+                          //     color: Colors.white,
+                          //     child: const Icon(Icons.arrow_back),
+                          //   ),
+                          // ),
                           const SizedBox(width: 10),
                           Text(
                             targetExamName,
@@ -196,41 +196,6 @@ class ExamPage extends StatelessWidget {
     );
   }
 
-  // return GridView.builder(
-  //   shrinkWrap: true,
-  //   physics: const NeverScrollableScrollPhysics(),
-  //   gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-  //     maxCrossAxisExtent: 4,
-  //     crossAxisSpacing: 20,
-  //     mainAxisSpacing: 20,
-  //     childAspectRatio: 250 / 100,
-  //   ),
-  //   itemCount: data.data.list.length,
-  //   itemBuilder: (context, index) {
-  //     // return dailyTest(data.data.list[index], context)
-  //     Text(data.data.list[0].targetExam!);
-  //   },
-  // );
-  // LayoutBuilder(
-  //   builder: (context, constraints) {
-  //     int crossAxisCount =constraints.maxWidth ~/ 250; // Number of items per row
-  //
-  //     return GridView.builder(
-  //       shrinkWrap: true,
-  //       physics: const NeverScrollableScrollPhysics(),
-  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //         crossAxisCount: crossAxisCount,
-  //         crossAxisSpacing: 20,
-  //         mainAxisSpacing: 20,
-  //         childAspectRatio: 250 / 100,
-  //       ),
-  //       itemCount: 5,
-  //       itemBuilder: (context, index) {
-  //         return dailyTest((index+1).toString(), context);
-  //       },
-  //     );
-  //   },
-  // ),
 
   Widget buildMobileLayout(BuildContext context) {
     final scrollController1 = ScrollController();

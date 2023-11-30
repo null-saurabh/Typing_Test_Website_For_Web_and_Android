@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/keyboard_ui.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/left_hand_image.dart';
@@ -81,7 +82,9 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                             }
                           });
                         } else {
-                          locator<NavigationService>().navigateTo(homePageRoute); // Pop twice to go back to home
+                          // locator<NavigationProvider>().navigateTo(homePageRoute); // Pop twice to go back to home
+                          GoRouter router = GoRouter.of(context);
+                          router.go('/');
                           showTestEndedDialog(context);
                           resetTest(); // Pop twice to go back to home
                         }
@@ -136,7 +139,9 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                             }
                           });
                         } else {
-                          locator<NavigationService>().navigateTo(homePageRoute); // Pop twice to go back to home
+                          // locator<NavigationProvider>().navigateTo(homePageRoute);
+                          GoRouter router = GoRouter.of(context);
+                          router.go('/');
                           showTestEndedDialog(context);
                           resetTest();
 

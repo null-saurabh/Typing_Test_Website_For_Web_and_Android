@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/main.dart';
 import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
@@ -8,8 +10,23 @@ import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
 import 'package:typingtest/view_model/services/navigation_service.dart';
 
-class WelcomeLoginScreen extends StatelessWidget {
+class WelcomeLoginScreen extends StatefulWidget {
   const WelcomeLoginScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WelcomeLoginScreen> createState() => _WelcomeLoginScreenState();
+}
+
+class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
+
+  @override
+  void initState() {
+    final userProvider = Provider.of<LoginUserProvider>(context, listen: false);
+    if (userProvider.user != null){
+      GoRouter.of(context).go('/home');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +69,20 @@ class WelcomeLoginScreen extends StatelessWidget {
             onPressed: () async {
               final user = await FirebaseAuthService.instance.signInWithGoogle();
               userProvider.setUser(user);
-              print("user set");
-              await apiService.registerUser(user!.email ?? '', user.displayName ?? '');
-              await apiProvider.fetchLiveTest();
-              await apiProvider.fetchPracticeTest();
-              locator<NavigationService>().navigateTo('homepage');
+
+              final registrationFuture = apiService.registerUser(user!.email ?? '', user.displayName ?? '');
+              final liveTestFuture = apiProvider.fetchLiveTest();
+              final practiceTestFuture = apiProvider.fetchPracticeTest();
+
+              await Future.wait([registrationFuture, liveTestFuture, practiceTestFuture]);
+              if (userProvider.user != null){
+                String path = Provider.of<NavigationProvider>(context, listen: false).originalLocations[Provider.of<NavigationProvider>(context, listen: false).originalLocations.length - 2];
+                GoRouter.of(context).go(path);
+              }
+              // locator<NavigationProvider>().navigateTo('homepage');
 
             },
-            child: const Text('Login', style: TextStyle(color: Colors.white),),
+            child: const Text(' Login With Google ', style: TextStyle(color: Colors.white),),
           )
                 ],
               ),
@@ -99,11 +122,15 @@ class WelcomeLoginScreen extends StatelessWidget {
                   onPressed: () async {
                     final user = await FirebaseAuthService.instance.signInWithGoogle();
                     userProvider.setUser(user);
-                    print("user set");
-                    await apiService.registerUser(user!.email ?? '', user.displayName ?? '');
-                    await apiProvider.fetchLiveTest();
-                    await apiProvider.fetchPracticeTest();
-                    locator<NavigationService>().navigateTo('homepage');
+                    final registrationFuture = apiService.registerUser(user!.email ?? '', user.displayName ?? '');
+                    final liveTestFuture = apiProvider.fetchLiveTest();
+                    final practiceTestFuture = apiProvider.fetchPracticeTest();
+
+                    await Future.wait([registrationFuture, liveTestFuture, practiceTestFuture]);
+                    if (userProvider.user != null){
+                      GoRouter.of(context).go('/');
+                    }
+                    // locator<NavigationProvider>().navigateTo('homepage');
 
                   },
                   child: const Text('Login', style: TextStyle(color: Colors.white),),
@@ -115,6 +142,4 @@ class WelcomeLoginScreen extends StatelessWidget {
         )
     );
   }
-
-
 }
