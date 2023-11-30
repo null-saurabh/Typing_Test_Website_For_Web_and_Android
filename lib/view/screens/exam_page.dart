@@ -424,12 +424,12 @@ class ExamPage extends StatelessWidget {
           children: [
             Text(
               testData.testName!,
-              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18,color: testData.isAttempted! ? Colors.purple : Colors.black ),
             ),
             // const SizedBox(
             //   height: 10,
             // ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

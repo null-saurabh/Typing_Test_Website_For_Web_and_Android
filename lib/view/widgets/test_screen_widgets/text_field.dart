@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:typingtest/view_model/provider/save_test_provider.dart';
 
 class TextFieldContainer extends StatefulWidget {
   final Function(String) onTextChanged;
@@ -14,10 +17,10 @@ class TextFieldContainer extends StatefulWidget {
 
 class _TextFieldContainerState extends State<TextFieldContainer> {
 
-  // final ScrollController _scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
   String userInput = "";
   final _scrollController1 = ScrollController();
+  int backspaceCount = 0;
 
   @override
   void initState() {
@@ -31,7 +34,6 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.35,
-      // padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 32),
       decoration: BoxDecoration(color: Colors.white,border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
       child: Padding(
         padding: const EdgeInsets.only(top: 20,left: 18,right: 18),
@@ -39,22 +41,31 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
           interactive: false,
           thumbVisibility: true,
           controller: _scrollController1,
-
-          child: SingleChildScrollView(
-            // controller: _scrollController,
-            controller: _scrollController1,
-
-            child: TextField(
-              focusNode: _focusNode,
-              onChanged: (value) {
+          child: RawKeyboardListener(
+            focusNode: _focusNode,
+            onKey: (RawKeyEvent event) {
+              if (event is RawKeyDownEvent &&
+                  event.logicalKey == LogicalKeyboardKey.backspace) {
                 setState(() {
-                  userInput = value;
+                  backspaceCount++;
                 });
-                // Notify the parent widget (TestScreen) about the changes
-                widget.onTextChanged(value);
-              },
-              maxLines: null,
-              decoration: const InputDecoration.collapsed(hintText: "Start typing here..."),
+                Provider.of<TestModelProvider>(context, listen: false).updateBackspace();
+              }
+            },
+            child: SingleChildScrollView(
+              controller: _scrollController1,
+              child: TextField(
+                focusNode: _focusNode,
+                onChanged: (value) {
+                  setState(() {
+                    userInput = value;
+                  });
+                  // Notify the parent widget (TestScreen) about the changes
+                  widget.onTextChanged(value);
+                },
+                maxLines: null,
+                decoration: const InputDecoration.collapsed(hintText: "Start typing here..."),
+              ),
             ),
           ),
         ),
@@ -62,35 +73,3 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     );
   }
 }
-
-
-
-
-
-
-// Positioned(
-//     right: 0,
-//     top: 0,
-//     child: InkWell(
-//       onTap: (){
-//         _scrollController.jumpTo(_scrollController.offset - 24);
-//       },
-//       child: Container(
-//         decoration: BoxDecoration(border: Border.all()),
-//         child:const Icon(Icons.arrow_upward,size: 17),
-//       ),
-//     )
-// ),
-// Positioned(
-//     right: 0,
-//     bottom: 0,
-//     child: InkWell(
-//       onTap: (){
-//         _scrollController.jumpTo(_scrollController.offset + 24);
-//       },
-//       child: Container(
-//         decoration: BoxDecoration(border: Border.all()),
-//         child:const Icon(Icons.arrow_downward,size: 17),
-//       ),
-//     )
-// )

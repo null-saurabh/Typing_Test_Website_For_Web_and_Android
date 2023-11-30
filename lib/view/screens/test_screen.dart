@@ -55,6 +55,7 @@ class _TestScreenState extends State<TestScreen> {
     });
   }
 
+
   void _submitTest() async {
     if (!testCompleted) {
       if (mounted) {
@@ -70,15 +71,15 @@ class _TestScreenState extends State<TestScreen> {
 
       final String timeTaken = Provider.of<TestModelProvider>(context, listen: false).testModel.timeTaken.toString();
       final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm;
-      // final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backspaceCount;
+      final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backSpaceCount.toString();
       final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy;
-      // final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped;
-      // final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords;
-      // final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords;
-      // final String fullMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.fullMistake;
-      // final String halfMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.halfMistake;
+      final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped.toString();
+      final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords.toString();
+      final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords.toString();
+      final String fullMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.fullMistake.toString();
+      final String halfMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.halfMistake.toString();
       final String testId = widget.testData.testId.toString();
-      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, "1", accuracy, "1", "1", "1", "1", "1", testId);
+      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
 
 
       Navigator.pop(context);
@@ -95,11 +96,8 @@ class _TestScreenState extends State<TestScreen> {
         showTestEndedDialog(context);
       }
       });
-      // calculateWPMAndAccuracy();
-      // saveResult();
     }
   }
-
 
   @override
   void dispose() {

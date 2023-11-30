@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
+import 'package:typingtest/model/save_test_model.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
@@ -68,27 +69,31 @@ class RightRow extends StatelessWidget {
         //     }
         // );
         print("clicked");
+
         try {
           print("in try");
-        final DateTime now = DateTime.now();
-        final Duration elapsed = now.difference(startTime);
-        Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
-        Provider.of<TestModelProvider>(context, listen: false).submitTest();
-
-          final String timeTaken = Provider.of<TestModelProvider>(context, listen: false).testModel.timeTaken.toString();
-          final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm;
-          // final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backspaceCount;
-          final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy;
-          // final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped;
-          // final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords;
-          // final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords;
-          // final String fullMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.fullMistake;
-          // final String halfMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.halfMistake;
-          final String testId = testData.testId.toString();
-          Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, "1", accuracy, "1", "1", "1", "1", "1", testId);
-          
+          final DateTime now = DateTime.now();
+          final Duration elapsed = now.difference(startTime);
+          Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
           Navigator.pop(context);
+          await Provider.of<TestModelProvider>(context, listen: false).submitTest();
+
           await Future.microtask(() {
+            final TestModel testModel = Provider.of<TestModelProvider>(context, listen: false).testModel;
+
+            final String timeTaken = testModel.timeTaken.toString();
+            final String speed = testModel.wpm;
+            final String backspaceCount = testModel.backSpaceCount.toString();
+            final String accuracy = testModel.accuracy;
+            final String wordsTyped = testModel.wordsTyped.toString();
+            final String correctWords = testModel.correctWords.toString();
+            final String incorrectWords = testModel.incorrectWords.toString();
+            final String fullMistake = testModel.fullMistake.toString();
+            final String halfMistake = testModel.halfMistake.toString();
+            final String testId = testData.testId.toString();
+
+            Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
+
             if (testData.type == "PRACTICE") {
               print(testData.testId);
               showDialog(
