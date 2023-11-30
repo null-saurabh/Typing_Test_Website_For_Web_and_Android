@@ -1,7 +1,7 @@
 import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:typingtest/view/screens/learn_typing.dart';
+
 import 'package:typingtest/view_model/locator.dart';
 
 class NavigationService extends ChangeNotifier {
@@ -19,11 +19,18 @@ class NavigationService extends ChangeNotifier {
     return navigatorKey.currentState!.pushNamed(routeName);
   }
 
-  Future<void> navigateToExamPage(BuildContext context, String examName) async {
-    _currentPage = 'exam'; // You can set a common identifier for exam pages
+  Future<void> navigateToRankingPage(BuildContext context, int testId) async {
+    _currentPage = 'ranking';
     notifyListeners();
     final router = locator<FluroRouter>();
-    router.navigateTo(context, '/exam/$examName', transition: TransitionType.fadeIn);
+    router.navigateTo(context, '/ranking/$testId', transition:null);
+  }
+
+  Future<void> navigateToExamPage(BuildContext context, String examName) async {
+    _currentPage = 'exam';
+    notifyListeners();
+    final router = locator<FluroRouter>();
+    router.navigateTo(context, '/exam/$examName', transition: null);
   }
 
 

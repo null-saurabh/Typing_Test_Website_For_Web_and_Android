@@ -40,8 +40,9 @@ class LeftDrawer extends StatelessWidget {
               drawerListTile(context,Icons.account_balance_wallet_outlined, "Subscriptions", 'subscription',userProvider, navigationService),
               drawerListTile(context,Icons.history_outlined, "Result History", 'history', userProvider, navigationService),
               drawerListTile(context,Icons.person_2_outlined, "My Profile", 'profile', userProvider, navigationService),
-              isLoggedIn ? drawerListTile(context,Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService) : drawerListTile(context,Icons.login_outlined, "Log In", 'login', userProvider, navigationService),
-            ],
+              if (isLoggedIn)
+                drawerListTile(context, Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService),
+              ],
           ),
         ),
       );

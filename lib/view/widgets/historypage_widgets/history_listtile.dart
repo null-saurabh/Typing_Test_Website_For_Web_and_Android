@@ -3,6 +3,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/widgets/ranking_page_widgets/ranking_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
+import 'package:typingtest/view_model/locator.dart';
+import 'package:typingtest/view_model/services/navigation_service.dart';
 
 class HistoryListTile extends StatelessWidget {
   final bool popup;
@@ -113,7 +115,8 @@ class HistoryListTile extends StatelessWidget {
                 testId: 6310,
               );
             })
-        : Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310)));
+        : locator<NavigationService>().navigateToRankingPage(context, 6310);
+        // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310)));
 
       },
       child: const Icon(Icons.leaderboard_outlined,color:Color(0xff369CBC)),

@@ -3,9 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
-import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
+import 'package:typingtest/view_model/locator.dart';
+import 'package:typingtest/view_model/services/navigation_service.dart';
 
 class LiveTestListTile extends StatefulWidget {
   final LiveTestData testData;
@@ -392,8 +393,10 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
               side: const BorderSide(color: Color(0xff369CBC)),
               borderRadius: BorderRadius.circular(5)))),
       onPressed: () async {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => RankingScreen(testId: widget.testData.testId!,)));
+        locator<NavigationService>().navigateToRankingPage(context, widget.testData.testId!);
+
+        // Navigator.of(context).push(
+        //     MaterialPageRoute(builder: (context) => RankingScreen(testId: widget.testData.testId!,)));
       },
       child: const Icon(Icons.leaderboard_outlined, color: Color(0xff369CBC)),
     );

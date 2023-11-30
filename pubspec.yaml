@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.10.0
   get_it:
   fluro:
+  go_router: ^12.1.1
 
 dev_dependencies:
   flutter_test:

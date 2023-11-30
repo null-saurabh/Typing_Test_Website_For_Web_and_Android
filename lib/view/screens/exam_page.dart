@@ -412,6 +412,22 @@ class ExamPage extends StatelessWidget {
     );
   }
 
+  void showFullScreenDialog(BuildContext context, Widget dialogContent) {
+    Navigator.of(context).push(PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => dialogContent,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeInOutQuad;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(position: offsetAnimation, child: child);
+      },
+    ));
+  }
+
   Widget dailyTest(LiveTestData testData, BuildContext context) {
     return Container(
       height: 100,
