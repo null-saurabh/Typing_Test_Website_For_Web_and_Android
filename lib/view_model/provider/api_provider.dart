@@ -97,6 +97,7 @@ class ApiProvider with ChangeNotifier {
       String testId,
       ) async {
 
+    print('data $timeTaken,$speed,$accuracy,$correctWords,$testId');
     final userEmail = _userProvider.userEmail;
 
     if (userEmail == null) {

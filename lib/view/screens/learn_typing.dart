@@ -6,9 +6,6 @@ import 'package:typingtest/view/widgets/learn_typing_widgets/keyboard_ui.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/left_hand_image.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/right_hand_image.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/test_string_ui.dart';
-import 'package:typingtest/view_model/locator.dart';
-import 'package:typingtest/view_model/route_names.dart';
-import 'package:typingtest/view_model/services/navigation_service.dart';
 
 class LearnTypingTestScreen extends StatefulWidget {
   const LearnTypingTestScreen({super.key});
@@ -103,59 +100,60 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
   }
 
   Widget buildMobileLayout(BuildContext context){
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     String typedString = longString.substring(0, currentIndex);
     String currentLetter = longString[currentIndex];
     String remainingString = longString.substring(currentIndex + 1);
+    final bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
-    return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
-          // Section 2: Keyboard UI
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height:100,width:100,child: LeftHandImage(currentLetter: currentLetter)),
-                RawKeyboardListener(
-                  focusNode: FocusNode(),
-                  autofocus: true,
-                  onKey: (RawKeyEvent event) {
-                    if (event is RawKeyDownEvent && event.character != null) {
-                      startTime ??= DateTime.now();
+    return RotatedBox(
+      quarterTurns: isPortrait ?1 :0,
+      child: Scaffold(
+        body: Column(
+          children: [
+            TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
+            // Section 2: Keyboard UI
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height:100,width:100,child: LeftHandImage(currentLetter: currentLetter)),
+                  RawKeyboardListener(
+                    focusNode: FocusNode(),
+                    autofocus: true,
+                    onKey: (RawKeyEvent event) {
+                      if (event is RawKeyDownEvent && event.character != null) {
+                        startTime ??= DateTime.now();
 
-                      final character = event.character;
-                      if (character == currentLetter) {
-                        if (currentIndex < longString.length - 1) {
-                          setState(() {
-                            currentIndex++;
-                            if (character == ' ') {
-                              totalWordsTyped++;
-                            }
-                          });
-                        } else {
-                          // locator<NavigationProvider>().navigateTo(homePageRoute);
-                          GoRouter router = GoRouter.of(context);
-                          router.go('/');
-                          showTestEndedDialog(context);
-                          resetTest();
+                        final character = event.character;
+                        if (character == currentLetter) {
+                          if (currentIndex < longString.length - 1) {
+                            setState(() {
+                              currentIndex++;
+                              if (character == ' ') {
+                                totalWordsTyped++;
+                              }
+                            });
+                          } else {
+                            // locator<NavigationProvider>().navigateTo(homePageRoute);
+                            GoRouter router = GoRouter.of(context);
+                            router.go('/');
+                            showTestEndedDialog(context);
+                            resetTest();
 
+                          }
                         }
                       }
-                    }
-                  },
-                  child: KeyboardWidget(currentLetter: currentLetter),
-                ),
-                SizedBox(height:100,width:100,child: RightHandImage(currentLetter: currentLetter)),
-              ],
+                    },
+                    child: KeyboardWidget(currentLetter: currentLetter),
+                  ),
+                  SizedBox(height:100,width:100,child: RightHandImage(currentLetter: currentLetter)),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

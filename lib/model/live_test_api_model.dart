@@ -90,6 +90,36 @@ class LiveTestData {
     this.attendStatus,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'test_id': testId,
+      'test_name': testName,
+      'slug': slug,
+      'target_exam': targetExam,
+      'target_exam_code': targetExamCode,
+      'server_time': serverTime,
+      'language': language,
+      'is_attempted': isAttempted,
+      'is_available': isAvailable,
+      'paragraph': paragraph,
+      'start_datetime': startDatetime,
+      'end_datetime': endDatetime,
+      'allow_backspace': allowBackspace,
+      'word_count': wordCount,
+      'allow_highlight': allowHighlight,
+      'highlight_type': highlightType,
+      'maximum_marks': maximumMarks,
+      'minimum_passing_marks': minimumPassingMarks,
+      'duration': duration,
+      'minimum_speed': minimumSpeed,
+      'minimum_words': minimumWords,
+      'minimum_accuracy': minimumAccuracy,
+      'type': type,
+      'result_type': resultType,
+      'Audio Urls': audioUrls,
+      'attend_status': attendStatus,
+    };
+  }
   factory LiveTestData.fromJson(Map<String, dynamic> json) {
     return LiveTestData(
       testId: json['test_id'],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/model/save_test_model.dart';
@@ -75,27 +76,27 @@ class RightRow extends StatelessWidget {
           final DateTime now = DateTime.now();
           final Duration elapsed = now.difference(startTime);
           Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
-          Navigator.pop(context);
+          GoRouter.of(context).pop();
           await Provider.of<TestModelProvider>(context, listen: false).submitTest();
-
+          print("c");
           await Future.microtask(() {
             final TestModel testModel = Provider.of<TestModelProvider>(context, listen: false).testModel;
 
-            final String timeTaken = testModel.timeTaken.toString();
-            final String speed = testModel.wpm;
-            final String backspaceCount = testModel.backSpaceCount.toString();
-            final String accuracy = testModel.accuracy;
-            final String wordsTyped = testModel.wordsTyped.toString();
-            final String correctWords = testModel.correctWords.toString();
-            final String incorrectWords = testModel.incorrectWords.toString();
-            final String fullMistake = testModel.fullMistake.toString();
-            final String halfMistake = testModel.halfMistake.toString();
+            final String timeTaken = testModel.timeTaken.toInt().toString();
+            final String speed = testModel.wpm.toInt().toString();
+            final String backspaceCount = testModel.backSpaceCount.toInt().toString();
+            final String accuracy = testModel.accuracy.toInt().toString();
+            final String wordsTyped = testModel.wordsTyped.toInt().toString();
+            final String correctWords = testModel.correctWords.toInt().toString();
+            final String incorrectWords = testModel.incorrectWords.toInt().toString();
+            final String fullMistake = testModel.fullMistake.toInt().toString();
+            final String halfMistake = testModel.halfMistake.toInt().toString();
             final String testId = testData.testId.toString();
 
             Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
 
             if (testData.type == "PRACTICE") {
-              print(testData.testId);
+              print("a");
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -103,6 +104,7 @@ class RightRow extends StatelessWidget {
                 },
               );
             } else if (testData.type == "LIVE") {
+              print("b");
               showTestEndedDialog(context);
             }
           });
@@ -132,7 +134,7 @@ class RightRow extends StatelessWidget {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                GoRouter.of(context).pop();
               },
               child: const Text('OK'),
             ),

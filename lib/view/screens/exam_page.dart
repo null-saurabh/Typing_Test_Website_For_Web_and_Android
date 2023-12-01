@@ -20,6 +20,7 @@ class ExamPage extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context) {
+    print("in exam page");
     final scrollController1 = ScrollController();
     return Scrollbar(
       controller: scrollController1,

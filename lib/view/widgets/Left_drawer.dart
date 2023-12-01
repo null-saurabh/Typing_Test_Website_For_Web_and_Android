@@ -5,7 +5,7 @@ import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
-import 'package:typingtest/view_model/services/navigation_service.dart';
+import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 class LeftDrawer extends StatelessWidget {
 
@@ -33,13 +33,13 @@ class LeftDrawer extends StatelessWidget {
                 Text(userProvider.user!.email ?? 'No Email', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey)),
               ],
               const SizedBox(height: 20),
-              drawerListTile(context,Icons.category_outlined, "All Tests", '/home', userProvider, navigationService),
-              drawerListTile(context,Icons.menu_book_rounded, "Learn Typing", '/learn', userProvider, navigationService),
-              drawerListTile(context,Icons.account_balance_wallet_outlined, "Subscriptions", '/subscription',userProvider, navigationService),
-              drawerListTile(context,Icons.history_outlined, "Result History", '/history/false', userProvider, navigationService),
-              drawerListTile(context,Icons.person_2_outlined, "My Profile", '/profile', userProvider, navigationService),
+              drawerItems(context,Icons.category_outlined, "All Tests", '/home', userProvider, navigationService),
+              drawerItems(context,Icons.menu_book_rounded, "Learn Typing", '/learn', userProvider, navigationService),
+              drawerItems(context,Icons.account_balance_wallet_outlined, "Subscriptions", '/subscription',userProvider, navigationService),
+              drawerItems(context,Icons.history_outlined, "Result History", '/history/false', userProvider, navigationService),
+              drawerItems(context,Icons.person_2_outlined, "My Profile", '/profile', userProvider, navigationService),
               if (isLoggedIn)
-                drawerListTile(context, Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService),
+                drawerItems(context, Icons.logout_outlined, "Log Out", 'logout', userProvider, navigationService),
               ],
           ),
         ),
@@ -47,11 +47,11 @@ class LeftDrawer extends StatelessWidget {
     });
   }
 
-  Widget drawerListTile(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationProvider navigationService) {
+  Widget drawerItems(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationProvider navigationProvider) {
     final ApiService apiService = ApiService();
     final apiProvider = Provider.of<ApiProvider>(context);
-    final currentRoute = navigationService.currentPage;
-    bool isSelected = currentRoute == pageId;
+    final currentRoute = navigationProvider.currentPage;
+    bool isSelected = currentRoute.contains(pageId);
     print("currentRoute: $currentRoute, pageId: $pageId");
 
     return Container(
@@ -63,6 +63,8 @@ class LeftDrawer extends StatelessWidget {
               if (pageId == 'logout') {
                 await FirebaseAuthService.instance.signOut();
                 userProvider.setUser(null);
+                Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation('/home');
+                Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation('/home');
                 GoRouter router = GoRouter.of(context);
                 router.replace('/welcome');
               } else if (pageId == 'login') {
@@ -74,7 +76,7 @@ class LeftDrawer extends StatelessWidget {
                 await apiProvider.fetchPracticeTest();
               } else {
                 print("in drawer");
-                navigationService.updateCurrentPage(pageId);
+                navigationProvider.updateCurrentPage(pageId);
                 GoRouter.of(context).go(pageId);
               }
             },

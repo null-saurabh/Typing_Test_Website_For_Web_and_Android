@@ -70,9 +70,9 @@ class _TestScreenState extends State<TestScreen> {
       Provider.of<TestModelProvider>(context, listen: false).submitTest();
 
       final String timeTaken = Provider.of<TestModelProvider>(context, listen: false).testModel.timeTaken.toString();
-      final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm;
+      final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm.toString();
       final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backSpaceCount.toString();
-      final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy;
+      final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy.toString();
       final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped.toString();
       final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords.toString();
       final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords.toString();
@@ -167,10 +167,12 @@ class _TestScreenState extends State<TestScreen> {
                                 children: [
                                   TextToWrite(testData: widget.testData,),
                                   const SizedBox(height: 20),
-                                  TextFieldContainer(onTextChanged: (typedText) {
+                                  TextFieldContainer(
+                                    onTextChanged: (typedText) {
                                     Provider.of<TestModelProvider>(context, listen: false)
                                         .updateTypedText(typedText);
-                                  },),
+                                  },
+                                  ),
                                 ],
                               ),
                             ),
@@ -238,10 +240,12 @@ class _TestScreenState extends State<TestScreen> {
                       children: [
                         TextToWrite(testData: widget.testData,),
                         const SizedBox(height: 20),
-                        TextFieldContainer(onTextChanged: (typedText) {
+                        TextFieldContainer(
+                            onTextChanged: (typedText) {
                           Provider.of<TestModelProvider>(context, listen: false)
                               .updateTypedText(typedText);
-                        }),
+                        }
+                        ),
                       ],
                     ),
                   ),

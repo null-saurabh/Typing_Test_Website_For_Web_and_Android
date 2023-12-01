@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/main.dart';
-import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
-import 'package:typingtest/view_model/services/navigation_service.dart';
+import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 class WelcomeLoginScreen extends StatefulWidget {
   const WelcomeLoginScreen({Key? key}) : super(key: key);
@@ -128,14 +126,14 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
 
                     await Future.wait([registrationFuture, liveTestFuture, practiceTestFuture]);
                     if (userProvider.user != null){
-                      GoRouter.of(context).go('/');
+                      String path = Provider.of<NavigationProvider>(context, listen: false).originalLocations[Provider.of<NavigationProvider>(context, listen: false).originalLocations.length - 2];
+                      print(path);
+                      GoRouter.of(context).go(path);
                     }
                     // locator<NavigationProvider>().navigateTo('homepage');
-
                   },
-                  child: const Text('Login', style: TextStyle(color: Colors.white),),
+                  child: const Text('Login With Google', style: TextStyle(color: Colors.white),),
                 )
-
               ],
             ),
           ),

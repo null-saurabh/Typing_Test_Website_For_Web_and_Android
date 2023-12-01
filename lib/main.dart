@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/screens/Homepage_screen.dart';
+import 'package:typingtest/view/screens/error_page.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homeview.dart';
@@ -15,12 +17,10 @@ import 'package:typingtest/view/screens/ranking_page.dart';
 import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
 import 'package:typingtest/view/screens/welcome_login_screen.dart';
-import 'package:typingtest/view_model/locator.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/provider/save_test_provider.dart';
-import 'package:typingtest/view_model/route_names.dart';
-import 'package:typingtest/view_model/services/navigation_service.dart';
+import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 
 void main() async {
@@ -79,24 +79,32 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 final _router = GoRouter(
   initialLocation: '/home',
   navigatorKey: _rootNavigatorKey,
+  // observers: [
+  //   GoRouteObserver()
+  // ],
   redirect: (context, state){
-    String originalLocation = state.fullPath ?? '/';
+    String originalLocation = state.matchedLocation;
     if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
-      print(originalLocation);
+      print(state.matchedLocation);
       return '/welcome';
     }
     else{
       return null;
     }
   },
-
+  errorPageBuilder: (context,state){
+    return const MaterialPage(child: ErrorPage());
+  },
   routes: [
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
         return HOMEVIEW(child: child);
       },
+      observers: [
+        GoRouteShellObserver()
+      ],
       routes: [
         GoRoute(
           // parentNavigatorKey: _shellNavigatorKey,
@@ -152,7 +160,7 @@ final _router = GoRouter(
             path: '/ranking/:testId',
             builder: (context, state) {
               return RankingScreen(
-                  testId: state.pathParameters["testId"] as int);
+                  testId: int.tryParse(state.pathParameters["testId"]!) as int);
             }),
       ],
     ),
@@ -167,14 +175,77 @@ final _router = GoRouter(
     GoRoute(
       // parentNavigatorKey: _rootNavigatorKey,
       name: 'test',
-      path: '/test',
+      path: '/test/:testData',
       builder: (context, state) {
-        return TestScreen(testData: state.pathParameters["testData"] as LiveTestData);
+        String testDataString = state.pathParameters["testData"] as String;
+        LiveTestData testData = LiveTestData.fromJson(jsonDecode(testDataString));
+        return TestScreen(testData: testData);
       },
     ),
   ],
+
 );
 
+class GoRouteShellObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    // Called when a new route has been pushed onto the navigator.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final BuildContext context = _shellNavigatorKey.currentContext!;
+      final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
+      final String routeName = route.settings.name ?? '';
+      print('a'+routeName);
+      if (routeName == 'exam') {
+        navigationProvider.updateCurrentPageFromUrl('/home');
+      } else if (routeName == 'ranking') {
+        navigationProvider.updateCurrentPageFromUrl('/history/false');
+      }else if (routeName == 'history') {
+        print('bbbb');
+        navigationProvider.updateCurrentPageFromUrl('/history/false');
+      } else {
+        navigationProvider.updateCurrentPageFromUrl('/$routeName');
+      }
+    });
+  }
+
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final BuildContext context = _shellNavigatorKey.currentContext!;
+      final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
+      final String routeName = route.settings.name ?? '';
+      print('a' +routeName);
+
+      if (routeName == 'exam') {
+        navigationProvider.updateCurrentPageFromUrl('/home');
+      } else if (routeName == 'ranking') {
+        navigationProvider.updateCurrentPageFromUrl('/history/false');
+      } else {
+        navigationProvider.updateCurrentPageFromUrl('/$routeName');
+      }
+    });
+  }
+}
+
+
+// class GoRouteObserver extends NavigatorObserver {
+//   @override
+//   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+//     // Called when a new route has been pushed onto the navigator.
+//     print('Route pushed: ${route.settings.name}');
+//     final BuildContext context = _rootNavigatorKey.currentContext!;
+//     Provider.of<NavigationProvider>(context, listen: false).updateCurrentPageFromUrl('/${route.settings.name}');
+//   }
+//
+//   @override
+//   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+//     // Called when the current route has been popped off the navigator.
+//     print('Route popped: ${route.settings.name}');
+//     final BuildContext context = _rootNavigatorKey.currentContext!;
+//     Provider.of<NavigationProvider>(context, listen: false).updateCurrentPageFromUrl('/${route.settings.name}');
+//   }
+//
+// }
 
 
 class MyApp extends StatelessWidget {

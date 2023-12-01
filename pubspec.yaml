@@ -40,6 +40,8 @@ dependencies:
   get_it:
   fluro:
   go_router: ^12.1.1
+#  webdev:
+
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +66,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+
+#webdev:
+#  build:
+#    options:
+#      - --output=web:build
+#      - --entry-points=web/main.dart
+#      - --define=FLUTTER_WEB_DEFERRED_IMPORTS_HTML=web/learn_typing_auto_rotate.html
 
   # To add assets to your application, add an assets section, like this:
 

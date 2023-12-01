@@ -73,8 +73,8 @@ class TestModelProvider with ChangeNotifier {
 
     final accuracy = calculateAccuracy(typedText, originalText);
 
-    _testModel.wpm = wpm.toString();
-    _testModel.accuracy = accuracy.toString();
+    _testModel.wpm = wpm.toInt();
+    _testModel.accuracy = accuracy.toInt();
 
     notifyListeners();
   }

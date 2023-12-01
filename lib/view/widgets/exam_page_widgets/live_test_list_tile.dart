@@ -7,7 +7,7 @@ import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view_model/locator.dart';
-import 'package:typingtest/view_model/services/navigation_service.dart';
+import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 class LiveTestListTile extends StatefulWidget {
   final LiveTestData testData;

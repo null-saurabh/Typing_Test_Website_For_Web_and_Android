@@ -1,5 +1,8 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
 import 'package:typingtest/view/widgets/pop_up_top_heading_bar.dart';
@@ -149,8 +152,12 @@ class InstructionPage extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>TestScreen(testData: testData,)));
-      },
+        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>TestScreen(testData: testData,)));
+        String testDataString = jsonEncode(testData.toJson());
+        GoRouter.of(context).pop();
+        GoRouter.of(context).pushNamed('test',pathParameters: {'testData':testDataString});
+
+        },
       child: const Text('Start Now', style: TextStyle(color: Colors.white),),
     );
   }

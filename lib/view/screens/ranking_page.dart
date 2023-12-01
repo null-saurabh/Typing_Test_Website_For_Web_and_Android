@@ -23,15 +23,15 @@ class RankingScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              InkWell(
-                onTap:(){Navigator.pop(context);},
-                child: Container(
-                  height: 32,
-                  width: 32,
-                  color: Colors.white,
-                  child: const Icon(Icons.arrow_back),
-                ),
-              ),
+              // InkWell(
+              //   onTap:(){Navigator.pop(context);},
+              //   child: Container(
+              //     height: 32,
+              //     width: 32,
+              //     color: Colors.white,
+              //     child: const Icon(Icons.arrow_back),
+              //   ),
+              // ),
               const SizedBox(width: 10),
               const Text(
                 "Leader Board",

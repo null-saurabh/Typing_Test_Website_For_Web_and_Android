@@ -76,7 +76,7 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
           },
         ),
       ),
-      // drawer: const LeftDrawer(),
+      drawer: const LeftDrawer(),
       backgroundColor: const Color(0xffF5FAFC),
       body: widget.child
 

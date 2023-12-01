@@ -6,8 +6,8 @@ class TestModel {
   int wordsTyped = 0;
   int correctWords = 0;
   int incorrectWords = 0;
-  String wpm = "";
-  String accuracy ="";
+  int wpm = 0;
+  int accuracy =0;
   int halfMistake = 0;
   int fullMistake = 0;
 }

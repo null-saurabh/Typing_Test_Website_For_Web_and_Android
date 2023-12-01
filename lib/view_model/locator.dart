@@ -8,7 +8,7 @@
 // import 'package:typingtest/view/screens/ranking_page.dart';
 // import 'package:typingtest/view/screens/subscription.dart';
 // import 'package:typingtest/view/screens/welcome_login_screen.dart';
-// import 'package:typingtest/view_model/services/navigation_service.dart';
+// import 'package:typingtest/view_model/services/navigation_provider.dart';
 //
 // GetIt locator = GetIt.instance;
 //

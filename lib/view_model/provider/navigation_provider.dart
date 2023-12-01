@@ -1,19 +1,17 @@
-import 'package:fluro/fluro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:typingtest/view_model/locator.dart';
 
 class NavigationProvider extends ChangeNotifier {
 
   // NavigationService(this.router);
 
   // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-  String _currentPage = '/';
+  String _currentPage = '/home';
 
   String get currentPage => _currentPage;
 
-  List<String> _originalLocations = [];
+  List<String> _originalLocations = ['/home','/home'];
 
   List<String> get originalLocations => _originalLocations;
 
@@ -22,6 +20,10 @@ class NavigationProvider extends ChangeNotifier {
   }
 
   void updateCurrentPage(String routeName) {
+    _currentPage = routeName;
+    notifyListeners();
+  }
+  void updateCurrentPageFromUrl(String routeName) {
     _currentPage = routeName;
     notifyListeners();
   }

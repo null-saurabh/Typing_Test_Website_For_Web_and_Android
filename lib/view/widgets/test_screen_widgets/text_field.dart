@@ -41,21 +41,23 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
           interactive: false,
           thumbVisibility: true,
           controller: _scrollController1,
-          child: RawKeyboardListener(
-            focusNode: _focusNode,
-            onKey: (RawKeyEvent event) {
-              if (event is RawKeyDownEvent &&
-                  event.logicalKey == LogicalKeyboardKey.backspace) {
-                setState(() {
-                  backspaceCount++;
-                });
-                Provider.of<TestModelProvider>(context, listen: false).updateBackspace();
-              }
-            },
-            child: SingleChildScrollView(
+          child:
+    // RawKeyboardListener(
+            // focusNode: _focusNode,
+            // onKey: (RawKeyEvent event) {
+            //   if (event is RawKeyDownEvent &&
+            //       event.logicalKey == LogicalKeyboardKey.backspace) {
+            //     setState(() {
+            //       backspaceCount++;
+            //     });
+            //     Provider.of<TestModelProvider>(context, listen: false).updateBackspace();
+            //   }
+            // },
+            // child:
+    SingleChildScrollView(
               controller: _scrollController1,
               child: TextField(
-                focusNode: _focusNode,
+                // focusNode: _focusNode,
                 onChanged: (value) {
                   setState(() {
                     userInput = value;
@@ -67,7 +69,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
                 decoration: const InputDecoration.collapsed(hintText: "Start typing here..."),
               ),
             ),
-          ),
+          // ),
         ),
       ),
     );
