@@ -46,7 +46,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     String typedString = longString.substring(0, currentIndex);
     String currentLetter = longString[currentIndex];
     String remainingString = longString.substring(currentIndex + 1);
-
+    print(MediaQuery.of(context).size.width *0.14);
 
     return Scaffold(
       body: Column(
@@ -61,7 +61,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height:200,width:200,child: LeftHandImage(currentLetter: currentLetter)),
+                SizedBox(
+                    height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                    width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                    child: LeftHandImage(currentLetter: currentLetter)),
                 RawKeyboardListener(
                   focusNode: FocusNode(),
                   autofocus: true,
@@ -79,9 +82,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                             }
                           });
                         } else {
-                          // locator<NavigationProvider>().navigateTo(homePageRoute); // Pop twice to go back to home
-                          GoRouter router = GoRouter.of(context);
-                          router.go('/');
+                          GoRouter.of(context).go('/home');
                           showTestEndedDialog(context);
                           resetTest(); // Pop twice to go back to home
                         }
@@ -90,7 +91,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                   },
                   child: KeyboardWidget(currentLetter: currentLetter),
                 ),
-                SizedBox(height:200,width:200,child: RightHandImage(currentLetter: currentLetter)),
+                SizedBox(
+                    height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10 ,
+                    width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                    child: RightHandImage(currentLetter: currentLetter)),
               ],
             ),
           ),
@@ -118,7 +122,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height:100,width:100,child: LeftHandImage(currentLetter: currentLetter)),
+                  SizedBox(
+                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      child: LeftHandImage(currentLetter: currentLetter)),
                   RawKeyboardListener(
                     focusNode: FocusNode(),
                     autofocus: true,
@@ -136,9 +143,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                               }
                             });
                           } else {
-                            // locator<NavigationProvider>().navigateTo(homePageRoute);
-                            GoRouter router = GoRouter.of(context);
-                            router.go('/');
+                            GoRouter.of(context).go('/home');
                             showTestEndedDialog(context);
                             resetTest();
 
@@ -148,7 +153,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     },
                     child: KeyboardWidget(currentLetter: currentLetter),
                   ),
-                  SizedBox(height:100,width:100,child: RightHandImage(currentLetter: currentLetter)),
+                  SizedBox(
+                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      child: RightHandImage(currentLetter: currentLetter)),
                 ],
               ),
             ),
@@ -190,7 +198,8 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
+                GoRouter.of(context).pop();
               },
               child: const Text('OK'),
             ),

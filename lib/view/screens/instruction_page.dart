@@ -113,7 +113,7 @@ class InstructionPage extends StatelessWidget {
                               const Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(".5 ",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
+                                  Text("5. ",style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),),
 
                                   Expanded(child: Text("Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",textAlign: TextAlign.justify,style: TextStyle(fontWeight: FontWeight.w400,fontSize: 18),)),
                                 ],

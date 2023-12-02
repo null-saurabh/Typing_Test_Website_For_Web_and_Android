@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
-import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
 import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 class LeftDrawer extends StatelessWidget {
-
+  // final GlobalKey<ScaffoldState> scaffoldKey;
+  final bool isMobile;
+  // required this.scaffoldKey,required this.isMobile,
   const LeftDrawer(
-      {super.key,});
+      {required this.isMobile,super.key,});
 
   @override
   Widget build(BuildContext context) {
@@ -48,11 +48,11 @@ class LeftDrawer extends StatelessWidget {
   }
 
   Widget drawerItems(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationProvider navigationProvider) {
-    final ApiService apiService = ApiService();
-    final apiProvider = Provider.of<ApiProvider>(context);
+    // final ApiService apiService = ApiService();
+    // final apiProvider = Provider.of<ApiProvider>(context);
     final currentRoute = navigationProvider.currentPage;
     bool isSelected = currentRoute.contains(pageId);
-    print("currentRoute: $currentRoute, pageId: $pageId");
+    // print("currentRoute: $currentRoute, pageId: $pageId");
 
     return Container(
           color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
@@ -67,20 +67,36 @@ class LeftDrawer extends StatelessWidget {
                 Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation('/home');
                 GoRouter router = GoRouter.of(context);
                 router.replace('/welcome');
-              } else if (pageId == 'login') {
-                final user = await FirebaseAuthService.instance.signInWithGoogle();
-                userProvider.setUser(user);
-                print("user set");
-                await apiService.registerUser(user!.email ?? '', user.displayName ?? '');
-                await apiProvider.fetchLiveTest();
-                await apiProvider.fetchPracticeTest();
               } else {
                 print("in drawer");
                 navigationProvider.updateCurrentPage(pageId);
                 GoRouter.of(context).go(pageId);
+                if (isMobile) {
+                //   print("is mobile");
+                  Scaffold.of(context).openEndDrawer();
+                }
               }
             },
           ),
         );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+// else if (pageId == 'login') {
+// final user = await FirebaseAuthService.instance.signInWithGoogle();
+// userProvider.setUser(user);
+// print("user set");
+// await apiService.registerUser(user!.email ?? '', user.displayName ?? '');
+// await apiProvider.fetchLiveTest();
+// await apiProvider.fetchPracticeTest();
+// }

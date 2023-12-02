@@ -18,6 +18,7 @@ class HOMEVIEW extends StatefulWidget {
 
 class _HOMEVIEWState extends State<HOMEVIEW> {
   final _navigatorKey = GlobalKey<NavigatorState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // @override
   // void initState() {
@@ -53,7 +54,7 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const LeftDrawer(),
+          const LeftDrawer(isMobile: false,),
           Expanded(
             child: widget.child
           )
@@ -65,18 +66,22 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
   Widget buildMobileLayout(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Builder(
-          builder: (context) {
-            return IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                Scaffold.of(context).openDrawer(); // Open the drawer
-              },
-            );
-          },
-        ),
+        // leading: Builder(
+        //   builder: (context) {
+        //     return IconButton(
+        //       icon: const Icon(Icons.menu),
+        //       onPressed: () {
+        //         // _scaffoldKey.currentState!.openDrawer();
+        //         _scaffoldKey.currentState!.openDrawer(); // Open the drawer
+        //       },
+        //     );
+        //   },
+        // ),
+        // title: ,
+        // actions: [getActionForChild(widget.child)],
       ),
-      drawer: const LeftDrawer(),
+      drawer: const LeftDrawer(isMobile: true,),
+
       backgroundColor: const Color(0xffF5FAFC),
       body: widget.child
 

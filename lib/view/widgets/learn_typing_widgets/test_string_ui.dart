@@ -14,6 +14,20 @@ class TestStringUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: currentLetter,
+        style: const TextStyle(fontSize: 40.0, color: Color(0xff369CBC)),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+
+    // Use the measured width for the container
+    double currentLetterWidth = textPainter.width;
+
+
+
     return Padding(
       padding: const EdgeInsets.all(1),
       child: Container(
@@ -40,7 +54,7 @@ class TestStringUi extends StatelessWidget {
             ),
             const SizedBox(width: 4,),
             Container(
-              width: 40, // Adjust the width as needed
+              width: currentLetterWidth +6, // Adjust the width as needed
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.0),
                   border: Border.all(color: const Color(0xff369CBC))

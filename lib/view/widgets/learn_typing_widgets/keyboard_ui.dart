@@ -14,8 +14,9 @@ class KeyboardWidget extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context){
+    double totalScreenWidth = MediaQuery.of(context).size.width * 0.50;
     return Container(
-      color: Colors.white,
+      // color: Colors.white,
       padding: const EdgeInsets.all(16.0),
       child: Center(
         child: Column(
@@ -36,7 +37,7 @@ class KeyboardWidget extends StatelessWidget {
               "-": 40.0,
               "=": 40.0,
               "Backspace": 80.0
-            }),
+            },totalScreenWidth),
             buildDesktopRow({
               "Tab": 60.0,
               "Q": 40.0,
@@ -52,7 +53,7 @@ class KeyboardWidget extends StatelessWidget {
               "[": 40.0,
               "]": 40.0,
               "\\": 60.0
-            }),
+            },totalScreenWidth),
             buildDesktopRow({
               "Caps": 85.0,
               "A": 40.0,
@@ -67,7 +68,7 @@ class KeyboardWidget extends StatelessWidget {
               ";": 40.0,
               '\'': 40.0,
               "Enter": 85.0
-            }),
+            },totalScreenWidth),
             buildDesktopRow({
               "L Shift": 110.0,
               "Z": 40.0,
@@ -81,7 +82,7 @@ class KeyboardWidget extends StatelessWidget {
               ".": 40.0,
               "/": 40.0,
               "R Shift": 110.0
-            }),
+            },totalScreenWidth),
             buildDesktopRow({
               "L Ctrl": 40.0,
               "L fn": 40.0,
@@ -91,15 +92,21 @@ class KeyboardWidget extends StatelessWidget {
               "R Alt": 40.0,
               "R fn": 40.0,
               "R Ctrl": 40.0
-            }),
+            },totalScreenWidth),
           ],
         ),
       ),
     );
   }
   Widget buildMobileLayout(BuildContext context){
+    double totalScreenWidth;
+    if (MediaQuery.of(context).orientation == Orientation.portrait) {
+      totalScreenWidth = MediaQuery.of(context).size.height * 0.60;
+    } else {
+      totalScreenWidth = MediaQuery.of(context).size.width * 0.60;
+    }
     return Container(
-      color: Colors.white,
+      // color: Colors.white,
       padding: const EdgeInsets.all(2.0),
       child: Center(
         child: Column(
@@ -120,7 +127,10 @@ class KeyboardWidget extends StatelessWidget {
               "-": 30.0,
               "=": 30.0,
               "Backspace": 72.0
-            }),
+            //   total = 462 + 13 spaces (52)
+            },
+            totalScreenWidth
+            ),
             buildMobileRow({
               "Tab": 51.0,
               "Q": 30.0,
@@ -136,7 +146,9 @@ class KeyboardWidget extends StatelessWidget {
               "[": 30.0,
               "]": 30.0,
               "\\": 51.0
-            }),
+              //   total = 462 + 13 spaces(52)
+
+            },totalScreenWidth),
             buildMobileRow({
               "Caps": 70.0,
               "A": 30.0,
@@ -150,8 +162,10 @@ class KeyboardWidget extends StatelessWidget {
               "L": 30.0,
               ";": 30.0,
               '\'': 30.0,
-              "Enter": 67.0
-            }),
+              "Enter": 66.0
+              //   total = 466 + 12 spaces(48)
+
+            },totalScreenWidth),
             buildMobileRow({
               "L Shift": 85,
               "Z": 30.0,
@@ -165,7 +179,9 @@ class KeyboardWidget extends StatelessWidget {
               ".": 30.0,
               "/": 30.0,
               "R Shift": 85
-            }),
+              //   total = 470 + 11 spaces(44)
+
+            },totalScreenWidth),
             buildMobileRow({
               "L Ctrl": 40.0,
               "L fn": 30.0,
@@ -175,7 +191,9 @@ class KeyboardWidget extends StatelessWidget {
               "R Alt": 40.0,
               "R fn": 30.0,
               "R Ctrl": 40.0
-            }),
+              //   total = 486 + 7 spaces(28)
+
+            },totalScreenWidth),
           ],
         ),
       ),
@@ -185,7 +203,10 @@ class KeyboardWidget extends StatelessWidget {
 
 
 
-  Widget buildDesktopRow(Map<String, double> keys) {
+  Widget buildDesktopRow(Map<String, double> keys, double totalScreenWidth) {
+    double totalRowWidth = 730;
+    double dynamicWidthRatio = totalScreenWidth / totalRowWidth;
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
@@ -193,7 +214,7 @@ class KeyboardWidget extends StatelessWidget {
         children: keys.entries
             .map(
               (entry) => Container(
-            width: entry.value,
+            width: (entry.value * dynamicWidthRatio > entry.value) ? entry.value :entry.value * dynamicWidthRatio,
             height: 40.0,
             alignment: Alignment.center,
             margin: const EdgeInsets.all(5.0),
@@ -209,7 +230,10 @@ class KeyboardWidget extends StatelessWidget {
       ),
     );
   }
-  Widget buildMobileRow(Map<String, double> keys) {
+  Widget buildMobileRow(Map<String, double> keys, double totalScreenWidth) {
+    // print('aa' + totalScreenWidth.toString());
+    double totalRowWidth = 514;
+    double dynamicWidthRatio = totalScreenWidth / totalRowWidth;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
@@ -217,7 +241,7 @@ class KeyboardWidget extends StatelessWidget {
         children: keys.entries
             .map(
               (entry) => Container(
-            width: entry.value,
+            width: (entry.value * dynamicWidthRatio > entry.value) ? entry.value :entry.value * dynamicWidthRatio,
             height: 25.0,
             alignment: Alignment.center,
             margin: const EdgeInsets.all(2.0),

@@ -5,6 +5,7 @@ import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/widgets/exam_page_widgets/live_test_list_tile.dart';
 import 'package:typingtest/view/widgets/historypage_widgets/history_dialog.dart';
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
+import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class ExamPage extends StatelessWidget {
@@ -398,7 +399,7 @@ class ExamPage extends StatelessWidget {
     return Container(
       height: 100,
       width: 275,
-      color: Colors.white,
+      color: testData.isAttempted!? Colors.grey.withOpacity(0.08) :Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -406,7 +407,7 @@ class ExamPage extends StatelessWidget {
           children: [
             Text(
               testData.testName!,
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18,color: testData.isAttempted! ? Colors.purple : Colors.black ),
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18,color: testData.isAttempted! ? Colors.black : Colors.black ),
             ),
             // const SizedBox(
             //   height: 10,
@@ -415,6 +416,37 @@ class ExamPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                if(testData.isAttempted!)
+                  opaqueButton(
+                    context,
+                    "Result",
+                        () async {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return ResultDialog(testId: testData.testId!);
+                              }
+                          );
+                    },
+                  ),
+                if(testData.isAttempted!)
+                  const SizedBox(width: 5,),
+                if(testData.isAttempted!)
+                  opaqueButton(
+                    context,
+                    "Try Again",
+                        () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return InstructionDialog(
+                              testData: testData,
+                            );
+                          });
+                    },
+                  ),
+
+                if(!testData.isAttempted!)
                 opaqueButton(
                   context,
                   "Start Now",
