@@ -18,6 +18,7 @@ import 'package:typingtest/view/screens/test_screen.dart';
 import 'package:typingtest/view/screens/welcome_login_screen.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 import 'package:typingtest/view_model/provider/save_test_provider.dart';
 import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
@@ -61,10 +62,13 @@ void main() async {
               context.read<LoginUserProvider>(),
             )),
         ChangeNotifierProvider(
-          create: (context) => TestModelProvider(),
+          create: (context) => TestCalculatorProvider(),
         ),
         ChangeNotifierProvider(
           create: (context) => NavigationProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => RazorPayProvider(),
         ),
       ],
       child: const MyApp(),
@@ -85,7 +89,7 @@ final _router = GoRouter(
     String originalLocation = state.matchedLocation;
     if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
-      print(state.matchedLocation);
+      // print(state.matchedLocation);
       return '/welcome';
     }
     else{
@@ -193,13 +197,13 @@ class GoRouteShellObserver extends NavigatorObserver {
       final BuildContext context = _shellNavigatorKey.currentContext!;
       final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
       final String routeName = route.settings.name ?? '';
-      print('a'+routeName);
+      // print('a'+routeName);
       if (routeName == 'exam') {
         navigationProvider.updateCurrentPageFromUrl('/home');
       } else if (routeName == 'ranking') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
       }else if (routeName == 'history') {
-        print('bbbb');
+        // print('bbbb');
         navigationProvider.updateCurrentPageFromUrl('/history/false');
       } else {
         navigationProvider.updateCurrentPageFromUrl('/$routeName');
@@ -213,7 +217,7 @@ class GoRouteShellObserver extends NavigatorObserver {
       final BuildContext context = _shellNavigatorKey.currentContext!;
       final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
       final String routeName = route.settings.name ?? '';
-      print('a' +routeName);
+      // print('a' +routeName);
 
       if (routeName == 'exam') {
         navigationProvider.updateCurrentPageFromUrl('/home');

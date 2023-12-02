@@ -1,5 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
+import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 
 class SubscriptionPage extends StatelessWidget {
   const SubscriptionPage({super.key});
@@ -164,10 +171,10 @@ class SubscriptionPage extends StatelessWidget {
             // const Spacer(),
             const SizedBox(height: 50),
             freePlan
-                ? buyButton("Get Started", context)
+                ? buyButton("Get Started", context,false,0)
                 : recommended
-                    ? buyRecommendedButton(context)
-                    : buyButton("Buy Now", context),
+                    ? buyButton("Buy Now", context,true,199)
+                    : buyButton("Buy Now", context,false,299),
             const SizedBox(
               height: 10,
             )
@@ -177,45 +184,53 @@ class SubscriptionPage extends StatelessWidget {
     );
   }
 
-  Widget buyRecommendedButton(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        style: ButtonStyle(
-            elevation: MaterialStateProperty.all(0),
-            backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                side: const BorderSide(color: Color(0xff369CBC)),
-                borderRadius: BorderRadius.circular(5)))),
-        onPressed: () async {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => const HomePageScreen()));
-        },
-        child: const Text(
-          'Buy Now',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
-  }
 
-  Widget buyButton(String buyText, BuildContext context) {
+  Widget buyButton(String buyText, BuildContext context,bool isRecommended,int price) {
+    final razorPayProvider = Provider.of<RazorPayProvider>(context, listen: false);
+    final loginUserProvider = Provider.of<LoginUserProvider>(context);
+    String email = loginUserProvider.user!.email!;
+    String name = loginUserProvider.user!.displayName ?? loginUserProvider.user!.email! ;
+
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         style: ButtonStyle(
             elevation: MaterialStateProperty.all(0),
-            backgroundColor: MaterialStateProperty.all(Colors.white),
+            backgroundColor: isRecommended ? MaterialStateProperty.all(const Color(0xff369CBC)) : MaterialStateProperty.all(Colors.white),
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 side: const BorderSide(color: Color(0xff369CBC)),
                 borderRadius: BorderRadius.circular(5)))),
         onPressed: () async {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (context) => const HOMEPAGE()));
+          if(price == 0){ GoRouter.of(context).go('/home');}
+          else if(price >0){
+
+            final orderResponse = await Provider.of<ApiProvider>(context, listen: false)
+                .createOrder(price);
+
+            final razorpayKey = orderResponse.razorpayKeyId;
+            final orderId = orderResponse.id;
+
+            razorPayProvider.onSuccess = () {
+              print('Payment Successful');
+            };
+
+            razorPayProvider.onError = () {
+              print('Payment Error');
+            };
+
+            razorPayProvider.openCheckout(
+              amount: price * 100,
+              key: razorpayKey,
+              name: name,
+              email: email,
+              orderId: orderId,
+            );
+
+          }
         },
         child: Text(
           buyText,
-          style: const TextStyle(color: Color(0xff369CBC)),
+          style: TextStyle(color: isRecommended ? Colors.white : const Color(0xff369CBC)),
         ),
       ),
     );

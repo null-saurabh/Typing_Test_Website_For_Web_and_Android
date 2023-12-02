@@ -30,8 +30,8 @@ class _TestScreenState extends State<TestScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () {
-      Provider.of<TestModelProvider>(context, listen: false).startNewTest();
-      Provider.of<TestModelProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
+      Provider.of<TestCalculatorProvider>(context, listen: false).startNewTest();
+      Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
 
     });
     _startTime = DateTime.now();
@@ -66,18 +66,18 @@ class _TestScreenState extends State<TestScreen> {
       _timer.cancel();
       final DateTime now = DateTime.now();
       final Duration elapsed = now.difference(_startTime);
-      Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
-      Provider.of<TestModelProvider>(context, listen: false).submitTest();
+      Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
+      Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
 
-      final String timeTaken = Provider.of<TestModelProvider>(context, listen: false).testModel.timeTaken.toString();
-      final String speed = Provider.of<TestModelProvider>(context, listen: false).testModel.wpm.toString();
-      final String backspaceCount = Provider.of<TestModelProvider>(context, listen: false).testModel.backSpaceCount.toString();
-      final String accuracy = Provider.of<TestModelProvider>(context, listen: false).testModel.accuracy.toString();
-      final String wordsTyped = Provider.of<TestModelProvider>(context, listen: false).testModel.wordsTyped.toString();
-      final String correctWords = Provider.of<TestModelProvider>(context, listen: false).testModel.correctWords.toString();
-      final String incorrectWords = Provider.of<TestModelProvider>(context, listen: false).testModel.incorrectWords.toString();
-      final String fullMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.fullMistake.toString();
-      final String halfMistake = Provider.of<TestModelProvider>(context, listen: false).testModel.halfMistake.toString();
+      final String timeTaken = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.timeTaken.toString();
+      final String speed = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wpm.toString();
+      final String backspaceCount = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.backSpaceCount.toString();
+      final String accuracy = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.accuracy.toString();
+      final String wordsTyped = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wordsTyped.toString();
+      final String correctWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.correctWords.toString();
+      final String incorrectWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.incorrectWords.toString();
+      final String fullMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.fullMistake.toString();
+      final String halfMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.halfMistake.toString();
       final String testId = widget.testData.testId.toString();
       Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
 
@@ -169,7 +169,7 @@ class _TestScreenState extends State<TestScreen> {
                                   const SizedBox(height: 20),
                                   TextFieldContainer(
                                     onTextChanged: (typedText) {
-                                    Provider.of<TestModelProvider>(context, listen: false)
+                                    Provider.of<TestCalculatorProvider>(context, listen: false)
                                         .updateTypedText(typedText);
                                   },
                                   ),
@@ -241,7 +241,7 @@ class _TestScreenState extends State<TestScreen> {
                         const SizedBox(height: 20),
                         TextFieldContainer(
                             onTextChanged: (typedText) {
-                          Provider.of<TestModelProvider>(context, listen: false)
+                          Provider.of<TestCalculatorProvider>(context, listen: false)
                               .updateTypedText(typedText);
                         }
                         ),

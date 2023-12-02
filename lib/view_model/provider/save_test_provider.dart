@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:typingtest/model/save_test_model.dart';
 
-class TestModelProvider with ChangeNotifier {
+class TestCalculatorProvider with ChangeNotifier {
   TestModel _testModel = TestModel();
 
   TestModel get testModel => _testModel;

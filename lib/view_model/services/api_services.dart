@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:typingtest/model/create_order_modal.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/model/ranking_modal.dart';
 import 'package:typingtest/model/result_api_modal.dart';
@@ -143,92 +144,28 @@ class ApiService {
     }
 
   }
+
+
+  Future<OrderResponse> createOrder(int price) async {
+    final response = await http.post(
+      Uri.parse('http://ec2-3-7-45-69.ap-south-1.compute.amazonaws.com:4000/api/user/order/create-order'),
+      body: json.encode({
+        "person_id": "656b782b7ab1e09d356369b5",
+        "amount": price,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NmI3NmVkN2FiMWUwOWQzNTYzNjlhMyIsInBob25lX251bWJlciI6Ijg1Mjk2MzE0NTgiLCJyb2xlIjoidXNlciIsImlhdCI6MTcwMTU0MTYyMCwiZXhwIjoxNzAyMTQ2NDIwfQ.oIbW4VZwhLGpUx6xle0nyv76LJWLyb1vWq96HtgKCpQ",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return OrderResponse.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to create order");
+    }
+  }
 }
 
-
-// class ApiService {
-//   final String baseUrl;
-//
-//   ApiService({required this.baseUrl});
-//
-//
-//   Future<List<Test>> fetchUpcomingTests() async {
-//     try{
-//       final response = await http.get(Uri.parse("http://192.168.0.73:5000/api/getData"));
-//       // final response = await http.get(Uri.parse("http://127.0.0.1:5000/api/getData"));
-//       if (response.statusCode == 200) {
-//         Map<String, dynamic> json = jsonDecode(response.body);
-//         Iterable iterableData = json["data"]["list"];
-//         return iterableData.map((test) => Test.fromJson(test)).toList();
-//       } else {
-//         // print("API Request failed with status code: ${response.statusCode}");
-//         throw Exception('Failed to load tests');
-//       }
-//     } catch (error){
-//       // print("API Request failed with error: $error");
-//       rethrow;
-//     }
-//   }}
-// final Map<String, dynamic> body = {
-//   'os_version': "10.0.1845 Build 18543",
-//   'last_hindi_exercise': "10.0.1845 Build 18543",
-//   'english_font_size': "6",
-//   'product_id': emailId,
-//   'system_date': "2020-6-12",
-//   'screen_resolution': "1080p",
-//   'system_installation_date': "6",
-//   'last_english_exercise': "last eng1",
-//   'hindi_font_size': "9",
-//   'user_name': userName,
-// };
-//
-// var headers = {
-//   'Accept': 'application/json',
-//   'Cookie': 'XSRF-TOKEN=eyJpdiI6IkZHYjJZZnJsQzY2dmI1dEZ3alBISEE9PSIsInZhbHVlIjoiUk5MSUtrWE5oUWFtcTVDVjNWVmh3ZEhvMkVNWWU1T090L2RZVkpkQjc4THVudk5FKzR5V3RPZkJHRCt2VitDQ1J0amYzNzU3MTJSYlFweGluVUsvRnQ0RHl5eTRBVWpoSU9rdDhKZGpYS21BTzBQaHJ6OCtFMHZUbEJBN0NMbVIiLCJtYWMiOiIwNjJhZWZmMTU3OTM1YWVlYmU2NzY2ZjNlM2JiMjEzNWZkMjJmOTU0MjFjMzQ4NThlMjUyYjg2MGE2OTdhNjQyIn0%3D; typing_master_session=eyJpdiI6Inl1bS9Ya0dwa0VtRTBJNVQxKzJzb3c9PSIsInZhbHVlIjoidWgxcTZIMXBYcThWcnJYSEJCRHFQK0lZVlFCNm1IeWVDY25DVkNiNitPa3BYRWZpWkxWNlNWelhnWjU1U2c5ZTdJU1dTeFY3eDVaZkFZL3ZKY1BFakl4QWFONWpGM3JRbjB3K0g1SzNmN2hMS05JbFhTd3NJZVZxcWpiVlYyS0QiLCJtYWMiOiJkMGVhMDIxN2Y5ZGExZGU4YzYzNzJhYjJiNzMxNGE4NzA3MGU4ODk3NzUxMDM4N2Y5MDg1NDEzODI1MmE1MTNjIn0%3D'
-// };
-//
-// final response = await http.post(
-//   Uri.parse('$baseUrl/users/system-info'),
-//   body: json.encode(body),
-//   headers: headers,
-// );
-//
-// if (response.statusCode == 200) {
-//   // if (response.headers['content-type']?.toLowerCase()?.contains('application/json') == true) {
-//   //   // The response is JSON, decode it
-//   //   final responseBody = json.decode(response.body);
-//   //
-//   //   // Now you can access the JSON data
-//   //   // For example, check the "message" field
-//   //   if (responseBody.containsKey("message")) {
-//   //     final message = responseBody["message"] as String;
-//   //     return message == "System Info Updated Successfully.";
-//   //   } else {
-//   //     throw Exception("Invalid response format");
-//   //   }
-//   // } else {
-//   //   throw Exception("Invalid response content type: ${response.headers['content-type']}");
-//   // }
-//   print("user registered");
-//   return true;
-// } else {
-//   // final responseBody = json.decode(response.body);
-//   // if (responseBody.containsKey("errors")) {
-//   //   final errors = responseBody["errors"] as Map<String, dynamic>;
-//   //   final errorMessages = errors.values
-//   //       .map<String>((value) => value[0] as String)
-//   //       .toList();
-//   //
-//   //   final errorMessage = errorMessages.join(", ");
-//   //   throw Exception("Registration failed: $errorMessage");
-//   // } else if (responseBody.containsKey("message")) {
-//   //   final message = responseBody["message"] as String;
-//   //   throw Exception("Registration failed: $message");
-//   // } else {
-//   //   throw Exception("Registration failed with an unknown error");
-//   // }
-//     throw Exception("Registration failed with an unknown error");
-//
-// }
 
 

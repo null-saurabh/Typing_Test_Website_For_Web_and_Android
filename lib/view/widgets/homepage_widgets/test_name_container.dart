@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:typingtest/view/screens/exam_page.dart';
-import 'package:typingtest/view_model/provider/navigation_provider.dart';
-
-import '../../../view_model/locator.dart';
 
 
 class TestNameContainer extends StatefulWidget {

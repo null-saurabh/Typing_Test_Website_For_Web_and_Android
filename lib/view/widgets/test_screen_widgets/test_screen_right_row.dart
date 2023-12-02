@@ -75,12 +75,12 @@ class RightRow extends StatelessWidget {
           print("in try");
           final DateTime now = DateTime.now();
           final Duration elapsed = now.difference(startTime);
-          Provider.of<TestModelProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
+          Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
           GoRouter.of(context).pop();
-          await Provider.of<TestModelProvider>(context, listen: false).submitTest();
+          await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
           print("c");
           await Future.microtask(() {
-            final TestModel testModel = Provider.of<TestModelProvider>(context, listen: false).testModel;
+            final TestModel testModel = Provider.of<TestCalculatorProvider>(context, listen: false).testModel;
 
             final String timeTaken = testModel.timeTaken.toInt().toString();
             final String speed = testModel.wpm.toInt().toString();

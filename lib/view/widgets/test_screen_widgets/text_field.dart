@@ -37,7 +37,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
     if (currentLength < previousLength) {
       setState(() {
         backspaceCount++;
-        Provider.of<TestModelProvider>(context, listen: false).updateBackspace();
+        Provider.of<TestCalculatorProvider>(context, listen: false).updateBackspace();
       });
       // print(Provider.of<TestModelProvider>(context, listen: false).testModel.backSpaceCount);
     }

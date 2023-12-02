@@ -1,5 +1,6 @@
 
 import 'package:flutter/foundation.dart';
+import 'package:typingtest/model/create_order_modal.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/model/ranking_modal.dart';
 import 'package:typingtest/model/result_api_modal.dart';
@@ -129,6 +130,14 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
+  Future<OrderResponse> createOrder(int price) async {
+    try {
+      return await apiService.createOrder(price);
+    } catch (error) {
+      notifyListeners();
+      rethrow;
+    }
+  }
 
 }
 
