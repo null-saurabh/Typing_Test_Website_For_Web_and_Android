@@ -198,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  flutter_razorpay_web:
+    dependency: "direct main"
+    description:
+      name: flutter_razorpay_web
+      sha256: "58c36fa887cbf5ae8dc0622059175a7f142992e1a2f442cf1d2c015d9eb21c0b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter

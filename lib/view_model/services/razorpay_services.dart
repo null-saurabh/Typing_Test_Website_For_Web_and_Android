@@ -1,8 +1,10 @@
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_razorpay_web/flutter_razorpay_web.dart';
+
 
 class RazorpayService {
-  final _razorpay = Razorpay();
+  late RazorpayWeb _razorpay = RazorpayWeb();
 
   VoidCallback? _onSuccess;
   VoidCallback? _onError;
@@ -14,21 +16,26 @@ class RazorpayService {
 
 
   void initialize() {
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    _razorpay = RazorpayWeb(
+      onSuccess: _handlePaymentSuccess,
+      onCancel: _handlePaymentCancel,
+      onFailed: _handlePaymentError,
+    );
+  //   _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+  //   _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+  //   _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handlePaymentCancel);
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  void _handlePaymentSuccess(RpaySuccessResponse response) {
     if (_onSuccess != null) _onSuccess!();
   }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
+  void _handlePaymentError(RpayFailedResponse response) {
     if (_onError != null) _onError!();
     if (_onPaymentFailure != null) _onPaymentFailure!();
   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
+  void _handlePaymentCancel(RpayCancelResponse response) {
     // Handle external wallet event
   }
 
@@ -39,7 +46,7 @@ class RazorpayService {
       'amount': amount,
       'currency' : "INR",
       'name': "A1 Typing",
-      'timeout': 20,
+      'timeout': 200,
       'order_id': orderId,
       'description':'Subscription Fee',
       'retry': {'enabled': true, 'max_count': 1},
