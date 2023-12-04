@@ -87,7 +87,9 @@ class ApiProvider with ChangeNotifier {
 
   Future<bool> saveResult(
       String timeTaken,
+      String omittedWords,
       String speed,
+      String totalWords,
       String backspaceCount,
       String accuracy,
       String wordsTyped,
@@ -111,7 +113,9 @@ class ApiProvider with ChangeNotifier {
       final response = await apiService.saveResult(
         userEmail,
         timeTaken,
+        omittedWords,
         speed,
+        totalWords,
         backspaceCount,
         accuracy,
         wordsTyped,

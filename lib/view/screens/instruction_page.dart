@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
-import 'package:typingtest/view/screens/test_screen.dart';
 import 'package:typingtest/view/widgets/pop_up_top_heading_bar.dart';
 
 class InstructionPage extends StatelessWidget {

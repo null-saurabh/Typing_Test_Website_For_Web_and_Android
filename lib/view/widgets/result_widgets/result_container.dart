@@ -44,9 +44,9 @@ class ResultContainer extends StatelessWidget {
                   title: "Incorrect Words Typed",
                   value: ": ${result.wordIncorrect}",
                 ),
-                const ScoreList(
+                ScoreList(
                   title: "Omitted Words",
-                  value: ": null",
+                  value: ": ${result.marksObtained}",
                 ),
                 ScoreList(
                   title: "Backspace Count",

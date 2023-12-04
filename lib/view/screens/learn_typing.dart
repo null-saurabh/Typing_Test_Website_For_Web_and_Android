@@ -178,7 +178,6 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     final minutes = elapsedTime.inMinutes;
     final seconds = elapsedTime.inSeconds.remainder(60);
     final totalMinutes = minutes + seconds / 60;
-    // print(totalWordsTyped);
     final wpm = (totalWordsTyped / totalMinutes).round();
 
     showDialog(
@@ -193,6 +192,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
               const Text('You have completed the typing test.'),
               const SizedBox(height: 10),
               Text('Your typing speed: $wpm WPM'),
+              const SizedBox(height: 10),
+              Text('Words Typed: $totalWordsTyped Words'),
+              const SizedBox(height: 10),
+              Text('TimeTaken: $totalMinutes Minutes'),
             ],
           ),
           actions: <Widget>[

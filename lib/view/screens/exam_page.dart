@@ -21,7 +21,7 @@ class ExamPage extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context) {
-    print("in exam page");
+    // print("in exam page");
     final scrollController1 = ScrollController();
     return Scrollbar(
       controller: scrollController1,
@@ -95,7 +95,7 @@ class ExamPage extends StatelessWidget {
                           return IconButton(
                             onPressed: () {
                               apiProvider.fetchLiveTest();
-                              print("clicked refresh fetch live test");
+                              // print("clicked refresh fetch live test");
                             },
                             icon: const Icon(Icons.refresh),
                           );
@@ -116,7 +116,7 @@ class ExamPage extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: data.data.list.length,
                               itemBuilder: (context, index) {
-                                print(data.data.list.length);
+                                // print(data.data.list.length);
                                 return LiveTestListTile(
                                     testData: data.data.list[index]);
                               },
@@ -149,7 +149,7 @@ class ExamPage extends StatelessWidget {
                             return IconButton(
                               onPressed: () {
                                 apiProvider.fetchPracticeTest();
-                                print("clicked refresh fetch live test");
+                                // print("clicked refresh fetch live test");
                               },
                               icon: const Icon(Icons.refresh),
                             );
@@ -165,7 +165,7 @@ class ExamPage extends StatelessWidget {
                     if (data == null) {
                       return const CircularProgressIndicator(); // Loading indicator
                     }
-                    print(data.data.list.length);
+                    // print(data.data.list.length);
                     return data.data.list.isNotEmpty
                     ?GridView.builder(
                       shrinkWrap: true,
@@ -284,7 +284,7 @@ class ExamPage extends StatelessWidget {
                             return IconButton(
                               onPressed: () {
                                 apiProvider.fetchPracticeTest();
-                                print("clicked refresh fetch live test");
+                                // print("clicked refresh fetch live test");
                               },
                               icon: const Icon(Icons.refresh),
                             );

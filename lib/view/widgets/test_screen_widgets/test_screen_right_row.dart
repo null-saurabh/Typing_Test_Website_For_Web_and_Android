@@ -63,27 +63,23 @@ class RightRow extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return const ResultDialog(testId: 6344);
-        //     }
-        // );
-        print("clicked");
+
 
         try {
-          print("in try");
+          // print("in try");
           final DateTime now = DateTime.now();
           final Duration elapsed = now.difference(startTime);
           Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
           GoRouter.of(context).pop();
           await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
-          print("c");
+          // print("c");
           await Future.microtask(() {
             final TestModel testModel = Provider.of<TestCalculatorProvider>(context, listen: false).testModel;
 
             final String timeTaken = testModel.timeTaken.toInt().toString();
+            final String omittedWords = testModel.omittedWords.toString();
             final String speed = testModel.wpm.toInt().toString();
+            final String totalWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.totalWords.toString();
             final String backspaceCount = testModel.backSpaceCount.toInt().toString();
             final String accuracy = testModel.accuracy.toInt().toString();
             final String wordsTyped = testModel.wordsTyped.toInt().toString();
@@ -93,10 +89,10 @@ class RightRow extends StatelessWidget {
             final String halfMistake = testModel.halfMistake.toInt().toString();
             final String testId = testData.testId.toString();
 
-            Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
+            Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, omittedWords,speed,totalWords, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
 
             if (testData.type == "PRACTICE") {
-              print("a");
+              // print("a");
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -111,7 +107,7 @@ class RightRow extends StatelessWidget {
 
         } catch (e) {
           // Handle exceptions, log, or show an error message
-          print('Error: $e');
+          // print('Error: $e');
         }
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

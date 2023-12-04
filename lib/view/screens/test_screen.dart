@@ -31,7 +31,8 @@ class _TestScreenState extends State<TestScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       Provider.of<TestCalculatorProvider>(context, listen: false).startNewTest();
-      Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
+      // Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
+      Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText("Death on a cross in the time of the Romans and previously was one of the ugliest and worst ways of execution, and the most painful.");
 
     });
     _startTime = DateTime.now();
@@ -70,7 +71,9 @@ class _TestScreenState extends State<TestScreen> {
       Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
 
       final String timeTaken = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.timeTaken.toString();
+      final String omittedWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.omittedWords.toString();
       final String speed = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wpm.toString();
+      final String totalWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.totalWords.toString();
       final String backspaceCount = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.backSpaceCount.toString();
       final String accuracy = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.accuracy.toString();
       final String wordsTyped = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wordsTyped.toString();
@@ -79,7 +82,7 @@ class _TestScreenState extends State<TestScreen> {
       final String fullMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.fullMistake.toString();
       final String halfMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.halfMistake.toString();
       final String testId = widget.testData.testId.toString();
-      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, speed, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
+      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, omittedWords,speed, totalWords,backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
 
 
       Navigator.pop(context);
