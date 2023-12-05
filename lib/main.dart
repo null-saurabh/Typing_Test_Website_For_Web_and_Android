@@ -10,6 +10,7 @@ import 'package:typingtest/view/screens/error_page.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homeview.dart';
+import 'package:typingtest/view/screens/learn_menu.dart';
 import 'package:typingtest/view/screens/learn_typing.dart';
 import 'package:typingtest/view/screens/profile_page.dart';
 import 'package:typingtest/view/screens/ranking_page.dart';
@@ -17,6 +18,7 @@ import 'package:typingtest/view/screens/subscription.dart';
 import 'package:typingtest/view/screens/test_screen.dart';
 import 'package:typingtest/view/screens/welcome_login_screen.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
+import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 import 'package:typingtest/view_model/provider/save_test_provider.dart';
@@ -69,6 +71,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (context) => RazorPayProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => LearnMenuProvider(),
         ),
       ],
       child: const MyApp(),
@@ -142,6 +147,13 @@ final _router = GoRouter(
               );
             }),
         GoRoute(
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'menu',
+            path: '/menu',
+            builder: (context, state) {
+              return const LearnMenuScreen();
+            }),
+        GoRoute(
             // parentNavigatorKey: _shellNavigatorKey,
           name: 'learn',
             path: '/learn',
@@ -179,7 +191,7 @@ final _router = GoRouter(
       name: 'test',
       path: '/test/:testData',
       builder: (context, state) {
-        print('in router');
+        // print('in router');
         String testDataString = state.pathParameters["testData"] as String;
         LiveTestData testData = LiveTestData.fromJson(jsonDecode(testDataString));
         return TestScreen(testData: testData);

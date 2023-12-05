@@ -34,7 +34,7 @@ class LeftDrawer extends StatelessWidget {
               ],
               const SizedBox(height: 20),
               drawerItems(context,Icons.category_outlined, "All Tests", '/home', userProvider, navigationService),
-              drawerItems(context,Icons.menu_book_rounded, "Learn Typing", '/learn', userProvider, navigationService),
+              drawerItems(context,Icons.menu_book_rounded, "Learn Typing", '/menu', userProvider, navigationService),
               drawerItems(context,Icons.account_balance_wallet_outlined, "Subscriptions", '/subscription',userProvider, navigationService),
               drawerItems(context,Icons.history_outlined, "Result History", '/history/false', userProvider, navigationService),
               drawerItems(context,Icons.person_2_outlined, "My Profile", '/profile', userProvider, navigationService),
@@ -68,7 +68,7 @@ class LeftDrawer extends StatelessWidget {
                 GoRouter router = GoRouter.of(context);
                 router.replace('/welcome');
               } else {
-                print("in drawer");
+                // print("in drawer");
                 navigationProvider.updateCurrentPage(pageId);
                 GoRouter.of(context).go(pageId);
                 if (isMobile) {

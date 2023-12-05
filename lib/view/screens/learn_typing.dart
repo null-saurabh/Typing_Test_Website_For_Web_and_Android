@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/keyboard_ui.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/left_hand_image.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/right_hand_image.dart';
 import 'package:typingtest/view/widgets/learn_typing_widgets/test_string_ui.dart';
+import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
 class LearnTypingTestScreen extends StatefulWidget {
   const LearnTypingTestScreen({super.key});
@@ -15,12 +17,11 @@ class LearnTypingTestScreen extends StatefulWidget {
 }
 
 class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
-  // String longString =
-  //     "This is a long string @=+-_`~1!2. for typing practice. Try typing it. This is a long string for typing practice. this is it a@=+-_`~1!2 3 89 @ ^ = + bcCd S A B b c { a B { } | : \" < > ? Try typing it. Try typing it. This is a long string for typing practice. Try typing it.  Try typing it. This is a long string for typing practice. Try typing it";
+
   int currentIndex = 0;
   DateTime? startTime;
   int totalWordsTyped = 0;
-  String longString = "this is a game what are you doing sat your that";
+  // String longString = "this is a game what are you doing sat your that";
 
   void resetTest() {
     setState(() {
@@ -43,19 +44,79 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
 
   Widget buildDesktopLayout(BuildContext context){
 
+    String longString = Provider.of<LearnMenuProvider>(context).currentTestString;
     String typedString = longString.substring(0, currentIndex);
     String currentLetter = longString[currentIndex];
     String remainingString = longString.substring(currentIndex + 1);
-    print(MediaQuery.of(context).size.width *0.14);
 
-    return SingleChildScrollView(
+
+    return Scaffold(
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+        children: [
+          const SizedBox(
+            height: 100,
+          ),
+          TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
+          // Section 2: Keyboard UI
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                  height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                  width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                  child: LeftHandImage(currentLetter: currentLetter)),
+              RawKeyboardListener(
+                focusNode: FocusNode(),
+                autofocus: true,
+                onKey: (RawKeyEvent event) {
+                  if (event is RawKeyDownEvent && event.character != null) {
+                    startTime ??= DateTime.now();
+
+                    final character = event.character;
+                    if (character == currentLetter) {
+                      if (currentIndex < longString.length - 1) {
+                        setState(() {
+                          currentIndex++;
+                          if (character == ' ') {
+                            totalWordsTyped++;
+                          }
+                        });
+                      } else {
+                        GoRouter.of(context).go('/menu');
+                        // GoRouter.of(context).pop();
+                        showTestEndedDialog(context);
+                        resetTest(); // Pop twice to go back to home
+                      }
+                    }
+                  }
+                },
+                child: KeyboardWidget(currentLetter: currentLetter),
+              ),
+              SizedBox(
+                  height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10 ,
+                  width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                  child: RightHandImage(currentLetter: currentLetter)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildMobileLayout(BuildContext context){
+
+    String longString = Provider.of<LearnMenuProvider>(context).currentTestString;
+    String typedString = longString.substring(0, currentIndex);
+    String currentLetter = longString[currentIndex];
+    String remainingString = longString.substring(currentIndex + 1);
+    final bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    return RotatedBox(
+      quarterTurns: isPortrait ?1 :0,
       child: Scaffold(
         body: Column(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
           children: [
-            const SizedBox(
-              height: 100,
-            ),
             TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
             // Section 2: Keyboard UI
             Expanded(
@@ -63,8 +124,8 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                      height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
-                      width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
                       child: LeftHandImage(currentLetter: currentLetter)),
                   RawKeyboardListener(
                     focusNode: FocusNode(),
@@ -83,9 +144,11 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                               }
                             });
                           } else {
-                            GoRouter.of(context).go('/home');
+                            GoRouter.of(context).go('/menu');
+                            // GoRouter.of(context).pop();
                             showTestEndedDialog(context);
-                            resetTest(); // Pop twice to go back to home
+                            resetTest();
+
                           }
                         }
                       }
@@ -93,78 +156,13 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     child: KeyboardWidget(currentLetter: currentLetter),
                   ),
                   SizedBox(
-                      height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10 ,
-                      width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
                       child: RightHandImage(currentLetter: currentLetter)),
                 ],
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildMobileLayout(BuildContext context){
-    // SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
-
-    String typedString = longString.substring(0, currentIndex);
-    String currentLetter = longString[currentIndex];
-    String remainingString = longString.substring(currentIndex + 1);
-    final bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
-
-    return SingleChildScrollView(
-      child: RotatedBox(
-        quarterTurns: isPortrait ?1 :0,
-        child: Scaffold(
-          body: Column(
-            children: [
-              TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
-              // Section 2: Keyboard UI
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                        height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                        width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                        child: LeftHandImage(currentLetter: currentLetter)),
-                    RawKeyboardListener(
-                      focusNode: FocusNode(),
-                      autofocus: true,
-                      onKey: (RawKeyEvent event) {
-                        if (event is RawKeyDownEvent && event.character != null) {
-                          startTime ??= DateTime.now();
-
-                          final character = event.character;
-                          if (character == currentLetter) {
-                            if (currentIndex < longString.length - 1) {
-                              setState(() {
-                                currentIndex++;
-                                if (character == ' ') {
-                                  totalWordsTyped++;
-                                }
-                              });
-                            } else {
-                              GoRouter.of(context).go('/home');
-                              showTestEndedDialog(context);
-                              resetTest();
-
-                            }
-                          }
-                        }
-                      },
-                      child: KeyboardWidget(currentLetter: currentLetter),
-                    ),
-                    SizedBox(
-                        height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                        width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                        child: RightHandImage(currentLetter: currentLetter)),
-                  ],
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -188,7 +186,20 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Test Ended'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Test Ended'),
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Container(decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.transparent, // Set the inner color to transparent
+                  border: Border.all(color: Colors.black), // Set the border color
+                ),child: IconButton(onPressed: (){GoRouter.of(context).pop();}, icon: const Icon(Icons.close),color: Colors.black,)),
+              )
+            ],
+          ),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -205,10 +216,12 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                // Navigator.of(context).pop();
                 GoRouter.of(context).pop();
+                Provider.of<LearnMenuProvider>(context, listen: false)
+                    .goToNextTest();
+                GoRouter.of(context).go('/learn');
               },
-              child: const Text('OK'),
+              child: const Text('Next Test'),
             ),
           ],
         );

@@ -16,7 +16,7 @@ class PopUpScreensTopHeadingBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(
+          SizedBox(
             width: MediaQuery.of(context).size.width* 0.85 - 140,
             child: Padding(
               padding: const EdgeInsets.only(left: 25),
