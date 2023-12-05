@@ -213,7 +213,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     final elapsedTime = endTime.difference(startTime!);
     final minutes = elapsedTime.inMinutes;
     final seconds = elapsedTime.inSeconds.remainder(60);
-    final totalMinutes = minutes + seconds / 60;
+    final totalMinutes = (minutes + seconds / 60);
     final wpm = (totalWordsTyped / totalMinutes).round();
     final words = totalWordsTyped;
     // print("words: $totalWordsTyped");
@@ -262,7 +262,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
               const SizedBox(height: 10),
               Text('Words Typed: $words Words'),
               const SizedBox(height: 10),
-              Text('TimeTaken: $totalMinutes Minutes'),
+              Text('TimeTaken: ${totalMinutes.toStringAsFixed(2)} Minutes'),
             ],
           ),
           actions: <Widget>[
