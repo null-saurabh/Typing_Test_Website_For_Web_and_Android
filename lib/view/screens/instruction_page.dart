@@ -151,7 +151,7 @@ class InstructionPage extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) =>TestScreen(testData: testData,)));
+
         String testDataString = jsonEncode(testData.toJson());
         GoRouter.of(context).pop();
         GoRouter.of(context).pushNamed('test',pathParameters: {'testData':testDataString});
@@ -160,6 +160,7 @@ class InstructionPage extends StatelessWidget {
       child: const Text('Start Now', style: TextStyle(color: Colors.white),),
     );
   }
+
   Widget requiredVerticalDivider(){
     return SizedBox(
       height: 20,

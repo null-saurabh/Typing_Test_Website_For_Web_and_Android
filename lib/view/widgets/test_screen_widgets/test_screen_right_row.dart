@@ -100,7 +100,7 @@ class RightRow extends StatelessWidget {
                 },
               );
             } else if (testData.type == "LIVE") {
-              print("b");
+              // print("b");
               showTestEndedDialog(context);
             }
           });

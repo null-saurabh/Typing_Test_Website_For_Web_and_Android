@@ -31,8 +31,8 @@ class _TestScreenState extends State<TestScreen> {
     super.initState();
     Future.delayed(Duration.zero, () {
       Provider.of<TestCalculatorProvider>(context, listen: false).startNewTest();
-      // Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
-      Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText("Death on a cross in the time of the Romans and previously was one of the ugliest and worst ways of execution, and the most painful.");
+      Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
+      // Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText("Death on a cross in the time of the Romans and previously was one of the ugliest and worst ways of execution, and the most painful.");
 
     });
     _startTime = DateTime.now();
@@ -68,8 +68,9 @@ class _TestScreenState extends State<TestScreen> {
       final DateTime now = DateTime.now();
       final Duration elapsed = now.difference(_startTime);
       Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
-      Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
+      await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
 
+      await Future.microtask(() {
       final String timeTaken = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.timeTaken.toString();
       final String omittedWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.omittedWords.toString();
       final String speed = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wpm.toString();
@@ -86,7 +87,7 @@ class _TestScreenState extends State<TestScreen> {
 
 
       Navigator.pop(context);
-      await Future.microtask(() {
+
       if (widget.testData.type == "PRACTICE") {
         showDialog(
             context: context,

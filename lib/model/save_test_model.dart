@@ -12,4 +12,5 @@ class TestModel {
   int halfMistake = 0;
   int fullMistake = 0;
   int omittedWords =0;
+  int extraSpaces = 0;
 }

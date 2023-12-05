@@ -89,7 +89,6 @@ final _router = GoRouter(
     String originalLocation = state.matchedLocation;
     if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
-      // print(state.matchedLocation);
       return '/welcome';
     }
     else{
@@ -176,10 +175,11 @@ final _router = GoRouter(
       },
     ),
     GoRoute(
-      // parentNavigatorKey: _rootNavigatorKey,
+      parentNavigatorKey: _rootNavigatorKey,
       name: 'test',
       path: '/test/:testData',
       builder: (context, state) {
+        print('in router');
         String testDataString = state.pathParameters["testData"] as String;
         LiveTestData testData = LiveTestData.fromJson(jsonDecode(testDataString));
         return TestScreen(testData: testData);
