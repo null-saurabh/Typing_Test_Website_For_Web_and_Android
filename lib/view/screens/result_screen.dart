@@ -185,21 +185,21 @@ class ResultScreen extends StatelessWidget {
                                     ),
                                     ResultBox(
                                       title: "Net Speed",
-                                      value: result.nwpm.toString(),
+                                      value: "${result.nwpm} WPM",
                                     ),
                                     const SizedBox(
                                       height: 10,
                                     ),
                                     ResultBox(
-                                      title: "Gross Speed",
-                                      value: result.gwpm.toString(),
+                                      title: "Total Words",
+                                      value: result.gcpm.toString(),
                                     ),
                                     const SizedBox(
                                       height: 15,
                                     ),
                                     ResultBox(
                                       title: "Accuracy",
-                                      value: result.accuracy.toString(),
+                                      value: '${result.accuracy}%',
                                     ),
                                   ],
                                 ),

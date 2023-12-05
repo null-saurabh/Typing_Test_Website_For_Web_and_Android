@@ -11,7 +11,7 @@ class NavigationProvider extends ChangeNotifier {
 
   String get currentPage => _currentPage;
 
-  List<String> _originalLocations = ['/home','/home'];
+  final List<String> _originalLocations = ['/home','/home'];
 
   List<String> get originalLocations => _originalLocations;
 
@@ -27,26 +27,6 @@ class NavigationProvider extends ChangeNotifier {
     _currentPage = routeName;
     notifyListeners();
   }
-
-  // Future<void> navigateToRankingPage(BuildContext context, int testId) async {
-  //   _currentPage = 'ranking';
-  //   notifyListeners();
-  //   final router = locator<FluroRouter>();
-  //   router.navigateTo(context, '/ranking/$testId', transition:null);
-  // }
-  //
-  // Future<void> navigateToExamPage(BuildContext context, String examName) async {
-  //   _currentPage = 'exam';
-  //   notifyListeners();
-  //   final router = locator<FluroRouter>();
-  //   router.navigateTo(context, '/exam/$examName', transition: null);
-  // }
-
-
-
-  // void goBack(){
-  //   return navigatorKey.currentState!.pop();
-  // }
 
 }
 

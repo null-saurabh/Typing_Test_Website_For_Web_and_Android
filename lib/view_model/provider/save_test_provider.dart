@@ -138,6 +138,7 @@ class TestCalculatorProvider with ChangeNotifier {
       int omittedWords = 0;
       int halfMistakes = 0;
       int fullMistakes = 0;
+      int extraWords = 0;
 
       for (int k = 0;
           k < alignedTypedWords.length && k < alignedOriginalWords.length;
@@ -155,6 +156,7 @@ class TestCalculatorProvider with ChangeNotifier {
           // String b = alignedOriginalWords[k];
           // print('bb = $b');
           incorrectWords++;
+          extraWords++;
         } else {
           // print('in else');
           // String a = alignedTypedWords[k];

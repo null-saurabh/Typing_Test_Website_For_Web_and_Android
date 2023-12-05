@@ -6,9 +6,8 @@ import 'package:typingtest/view_model/services/firebase_services.dart';
 import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 class LeftDrawer extends StatelessWidget {
-  // final GlobalKey<ScaffoldState> scaffoldKey;
+
   final bool isMobile;
-  // required this.scaffoldKey,required this.isMobile,
   const LeftDrawer(
       {required this.isMobile,super.key,});
 
@@ -48,11 +47,10 @@ class LeftDrawer extends StatelessWidget {
   }
 
   Widget drawerItems(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationProvider navigationProvider) {
-    // final ApiService apiService = ApiService();
-    // final apiProvider = Provider.of<ApiProvider>(context);
     final currentRoute = navigationProvider.currentPage;
     bool isSelected = currentRoute.contains(pageId);
-    // print("currentRoute: $currentRoute, pageId: $pageId");
+    print("$currentRoute : $pageId");
+
 
     return Container(
           color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
@@ -68,11 +66,9 @@ class LeftDrawer extends StatelessWidget {
                 GoRouter router = GoRouter.of(context);
                 router.replace('/welcome');
               } else {
-                // print("in drawer");
                 navigationProvider.updateCurrentPage(pageId);
                 GoRouter.of(context).go(pageId);
                 if (isMobile) {
-                //   print("is mobile");
                   Scaffold.of(context).openEndDrawer();
                 }
               }

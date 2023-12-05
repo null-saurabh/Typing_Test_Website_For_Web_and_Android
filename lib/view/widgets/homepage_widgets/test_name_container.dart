@@ -18,13 +18,6 @@ class _TestNameContainerState extends State<TestNameContainer> {
       onTap: () {
         GoRouter router = GoRouter.of(context);
         router.goNamed('exam',pathParameters: {'examName' : 'SSC_Typing_Tests'});
-        // locator<NavigationProvider>().navigateToExamPage(context, "SSC_Typing_Tests");
-
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => const ExamPage(targetExamName: "SSC Typing Tests",),
-        //   ),
-        // );
       },
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovering = true),

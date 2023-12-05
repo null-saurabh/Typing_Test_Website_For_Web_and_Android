@@ -215,8 +215,9 @@ class GoRouteShellObserver extends NavigatorObserver {
       } else if (routeName == 'ranking') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
       }else if (routeName == 'history') {
-        // print('bbbb');
         navigationProvider.updateCurrentPageFromUrl('/history/false');
+      } else if (routeName == 'learn') {
+        navigationProvider.updateCurrentPageFromUrl('/menu');
       } else {
         navigationProvider.updateCurrentPageFromUrl('/$routeName');
       }

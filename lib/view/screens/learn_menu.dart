@@ -26,13 +26,15 @@ class LearnMenuScreen extends StatelessWidget {
   }
 
   Widget _buildMenuItem(BuildContext context, String menuText, int index) {
-    return ListTile(
-      title: Text(menuText),
-      onTap: () {
-        Provider.of<LearnMenuProvider>(context, listen: false)
-            .setTestIndex(index);
-        GoRouter.of(context).go('/learn');
-      },
+    return Card(
+      child: ListTile(
+        title: Text(menuText),
+        onTap: () {
+          Provider.of<LearnMenuProvider>(context, listen: false)
+              .setTestIndex(index);
+          GoRouter.of(context).go('/learn');
+        },
+      ),
     );
   }
 
