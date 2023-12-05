@@ -17,7 +17,6 @@ class LearnTypingTestScreen extends StatefulWidget {
 }
 
 class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
-
   int currentIndex = 0;
   DateTime? startTime;
   int totalWordsTyped = 0;
@@ -31,24 +30,20 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return ScreenTypeLayout.builder(
       mobile: (BuildContext context) => buildMobileLayout(context),
       desktop: (BuildContext context) => buildDesktopLayout(context),
     );
-
   }
 
-  Widget buildDesktopLayout(BuildContext context){
-
-    String longString = Provider.of<LearnMenuProvider>(context).currentTestString;
+  Widget buildDesktopLayout(BuildContext context) {
+    String longString =
+        Provider.of<LearnMenuProvider>(context).currentTestString;
     String typedString = longString.substring(0, currentIndex);
     String currentLetter = longString[currentIndex];
     String remainingString = longString.substring(currentIndex + 1);
-
 
     return Scaffold(
       body: Column(
@@ -57,14 +52,21 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
           const SizedBox(
             height: 100,
           ),
-          TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
+          TestStringUi(
+              typedString: typedString,
+              currentLetter: currentLetter,
+              remainingString: remainingString),
           // Section 2: Keyboard UI
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                  height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
-                  width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                  height: (MediaQuery.of(context).size.width * 0.10 > 200)
+                      ? 200
+                      : MediaQuery.of(context).size.width * 0.10,
+                  width: (MediaQuery.of(context).size.width * 0.10 > 200)
+                      ? 200
+                      : MediaQuery.of(context).size.width * 0.10,
                   child: LeftHandImage(currentLetter: currentLetter)),
               RawKeyboardListener(
                 focusNode: FocusNode(),
@@ -80,11 +82,12 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                           currentIndex++;
                           if (character == ' ') {
                             totalWordsTyped++;
+                            // print(totalWordsTyped);
                           }
                         });
                       } else {
+                        totalWordsTyped++;
                         GoRouter.of(context).go('/menu');
-                        // GoRouter.of(context).pop();
                         showTestEndedDialog(context);
                         resetTest(); // Pop twice to go back to home
                       }
@@ -94,8 +97,12 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                 child: KeyboardWidget(currentLetter: currentLetter),
               ),
               SizedBox(
-                  height:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10 ,
-                  width:(MediaQuery.of(context).size.width *0.10 >200) ? 200:MediaQuery.of(context).size.width *0.10,
+                  height: (MediaQuery.of(context).size.width * 0.10 > 200)
+                      ? 200
+                      : MediaQuery.of(context).size.width * 0.10,
+                  width: (MediaQuery.of(context).size.width * 0.10 > 200)
+                      ? 200
+                      : MediaQuery.of(context).size.width * 0.10,
                   child: RightHandImage(currentLetter: currentLetter)),
             ],
           ),
@@ -104,28 +111,44 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     );
   }
 
-  Widget buildMobileLayout(BuildContext context){
-
-    String longString = Provider.of<LearnMenuProvider>(context).currentTestString;
+  Widget buildMobileLayout(BuildContext context) {
+    String longString =
+        Provider.of<LearnMenuProvider>(context).currentTestString;
     String typedString = longString.substring(0, currentIndex);
     String currentLetter = longString[currentIndex];
     String remainingString = longString.substring(currentIndex + 1);
-    final bool isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final bool isPortrait =
+        MediaQuery.of(context).orientation == Orientation.portrait;
 
     return RotatedBox(
-      quarterTurns: isPortrait ?1 :0,
+      quarterTurns: isPortrait ? 1 : 0,
       child: Scaffold(
         body: Column(
           children: [
-            TestStringUi(typedString: typedString, currentLetter: currentLetter, remainingString: remainingString),
+            TestStringUi(
+                typedString: typedString,
+                currentLetter: currentLetter,
+                remainingString: remainingString),
             // Section 2: Keyboard UI
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      height: !isPortrait
+                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14
+                          : (MediaQuery.of(context).size.height * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14,
+                      width: !isPortrait
+                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14
+                          : (MediaQuery.of(context).size.height * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14,
                       child: LeftHandImage(currentLetter: currentLetter)),
                   RawKeyboardListener(
                     focusNode: FocusNode(),
@@ -148,7 +171,6 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                             // GoRouter.of(context).pop();
                             showTestEndedDialog(context);
                             resetTest();
-
                           }
                         }
                       }
@@ -156,8 +178,20 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     child: KeyboardWidget(currentLetter: currentLetter),
                   ),
                   SizedBox(
-                      height:!isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
-                      width: !isPortrait ?(MediaQuery.of(context).size.width *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14 :(MediaQuery.of(context).size.height *0.14 >100) ? 100:MediaQuery.of(context).size.height *0.14,
+                      height: !isPortrait
+                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14
+                          : (MediaQuery.of(context).size.height * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14,
+                      width: !isPortrait
+                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14
+                          : (MediaQuery.of(context).size.height * 0.14 > 100)
+                              ? 100
+                              : MediaQuery.of(context).size.height * 0.14,
                       child: RightHandImage(currentLetter: currentLetter)),
                 ],
               ),
@@ -181,10 +215,15 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     final seconds = elapsedTime.inSeconds.remainder(60);
     final totalMinutes = minutes + seconds / 60;
     final wpm = (totalWordsTyped / totalMinutes).round();
+    final words = totalWordsTyped;
+    // print("words: $totalWordsTyped");
+    // print("min: $totalMinutes");
+    // print("wpm: $wpm");
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        // print("words: $totalWordsTyped");
         return AlertDialog(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -192,11 +231,24 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
               const Text('Test Ended'),
               Padding(
                 padding: const EdgeInsets.only(right: 10.0),
-                child: Container(decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.transparent, // Set the inner color to transparent
-                  border: Border.all(color: Colors.black), // Set the border color
-                ),child: IconButton(onPressed: (){GoRouter.of(context).pop();}, icon: const Icon(Icons.close),color: Colors.black,)),
+                child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors
+                          .transparent, // Set the inner color to transparent
+                      border: Border.all(color: Colors.black),
+                    ),
+                    child: Center(
+                        child: IconButton(
+                      padding: const EdgeInsets.all(6),
+                      constraints: const BoxConstraints(),
+                      onPressed: () {
+                        GoRouter.of(context).pop();
+                      },
+                      icon: const Icon(Icons.close),
+                      color: Colors.black,
+                      iconSize: 24,
+                    ))),
               )
             ],
           ),
@@ -208,7 +260,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
               const SizedBox(height: 10),
               Text('Your typing speed: $wpm WPM'),
               const SizedBox(height: 10),
-              Text('Words Typed: $totalWordsTyped Words'),
+              Text('Words Typed: $words Words'),
               const SizedBox(height: 10),
               Text('TimeTaken: $totalMinutes Minutes'),
             ],
@@ -229,7 +281,3 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
     );
   }
 }
-
-
-
-
