@@ -159,81 +159,91 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
       child: Scaffold(
         body: Column(
           children: [
-            TestStringUi(
-                typedString: typedString,
-                currentLetter: currentLetter,
-                remainingString: remainingString),
+            if(isPortrait)
+            const SizedBox(height: 20,),
+            Padding(
+              padding: EdgeInsets.only(right: isPortrait ? 29:0),
+              child: TestStringUi(
+                  typedString: typedString,
+                  currentLetter: currentLetter,
+                  remainingString: remainingString),
+            ),
             const SizedBox(height: 15,),
             // Section 2: Keyboard UI
             Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            height: !isPortrait
-                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.width * 0.14
-                                : (MediaQuery.of(context).size.height * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.height * 0.14,
-                            width: !isPortrait
-                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.width * 0.14
-                                : (MediaQuery.of(context).size.height * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.height * 0.14,
-                            child: LeftHandImage(currentLetter: currentLetter)),
-                        RawKeyboardListener(
-                          focusNode: FocusNode(),
-                          autofocus: true,
-                          onKey: (RawKeyEvent event) {
-                            if (event is RawKeyDownEvent && event.character != null) {
-                              startTime ??= DateTime.now();
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              height: !isPortrait
+                                  ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.width * 0.14
+                                  : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.height * 0.14,
+                              width: !isPortrait
+                                  ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.width * 0.14
+                                  : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.height * 0.14,
+                              child: LeftHandImage(currentLetter: currentLetter)),
+                          RawKeyboardListener(
+                            focusNode: FocusNode(),
+                            autofocus: true,
+                            onKey: (RawKeyEvent event) {
+                              if (event is RawKeyDownEvent && event.character != null) {
+                                startTime ??= DateTime.now();
 
-                              final character = event.character;
-                              if (character == currentLetter) {
-                                if (currentIndex < longString.length - 1) {
-                                  setState(() {
-                                    currentIndex++;
-                                    if (character == ' ') {
-                                      totalWordsTyped++;
-                                    }
-                                  });
-                                } else {
-                                  GoRouter.of(context).go('/menu');
-                                  // GoRouter.of(context).pop();
-                                  showTestEndedDialog(context);
-                                  resetTest();
+                                final character = event.character;
+                                if (character == currentLetter) {
+                                  if (currentIndex < longString.length - 1) {
+                                    setState(() {
+                                      currentIndex++;
+                                      if (character == ' ') {
+                                        totalWordsTyped++;
+                                      }
+                                    });
+                                  } else {
+                                    GoRouter.of(context).go('/menu');
+                                    // GoRouter.of(context).pop();
+                                    showTestEndedDialog(context);
+                                    resetTest();
+                                  }
                                 }
                               }
-                            }
-                          },
-                          child: SizedBox(child: KeyboardWidget(currentLetter: currentLetter)),
-                        ),
-                        SizedBox(
-                            height: !isPortrait
-                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.width * 0.14
-                                : (MediaQuery.of(context).size.height * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.height * 0.14,
-                            width: !isPortrait
-                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.width * 0.14
-                                : (MediaQuery.of(context).size.height * 0.14 > 100)
-                                    ? 100
-                                    : MediaQuery.of(context).size.height * 0.14,
-                            child: RightHandImage(currentLetter: currentLetter)),
-                      ],
-                    ),
-                  ],
+                            },
+                            child: SizedBox(child: KeyboardWidget(currentLetter: currentLetter)),
+                          ),
+                          SizedBox(
+                              height: !isPortrait
+                                  ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.width * 0.14
+                                  : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.height * 0.14,
+                              width: !isPortrait
+                                  ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.width * 0.14
+                                  : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                      ? 100
+                                      : MediaQuery.of(context).size.height * 0.14,
+                              child: RightHandImage(currentLetter: currentLetter)),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
