@@ -54,57 +54,82 @@ class RightRow extends StatelessWidget {
     );
   }
 
-
   Widget submitButton(BuildContext context){
     return ElevatedButton(
-      style: ButtonStyle(elevation: MaterialStateProperty.all(0),
-          backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
-          shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
-          ))),
+      style: ButtonStyle(
+        elevation: MaterialStateProperty.all(0),
+        backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
+        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+          side: const BorderSide(color: Color(0xff369CBC)),
+          borderRadius: BorderRadius.circular(5),
+        )),
+      ),
       onPressed: () async {
-
-
         try {
-          // print("in try");
           final DateTime now = DateTime.now();
           final Duration elapsed = now.difference(startTime);
+
+
+          // Task 1: Update time taken and pop the current route
           Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
           GoRouter.of(context).pop();
-          await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
-          // print("c");
-          await Future.microtask(() {
-            final TestModel testModel = Provider.of<TestCalculatorProvider>(context, listen: false).testModel;
+
+          // Task 2: Submit the test
+         await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
+
+          // Task 3: Get necessary data from the provider and save results
+          if(context.mounted) {
+            final TestModel testModel = Provider
+                .of<TestCalculatorProvider>(context, listen: false)
+                .testModel;
 
             final String timeTaken = testModel.timeTaken.toInt().toString();
             final String omittedWords = testModel.omittedWords.toString();
             final String speed = testModel.wpm.toInt().toString();
-            final String totalWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.totalWords.toString();
-            final String backspaceCount = testModel.backSpaceCount.toInt().toString();
+            final String totalWords = Provider
+                .of<TestCalculatorProvider>(context, listen: false)
+                .testModel
+                .totalWords
+                .toString();
+            final String backspaceCount = testModel.backSpaceCount.toInt()
+                .toString();
             final String accuracy = testModel.accuracy.toInt().toString();
             final String wordsTyped = testModel.wordsTyped.toInt().toString();
-            final String correctWords = testModel.correctWords.toInt().toString();
-            final String incorrectWords = testModel.incorrectWords.toInt().toString();
+            final String correctWords = testModel.correctWords.toInt()
+                .toString();
+            final String incorrectWords = testModel.incorrectWords.toInt()
+                .toString();
             final String fullMistake = testModel.fullMistake.toInt().toString();
             final String halfMistake = testModel.halfMistake.toInt().toString();
             final String testId = testData.testId.toString();
 
-            Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, omittedWords,speed,totalWords, backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
-
-            if (testData.type == "PRACTICE") {
-              // print("a");
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return ResultDialog(testId: testData.testId!);
-                },
-              );
-            } else if (testData.type == "LIVE") {
-              // print("b");
-              showTestEndedDialog(context);
-            }
-          });
-
+            await Provider.of<ApiProvider>(context, listen: false).saveResult(
+                timeTaken,
+                omittedWords,
+                speed,
+                totalWords,
+                backspaceCount,
+                accuracy,
+                wordsTyped,
+                correctWords,
+                incorrectWords,
+                fullMistake,
+                halfMistake,
+                testId);
+          }
+          // Task 4: Decide whether to show a dialog or call showTestEndedDialog
+          if(context.mounted) {
+          if (testData.type == "PRACTICE") {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ResultDialog(testId: testData.testId!);
+              },
+            );
+          } else if (testData.type == "LIVE") {
+            showTestEndedDialog(context);
+          }
+         }
         } catch (e) {
           // Handle exceptions, log, or show an error message
           // print('Error: $e');
@@ -113,6 +138,7 @@ class RightRow extends StatelessWidget {
       child: const Text('Submit', style: TextStyle(color: Colors.white),),
     );
   }
+
 
   void showTestEndedDialog(BuildContext context) {
     showDialog(
