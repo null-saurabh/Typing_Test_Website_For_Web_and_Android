@@ -69,34 +69,44 @@ class LearnMenuScreen extends StatelessWidget {
 
   Widget buildMobileLayout(BuildContext context){
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Learn Typing Menu'),
-      ),
-      body: ListView(
-        children: [
-          _buildMobileMenuItem(context, 'Letters ASDFJKL;',0),
-          _buildMobileMenuItem(context, 'Letters QWERUIOP',1),
-          _buildMobileMenuItem(context, 'Letters ZXCVM,.',2),
-          _buildMobileMenuItem(context, 'Letters TYGHBN',3),
-          _buildMobileMenuItem(context, 'Letters ASDFQWERJKL;UIOP',4),
-          // Add more menu items as needed
-        ],
+      body: Padding(
+        padding: const EdgeInsets.only(right: 15.0,left: 15,top: 0,bottom: 15),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Typing Lessons',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+            const SizedBox(height: 15,),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: menuItems.length,
+                  itemBuilder: (context,index){
+                    return _buildMobileMenuItem(context, menuItems[index], index);
+                  }
+
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildMobileMenuItem(BuildContext context, String menuText, int index) {
     return Card(
-      color: const Color(0xff369CBC),
-      child: Center(
-        child: ListTile(
-          title: Center(child: Text(menuText,style: const TextStyle(color: Colors.white))),
-          onTap: () {
-            Provider.of<LearnMenuProvider>(context, listen: false)
-                .setTestIndex(index);
-            GoRouter.of(context).go('/learn');
-          },
+      child: ListTile(
+        leading: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.grey.withOpacity(0.4)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text((index +1).toString(),style: const TextStyle(fontSize: 14),),
+          ),
         ),
+        title: Text(menuText,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18)),
+        trailing: startButton(context,index),
       ),
 
     );
@@ -119,15 +129,6 @@ class LearnMenuScreen extends StatelessWidget {
         title: Text(menuText,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
         trailing: startButton(context,index),
       )
-
-
-      // TextButton(
-      //     onPressed: () {
-      //       Provider.of<LearnMenuProvider>(context, listen: false)
-      //           .setTestIndex(index);
-      //       GoRouter.of(context).go('/learn');
-      //     },
-    //       child: Text(menuText,style: const TextStyle(color: Colors.white)))
     );
   }
 
