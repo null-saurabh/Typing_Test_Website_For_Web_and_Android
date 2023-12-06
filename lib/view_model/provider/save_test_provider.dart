@@ -52,6 +52,7 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.omittedWords = originalText.split(' ').length;
       _testModel.halfMistake = 0;
       _testModel.fullMistake = 0;
+      _testModel.totalWords = originalText.split(' ').length;
     } else {
       List<String> typedWordsWithSpaces = typedText.split(' ');
       int extraSpaces = typedWordsWithSpaces.length -

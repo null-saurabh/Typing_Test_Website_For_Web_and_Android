@@ -17,7 +17,7 @@ class RankingScreen extends StatelessWidget {
 
   Widget buildDesktopLayout(BuildContext context){
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0,vertical: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

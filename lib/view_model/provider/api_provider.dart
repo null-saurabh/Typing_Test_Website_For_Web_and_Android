@@ -78,7 +78,7 @@ class ApiProvider with ChangeNotifier {
     }
     try {
       final response = await apiService.rankingLeaderBoard(userEmail,testId);
-      print("trying ranking in provider");
+      // print("trying ranking in provider");
       return response.data!;
     } catch (e) {
       rethrow;
@@ -100,7 +100,7 @@ class ApiProvider with ChangeNotifier {
       String testId,
       ) async {
 
-    print('data $timeTaken,$speed,$accuracy,$correctWords,$testId');
+    // print('data $timeTaken,$speed,$accuracy,$correctWords,$testId');
     final userEmail = _userProvider.userEmail;
 
     if (userEmail == null) {
@@ -108,7 +108,7 @@ class ApiProvider with ChangeNotifier {
     }
 
     try {
-      print("in provider");
+      // print("in provider");
 
       final response = await apiService.saveResult(
         userEmail,
@@ -129,7 +129,7 @@ class ApiProvider with ChangeNotifier {
       // Do something with the result if needed
       return response;
     } catch (e) {
-      print("Error saving result: $e");
+      // print("Error saving result: $e");
       return false;
     }
   }

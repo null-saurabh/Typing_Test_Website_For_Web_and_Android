@@ -47,10 +47,44 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
 
     return Scaffold(
       body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceEvenly ,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 100,
+            height: 15,
+          ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(width: 10,),
+                InkWell(
+                  onTap: () {
+                    GoRouter.of(context).go('/menu');
+                    // GoRouter.of(context).pop();
+                  },
+                  child: const Row(
+                    children: [
+                      SizedBox(
+                        height: 30,
+                        width: 30,
+                        // color: Color(0xff369CBC),
+                        // decoration: BoxDecoration(
+                        //   shape: BoxShape.circle,
+                        //   color: Color(0xff369CBC),
+                        //
+                        // ),
+                        child: Icon(Icons.arrow_back_ios_new,color: Color(0xff369CBC),),
+                      ),
+                      SizedBox(width: 2.5),
+                      Text("Back",style: TextStyle(color: Color(0xff369CBC),fontSize: 18),),
+                      SizedBox(width: 5),
+                    ],
+                  ),
+                )
+
+              ],
+            ),
+          const SizedBox(
+            height: 15,
           ),
           TestStringUi(
               typedString: typedString,
@@ -94,7 +128,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     }
                   }
                 },
-                child: KeyboardWidget(currentLetter: currentLetter),
+                child: SizedBox(child: KeyboardWidget(currentLetter: currentLetter)),
               ),
               SizedBox(
                   height: (MediaQuery.of(context).size.width * 0.10 > 200)
@@ -129,71 +163,78 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                 typedString: typedString,
                 currentLetter: currentLetter,
                 remainingString: remainingString),
+            const SizedBox(height: 15,),
             // Section 2: Keyboard UI
             Expanded(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                      height: !isPortrait
-                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14
-                          : (MediaQuery.of(context).size.height * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14,
-                      width: !isPortrait
-                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14
-                          : (MediaQuery.of(context).size.height * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14,
-                      child: LeftHandImage(currentLetter: currentLetter)),
-                  RawKeyboardListener(
-                    focusNode: FocusNode(),
-                    autofocus: true,
-                    onKey: (RawKeyEvent event) {
-                      if (event is RawKeyDownEvent && event.character != null) {
-                        startTime ??= DateTime.now();
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            height: !isPortrait
+                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.width * 0.14
+                                : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.height * 0.14,
+                            width: !isPortrait
+                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.width * 0.14
+                                : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.height * 0.14,
+                            child: LeftHandImage(currentLetter: currentLetter)),
+                        RawKeyboardListener(
+                          focusNode: FocusNode(),
+                          autofocus: true,
+                          onKey: (RawKeyEvent event) {
+                            if (event is RawKeyDownEvent && event.character != null) {
+                              startTime ??= DateTime.now();
 
-                        final character = event.character;
-                        if (character == currentLetter) {
-                          if (currentIndex < longString.length - 1) {
-                            setState(() {
-                              currentIndex++;
-                              if (character == ' ') {
-                                totalWordsTyped++;
+                              final character = event.character;
+                              if (character == currentLetter) {
+                                if (currentIndex < longString.length - 1) {
+                                  setState(() {
+                                    currentIndex++;
+                                    if (character == ' ') {
+                                      totalWordsTyped++;
+                                    }
+                                  });
+                                } else {
+                                  GoRouter.of(context).go('/menu');
+                                  // GoRouter.of(context).pop();
+                                  showTestEndedDialog(context);
+                                  resetTest();
+                                }
                               }
-                            });
-                          } else {
-                            GoRouter.of(context).go('/menu');
-                            // GoRouter.of(context).pop();
-                            showTestEndedDialog(context);
-                            resetTest();
-                          }
-                        }
-                      }
-                    },
-                    child: KeyboardWidget(currentLetter: currentLetter),
-                  ),
-                  SizedBox(
-                      height: !isPortrait
-                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14
-                          : (MediaQuery.of(context).size.height * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14,
-                      width: !isPortrait
-                          ? (MediaQuery.of(context).size.width * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14
-                          : (MediaQuery.of(context).size.height * 0.14 > 100)
-                              ? 100
-                              : MediaQuery.of(context).size.height * 0.14,
-                      child: RightHandImage(currentLetter: currentLetter)),
-                ],
+                            }
+                          },
+                          child: SizedBox(child: KeyboardWidget(currentLetter: currentLetter)),
+                        ),
+                        SizedBox(
+                            height: !isPortrait
+                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.width * 0.14
+                                : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.height * 0.14,
+                            width: !isPortrait
+                                ? (MediaQuery.of(context).size.width * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.width * 0.14
+                                : (MediaQuery.of(context).size.height * 0.14 > 100)
+                                    ? 100
+                                    : MediaQuery.of(context).size.height * 0.14,
+                            child: RightHandImage(currentLetter: currentLetter)),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

@@ -72,7 +72,6 @@ class RightRow extends StatelessWidget {
 
           // Task 1: Update time taken and pop the current route
           Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
-          GoRouter.of(context).pop();
 
           // Task 2: Submit the test
          await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
@@ -116,9 +115,13 @@ class RightRow extends StatelessWidget {
                 fullMistake,
                 halfMistake,
                 testId);
+            // print("after save result");
+
           }
           // Task 4: Decide whether to show a dialog or call showTestEndedDialog
           if(context.mounted) {
+
+            GoRouter.of(context).pop();
           if (testData.type == "PRACTICE") {
             showDialog(
               context: context,
@@ -131,8 +134,6 @@ class RightRow extends StatelessWidget {
           }
          }
         } catch (e) {
-          // Handle exceptions, log, or show an error message
-          // print('Error: $e');
         }
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

@@ -106,7 +106,6 @@ class KeyboardWidget extends StatelessWidget {
       totalScreenWidth = MediaQuery.of(context).size.width * 0.60;
     }
     return Container(
-      // color: Colors.white,
       padding: const EdgeInsets.all(2.0),
       child: Center(
         child: Column(
@@ -204,8 +203,8 @@ class KeyboardWidget extends StatelessWidget {
 
 
   Widget buildDesktopRow(Map<String, double> keys, double totalScreenWidth) {
-    double totalRowWidth = 730;
-    double dynamicWidthRatio = totalScreenWidth / totalRowWidth;
+    double totalRowWidthConstantForRatio = 730;
+    double dynamicWidthRatio = totalScreenWidth / totalRowWidthConstantForRatio;
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5.0),

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
@@ -59,47 +60,103 @@ class _TestScreenState extends State<TestScreen> {
 
   void _submitTest() async {
     if (!testCompleted) {
-      if (mounted) {
         setState(() {
           testCompleted = true;
         });
-      }
+
       _timer.cancel();
       final DateTime now = DateTime.now();
       final Duration elapsed = now.difference(_startTime);
+
       Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
       await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
 
-      await Future.microtask(() {
-      final String timeTaken = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.timeTaken.toString();
-      final String omittedWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.omittedWords.toString();
-      final String speed = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wpm.toString();
-      final String totalWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.totalWords.toString();
-      final String backspaceCount = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.backSpaceCount.toString();
-      final String accuracy = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.accuracy.toString();
-      final String wordsTyped = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.wordsTyped.toString();
-      final String correctWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.correctWords.toString();
-      final String incorrectWords = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.incorrectWords.toString();
-      final String fullMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.fullMistake.toString();
-      final String halfMistake = Provider.of<TestCalculatorProvider>(context, listen: false).testModel.halfMistake.toString();
-      final String testId = widget.testData.testId.toString();
-      Provider.of<ApiProvider>(context,listen: false).saveResult(timeTaken, omittedWords,speed, totalWords,backspaceCount, accuracy, wordsTyped, correctWords, incorrectWords,fullMistake, halfMistake, testId);
-
-
-      Navigator.pop(context);
-
-      if (widget.testData.type == "PRACTICE") {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return ResultDialog(testId: widget.testData.testId!);
-            }
-        );
+      if(context.mounted) {
+        final String timeTaken = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .timeTaken
+            .toString();
+        final String omittedWords = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .omittedWords
+            .toString();
+        final String speed = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .wpm
+            .toString();
+        final String totalWords = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .totalWords
+            .toString();
+        final String backspaceCount = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .backSpaceCount
+            .toString();
+        final String accuracy = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .accuracy
+            .toString();
+        final String wordsTyped = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .wordsTyped
+            .toString();
+        final String correctWords = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .correctWords
+            .toString();
+        final String incorrectWords = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .incorrectWords
+            .toString();
+        final String fullMistake = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .fullMistake
+            .toString();
+        final String halfMistake = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .halfMistake
+            .toString();
+        final String testId = widget.testData.testId.toString();
+        Provider.of<ApiProvider>(context, listen: false).saveResult(
+            timeTaken,
+            omittedWords,
+            speed,
+            totalWords,
+            backspaceCount,
+            accuracy,
+            wordsTyped,
+            correctWords,
+            incorrectWords,
+            fullMistake,
+            halfMistake,
+            testId);
       }
-      else {
-        showTestEndedDialog(context);
-      }
-      });
+
+        if(context.mounted) {
+          GoRouter.of(context).pop();
+          if (widget.testData.type == "PRACTICE") {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return ResultDialog(testId: widget.testData.testId!);
+                }
+            );
+          }
+          else {
+            showTestEndedDialog(context);
+          }
+        }
     }
   }
 

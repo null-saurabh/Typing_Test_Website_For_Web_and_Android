@@ -27,11 +27,11 @@ Widget buildDesktopLayout(BuildContext context){
         children: [
           SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(left: 50.0),
+            padding: EdgeInsets.only(left: 40.0),
             child: Text("All Tests",style: TextStyle(fontSize: 24,fontWeight: FontWeight.w600),),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 50.0, right: 50,bottom: 50),
+            padding: EdgeInsets.only(left: 40.0, right: 40,bottom: 40),
             child: HomepageContent(),
           ),
         ],

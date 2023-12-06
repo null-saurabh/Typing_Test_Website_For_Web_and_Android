@@ -33,7 +33,7 @@ class ExamPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,7 +53,7 @@ class ExamPage extends StatelessWidget {
                           //     child: const Icon(Icons.arrow_back),
                           //   ),
                           // ),
-                          const SizedBox(width: 10),
+                          // const SizedBox(width: 10),
                           Text(
                             targetExamName,
                             style: const TextStyle(
@@ -129,7 +129,7 @@ class ExamPage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(40.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
