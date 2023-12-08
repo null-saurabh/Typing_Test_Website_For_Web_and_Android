@@ -27,11 +27,41 @@ class LearnMenuScreen extends StatelessWidget {
   const LearnMenuScreen({super.key});
 
   final List<String> menuItems = const [
-    "A, S, D, F, J, K, L and ';'",
-    'Q, W, E, R, U, I, O and P',
-    "Z, X, C, V, M, ',' and '.'",
-    'T, Y, G, H, B and N',
-    "A, S, D, F, Q, W, E, R, J, K, L, ';', U, I, O and P"
+    "a, s, d, f, j, k, l and ‘;’",
+    'q, w, e, r, u, i, o and p',
+    "z, x, c, v, m, ‘,’ and ‘.’",
+    't, y, g, h, b and n',
+    "a, s, d, f, q, w, e, r, j, k, l, ‘;’, u, i, o and p",
+    "a, s, d, f, J, K, L and ‘;’",
+    "q, w, e, r, U, I, O and P",
+    "z, x, c, v, M, ‘,’ and ‘.’",
+    "t, y, g, h, B and N",
+    "c, v, b, n, m, ‘,’, ‘.’, ‘/’, G, H, J and K",
+    "q, w, e, r, t, y, u, i, o, p, ‘[’ and ‘]’",
+    'A, S, D, F, G, H, J, K, L, ‘;’, ‘’’ and ‘\\’',
+    "Z, X, C, V, B, N, M, ‘,’, ‘.’, ‘/’ and ‘?’",
+    "Q, A, Z, W, S, X, E, D, C, R, F and V",
+
+
+    "t, g, b, y, h, n, U, J, M, I, K and ‘,’",
+    '''o, l, ‘.’, p, ‘;’, ‘/’, ‘[’, ‘]’, ‘\\’, ‘’’ and ‘"’ ''',
+    "e, d, c, r, f, v, T, G, B, Y, H and N",
+    "u, j, m, i, k, ‘,’, O, L, ‘.’, P, ';' and ‘/’",
+    "A, z, Q, s, X, W, d, c, E, f, V and r",
+    "n, M, ‘,’, ‘.’, ‘/’, B, v, c, X, z and ‘?’",
+    '''H, j, k, l, ‘;’, ‘’’ and ‘"’, G, f, d, S, a and ‘\\’ ''',
+    "Y, u, i, O, p, ‘[’, ‘]’, t, R, e, W and q",
+    '''K, l, ‘;’, ‘’’ and ‘"’, J, h, g, F, d and S''',
+
+  "'`', 1, 2, 3, 4, q, w, e and r",
+  "5, 6, t, y, g, h, b and n",
+  "7, 8, u, i, j, k, m and ','",
+  "9, 0, o, p, '[', ']', 'l' and ';'",
+  "'`', 1, 2, 3, 4, a, s, d and f",
+  "5, 6, g, h, j, k, l and ';'",
+  "7, 8, z, x, c, v, b and n",
+  "9, 0, m, ',', '.', '/', '?', and '`'",
+
   ];
 
   @override
