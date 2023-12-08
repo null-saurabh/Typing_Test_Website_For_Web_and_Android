@@ -21,7 +21,7 @@ class RankingScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          const Row(
             children: [
               // InkWell(
               //   onTap:(){Navigator.pop(context);},
@@ -32,8 +32,8 @@ class RankingScreen extends StatelessWidget {
               //     child: const Icon(Icons.arrow_back),
               //   ),
               // ),
-              const SizedBox(width: 10),
-              const Text(
+              SizedBox(width: 10),
+              Text(
                 "Leader Board",
                 style: TextStyle(
                     fontSize: 18,

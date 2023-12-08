@@ -49,7 +49,7 @@ class LeftDrawer extends StatelessWidget {
   Widget drawerItems(BuildContext context,IconData icon, String title, String pageId, LoginUserProvider userProvider, NavigationProvider navigationProvider) {
     final currentRoute = navigationProvider.currentPage;
     bool isSelected = currentRoute.contains(pageId);
-    print("$currentRoute : $pageId");
+    // print("$currentRoute : $pageId");
 
 
     return Container(

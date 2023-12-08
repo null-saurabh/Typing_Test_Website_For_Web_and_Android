@@ -211,17 +211,37 @@ class GoRouteShellObserver extends NavigatorObserver {
       final BuildContext context = _shellNavigatorKey.currentContext!;
       final NavigationProvider navigationProvider = Provider.of<NavigationProvider>(context, listen: false);
       final String routeName = route.settings.name ?? '';
-      // print('a'+routeName);
+      var routeTitle  = route.settings.arguments as Map<String, dynamic>? ?? {};
+      // var examName = routeTitle?['examName'];
+      print('a: $routeName');
+      print('b: $routeTitle');
+
       if (routeName == 'exam') {
         navigationProvider.updateCurrentPageFromUrl('/home');
+        navigationProvider.updateTitle(routeTitle['examName']);
       } else if (routeName == 'ranking') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
+        navigationProvider.updateTitle('Leader Board');
       }else if (routeName == 'history') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
+        navigationProvider.updateTitle("Result History");
       } else if (routeName == 'learn') {
         navigationProvider.updateCurrentPageFromUrl('/menu');
+        navigationProvider.updateTitle('Learn Keys: [ ${routeTitle['testName']} ]');
       } else {
         navigationProvider.updateCurrentPageFromUrl('/$routeName');
+        if(routeName == 'home'){
+          navigationProvider.updateTitle('All Tests');
+        }
+        else if(routeName == 'menu'){
+          navigationProvider.updateTitle('Typing Lessons');
+        }
+        else if(routeName == 'subscription'){
+          navigationProvider.updateTitle('Subscriptions');
+        }
+        else if(routeName == 'profile'){
+          navigationProvider.updateTitle('My Profile');
+        }
       }
     });
   }

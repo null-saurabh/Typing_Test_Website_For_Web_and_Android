@@ -23,6 +23,13 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
   int totalWordsTyped = 0;
   // String longString = "this is a game what are you doing sat your that";
 
+  @override
+  void initState() {
+    int index = Provider.of<LearnMenuProvider>(context, listen: false).getMenuItems.indexOf(widget.testName);
+    Provider.of<LearnMenuProvider>(context, listen: false).setTestIndex(index);
+    super.initState();
+  }
+
   void resetTest() {
     setState(() {
       currentIndex = 0;
@@ -81,8 +88,8 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 5,),
-                Text('Learn Keys: ${widget.testName}',style: TextStyle(fontSize: 18),),
+                const SizedBox(width: 15,),
+                Text('Learn Keys: [ ${widget.testName} ]',style: TextStyle(fontSize: 18),),
 
 
               ],

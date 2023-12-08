@@ -15,6 +15,10 @@ class NavigationProvider extends ChangeNotifier {
 
   List<String> get originalLocations => _originalLocations;
 
+  String _pageTitle = "All Tests";
+
+  String get pageTitle => _pageTitle;
+
   void addOriginalLocation(String location) {
     _originalLocations.add(location);
   }
@@ -25,6 +29,11 @@ class NavigationProvider extends ChangeNotifier {
   }
   void updateCurrentPageFromUrl(String routeName) {
     _currentPage = routeName;
+    notifyListeners();
+  }
+
+  void updateTitle(String title){
+    _pageTitle = title;
     notifyListeners();
   }
 

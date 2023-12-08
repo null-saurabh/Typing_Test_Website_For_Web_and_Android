@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart' hide WidgetBuilder;
 import 'package:typingtest/view/widgets/Left_drawer.dart';
-import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/provider/navigation_provider.dart';
 
 
 
@@ -18,7 +17,7 @@ class HOMEVIEW extends StatefulWidget {
 
 class _HOMEVIEWState extends State<HOMEVIEW> {
   final _navigatorKey = GlobalKey<NavigatorState>();
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   // @override
   // void initState() {
@@ -66,19 +65,7 @@ class _HOMEVIEWState extends State<HOMEVIEW> {
   Widget buildMobileLayout(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // leading: Builder(
-        //   builder: (context) {
-        //     return IconButton(
-        //       icon: const Icon(Icons.menu),
-        //       onPressed: () {
-        //         // _scaffoldKey.currentState!.openDrawer();
-        //         _scaffoldKey.currentState!.openDrawer(); // Open the drawer
-        //       },
-        //     );
-        //   },
-        // ),
-        // title: ,
-        // actions: [getActionForChild(widget.child)],
+        title: Text(Provider.of<NavigationProvider>(context).pageTitle),
       ),
       drawer: const LeftDrawer(isMobile: true,),
 
