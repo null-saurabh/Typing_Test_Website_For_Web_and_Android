@@ -10,7 +10,8 @@ import 'package:typingtest/view/widgets/learn_typing_widgets/test_string_ui.dart
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
 class LearnTypingTestScreen extends StatefulWidget {
-  const LearnTypingTestScreen({super.key});
+  final String testName;
+  const LearnTypingTestScreen({required this.testName,super.key});
 
   @override
   State<LearnTypingTestScreen> createState() => _LearnTypingTestScreenState();
@@ -79,7 +80,10 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                       SizedBox(width: 5),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(width: 5,),
+                Text('Learn Keys: ${widget.testName}',style: TextStyle(fontSize: 18),),
+
 
               ],
             ),
@@ -322,7 +326,8 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                 GoRouter.of(context).pop();
                 Provider.of<LearnMenuProvider>(context, listen: false)
                     .goToNextTest();
-                GoRouter.of(context).go('/learn');
+                String nextTestScreen = Provider.of<LearnMenuProvider>(context, listen: false).currentMenuItem;
+                GoRouter.of(context).go('/learn/$nextTestScreen');
               },
               child: const Text('Next Test'),
             ),

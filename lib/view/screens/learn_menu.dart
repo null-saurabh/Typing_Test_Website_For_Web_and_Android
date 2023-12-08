@@ -26,44 +26,6 @@ import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 class LearnMenuScreen extends StatelessWidget {
   const LearnMenuScreen({super.key});
 
-  final List<String> menuItems = const [
-    "a, s, d, f, j, k, l and ‘;’",
-    'q, w, e, r, u, i, o and p',
-    "z, x, c, v, m, ‘,’ and ‘.’",
-    't, y, g, h, b and n',
-    "a, s, d, f, q, w, e, r, j, k, l, ‘;’, u, i, o and p",
-    "a, s, d, f, J, K, L and ‘;’",
-    "q, w, e, r, U, I, O and P",
-    "z, x, c, v, M, ‘,’ and ‘.’",
-    "t, y, g, h, B and N",
-    "c, v, b, n, m, ‘,’, ‘.’, ‘/’, G, H, J and K",
-    "q, w, e, r, t, y, u, i, o, p, ‘[’ and ‘]’",
-    'A, S, D, F, G, H, J, K, L, ‘;’, ‘’’ and ‘\\’',
-    "Z, X, C, V, B, N, M, ‘,’, ‘.’, ‘/’ and ‘?’",
-    "Q, A, Z, W, S, X, E, D, C, R, F and V",
-
-
-    "t, g, b, y, h, n, U, J, M, I, K and ‘,’",
-    '''o, l, ‘.’, p, ‘;’, ‘/’, ‘[’, ‘]’, ‘\\’, ‘’’ and ‘"’ ''',
-    "e, d, c, r, f, v, T, G, B, Y, H and N",
-    "u, j, m, i, k, ‘,’, O, L, ‘.’, P, ';' and ‘/’",
-    "A, z, Q, s, X, W, d, c, E, f, V and r",
-    "n, M, ‘,’, ‘.’, ‘/’, B, v, c, X, z and ‘?’",
-    '''H, j, k, l, ‘;’, ‘’’ and ‘"’, G, f, d, S, a and ‘\\’ ''',
-    "Y, u, i, O, p, ‘[’, ‘]’, t, R, e, W and q",
-    '''K, l, ‘;’, ‘’’ and ‘"’, J, h, g, F, d and S''',
-
-  "'`', 1, 2, 3, 4, q, w, e and r",
-  "5, 6, t, y, g, h, b and n",
-  "7, 8, u, i, j, k, m and ','",
-  "9, 0, o, p, '[', ']', 'l' and ';'",
-  "'`', 1, 2, 3, 4, a, s, d and f",
-  "5, 6, g, h, j, k, l and ';'",
-  "7, 8, z, x, c, v, b and n",
-  "9, 0, m, ',', '.', '/', '?', and '`'",
-
-  ];
-
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
@@ -73,6 +35,7 @@ class LearnMenuScreen extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context){
+    final List<String> menuItems = Provider.of<LearnMenuProvider>(context).getMenuItems;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20),
@@ -98,6 +61,7 @@ class LearnMenuScreen extends StatelessWidget {
   }
 
   Widget buildMobileLayout(BuildContext context){
+    final List<String> menuItems = Provider.of<LearnMenuProvider>(context).getMenuItems;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(right: 15.0,left: 15,top: 0,bottom: 15),
@@ -136,7 +100,7 @@ class LearnMenuScreen extends StatelessWidget {
           ),
         ),
         title: Text(menuText,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18)),
-        trailing: startButton(context,index),
+        trailing: startButton(context,index,menuText),
       ),
 
     );
@@ -157,12 +121,12 @@ class LearnMenuScreen extends StatelessWidget {
           ),
         ),
         title: Text(menuText,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
-        trailing: startButton(context,index),
+        trailing: startButton(context,index,menuText),
       )
     );
   }
 
-  Widget startButton(BuildContext context,int index){
+  Widget startButton(BuildContext context,int index,menuText){
     return ElevatedButton(
       style: ButtonStyle(elevation: MaterialStateProperty.all(0),
           backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
@@ -172,7 +136,7 @@ class LearnMenuScreen extends StatelessWidget {
       onPressed: () async {
         Provider.of<LearnMenuProvider>(context, listen: false)
                   .setTestIndex(index);
-              GoRouter.of(context).go('/learn');
+              GoRouter.of(context).go('/learn/$menuText');
       },
       child: const Text('Start', style: TextStyle(color: Colors.white),),
     );

@@ -156,9 +156,11 @@ final _router = GoRouter(
         GoRoute(
             // parentNavigatorKey: _shellNavigatorKey,
           name: 'learn',
-            path: '/learn',
+            path: '/learn/:testName',
             builder: (context, state) {
-              return const LearnTypingTestScreen();
+              return LearnTypingTestScreen(
+                testName: state.pathParameters["testName"] ?? "a, s, d, f, j, k, l and ‘;’",
+              );
             }),
         GoRoute(
             // parentNavigatorKey: _shellNavigatorKey,
