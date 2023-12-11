@@ -39,7 +39,9 @@ class RazorpayService {
     // Handle external wallet event
   }
 
-  void openCheckout({required int amount,required String key,required String name,required String email,required String orderId}) {
+  void openCheckout({required int amount,required String key,required String name,required String email,
+    // required String orderId
+  }) {
 
     final options = {
       'key': key,
@@ -47,7 +49,7 @@ class RazorpayService {
       'currency' : "INR",
       'name': "A1 Typing",
       'timeout': 200,
-      'order_id': orderId,
+      // 'order_id': orderId,
       'description':'Subscription Fee',
       'retry': {'enabled': true, 'max_count': 1},
       'send_sms_hash': true,

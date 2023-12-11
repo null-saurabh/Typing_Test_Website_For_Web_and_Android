@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/view_model/provider/api_provider.dart';
+// import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 
@@ -202,11 +202,11 @@ class SubscriptionPage extends StatelessWidget {
           if(price == 0){ GoRouter.of(context).go('/home');}
           else if(price >0){
 
-            final orderResponse = await Provider.of<ApiProvider>(context, listen: false)
-                .createOrder(price);
+            // final orderResponse = await Provider.of<ApiProvider>(context, listen: false)
+            //     .createOrder(price);
 
-            final razorpayKey = orderResponse.razorpayKeyId;
-            final orderId = orderResponse.id;
+            // final razorpayKey = orderResponse.razorpayKeyId;
+            // final orderId = orderResponse.id;
 
             razorPayProvider.onSuccess = () {
               print('Payment Successful');
@@ -218,10 +218,10 @@ class SubscriptionPage extends StatelessWidget {
 
             razorPayProvider.openCheckout(
               amount: price * 100,
-              key: razorpayKey,
+              key: "rzp_test_nGsJwTHHc6fIrn",
               name: name,
               email: email,
-              orderId: orderId,
+              // orderId: orderId,
             );
 
           }
