@@ -175,7 +175,7 @@ class ExamPage extends StatelessWidget {
                         maxCrossAxisExtent: 325,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        childAspectRatio: 275 / 129,
+                        childAspectRatio: 275 / 135,
                       ),
                       itemCount: data.data.list.length,
                       itemBuilder: (context, index) {
@@ -397,7 +397,7 @@ class ExamPage extends StatelessWidget {
 
   Widget dailyTest(LiveTestData testData, BuildContext context) {
     return Container(
-      height: 100,
+      height: 110,
       width: 275,
       color: testData.isAttempted!? Colors.grey.withOpacity(0.08) :Colors.white,
       child: Padding(
@@ -407,6 +407,8 @@ class ExamPage extends StatelessWidget {
           children: [
             Text(
               testData.testName!,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18,color: testData.isAttempted! ? Colors.black : Colors.black ),
             ),
             // const SizedBox(

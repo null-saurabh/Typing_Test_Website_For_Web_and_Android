@@ -4,32 +4,34 @@ import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
-void main() async {
-  runApp(
-  MultiProvider(
-    providers: [
-      ChangeNotifierProvider(
-        create: (context) => LearnMenuProvider(),
-      ),
-    ],
-    child: const MyApp(),
-  ),);
-}
+// void main() async {
+//   runApp(
+//   MultiProvider(
+//     providers: [
+//       ChangeNotifierProvider(
+//         create: (context) => LearnMenuProvider(),
+//       ),
+//     ],
+//     child: const MyApp(),
+//   ),);
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+// // This widget is the root
+// // of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//         title: "ListView.builder",
+//         theme: ThemeData(primarySwatch: Colors.green),
+//         debugShowCheckedModeBanner: false,
+//         // home : new ListViewBuilder(),  NO Need To Use Unnecessary New Keyword
+//         home: const LearnMenuScreen());
+//   }
+// }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-// This widget is the root
-// of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        title: "ListView.builder",
-        theme: ThemeData(primarySwatch: Colors.green),
-        debugShowCheckedModeBanner: false,
-        // home : new ListViewBuilder(),  NO Need To Use Unnecessary New Keyword
-        home: const LearnMenuScreen());
-  }
-}
+
 
 class LearnMenuScreen extends StatelessWidget {
   const LearnMenuScreen({super.key});
@@ -132,7 +134,7 @@ class LearnMenuScreen extends StatelessWidget {
           ),
         ),
         title: Text(menuText.substring(0,match!.start+1).trim(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
-        subtitle:   Text('Letters: ' + menuText.substring(match.start+1).trim(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+        subtitle:   Text('Letters: ${menuText.substring(match.start+1).trim()}',style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
         trailing: startButton(context,index,menuText),
       )
     );

@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/screens/Homepage_screen.dart';
 import 'package:typingtest/view/screens/error_page.dart';
+import 'package:typingtest/view/screens/exam_information_page.dart';
 import 'package:typingtest/view/screens/exam_page.dart';
 import 'package:typingtest/view/screens/history_screen.dart';
 import 'package:typingtest/view/screens/homeview.dart';
@@ -92,13 +93,20 @@ final _router = GoRouter(
   // ],
   redirect: (context, state){
     String originalLocation = state.matchedLocation;
+    print(originalLocation);
     if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
-      return '/welcome';
+
+      final List<String> allowedRoutes = [
+        '/welcome',
+        '/examinformation',
+      ];
+
+      if (!allowedRoutes.any((route) => originalLocation.startsWith(route))) {
+        return '/welcome';
+      }
     }
-    else{
-      return null;
-    }
+    return null;
   },
   errorPageBuilder: (context,state){
     return const MaterialPage(child: ErrorPage());
@@ -130,20 +138,19 @@ final _router = GoRouter(
           },
         ),
         GoRoute(
-            // parentNavigatorKey: _shellNavigatorKey,
-          name: 'profile',
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'profile',
             path: '/profile',
             builder: (context, state) {
               return const ProfilePage();
             }),
         GoRoute(
-            // parentNavigatorKey: _shellNavigatorKey,
-          name: 'history',
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'history',
             path: '/history/:popup',
             builder: (context, state) {
               return HistoryScreen(
                 popup: state.pathParameters["popup"]?.toLowerCase() == 'true',
-                // examName: state.queryParameter,
               );
             }),
         GoRoute(
@@ -154,8 +161,8 @@ final _router = GoRouter(
               return const LearnMenuScreen();
             }),
         GoRoute(
-            // parentNavigatorKey: _shellNavigatorKey,
-          name: 'learn',
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'learn',
             path: '/learn/:testName',
             builder: (context, state) {
               return LearnTypingTestScreen(
@@ -163,16 +170,24 @@ final _router = GoRouter(
               );
             }),
         GoRoute(
-            // parentNavigatorKey: _shellNavigatorKey,
-          name: 'exam',
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'exam',
             path: '/exam/:examName',
             builder: (context, state) {
               return ExamPage(
                   targetExamName: state.pathParameters["examName"] ?? "" );
             }),
         GoRoute(
-            // parentNavigatorKey: _shellNavigatorKey,
-          name: 'ranking',
+            parentNavigatorKey: _shellNavigatorKey,
+            name: 'examInformation',
+            path: '/examinformation/:examName',
+            builder: (context, state) {
+              return ExamInformation(
+                  targetExamName: state.pathParameters["examName"] ?? "" );
+            }),
+        GoRoute(
+          // parentNavigatorKey: _shellNavigatorKey,
+            name: 'ranking',
             path: '/ranking/:testId',
             builder: (context, state) {
               return RankingScreen(
@@ -199,6 +214,15 @@ final _router = GoRouter(
         return TestScreen(testData: testData);
       },
     ),
+    GoRoute(
+      parentNavigatorKey: _rootNavigatorKey,
+        name: 'examInformationLoginFalse',
+        path: '/examinformationloginfalse/:examName',
+        builder: (context, state) {
+          return ExamInformation(
+              targetExamName: state.pathParameters["examName"] ?? "" );
+        }),
+
   ],
 
 );
@@ -219,7 +243,10 @@ class GoRouteShellObserver extends NavigatorObserver {
       if (routeName == 'exam') {
         navigationProvider.updateCurrentPageFromUrl('/home');
         navigationProvider.updateTitle(routeTitle['examName']);
-      } else if (routeName == 'ranking') {
+      } else if (routeName == 'examInformation') {
+        navigationProvider.updateCurrentPageFromUrl('/home');
+        navigationProvider.updateTitle('Leader Board');
+      }else if (routeName == 'ranking') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
         navigationProvider.updateTitle('Leader Board');
       }else if (routeName == 'history') {
