@@ -97,13 +97,13 @@ class ExamInformation extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                targetExamName.contains('cgl')
+                targetExamName.contains('CGL')
                 ?Text(cglDetail1,style: const TextStyle(fontSize: 18),)
                 :Text(chslDetail1,style: const TextStyle(fontSize: 18),),
                 const SizedBox(
                   height: 20,
                 ),
-                targetExamName.contains('cgl')
+                targetExamName.contains('CGL')
                 ?Text(cglDetail2,style: const TextStyle(fontSize: 18))
                 :Text(chslDetail2,style: const TextStyle(fontSize: 18)),
                 const SizedBox(height: 20,),
@@ -113,7 +113,7 @@ class ExamInformation extends StatelessWidget {
                     color: Colors.black),),
                 const SizedBox(height: 20,),
 
-                targetExamName.contains('cgl')
+                targetExamName.contains('CGL')
                 ?BulletPoints(stringPoints: cglGuidelinePoints)
                 :BulletPoints(stringPoints: chslGuidelinePoints),
                 const SizedBox(height: 20,),
