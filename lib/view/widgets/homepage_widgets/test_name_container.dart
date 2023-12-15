@@ -3,7 +3,8 @@ import 'package:go_router/go_router.dart';
 
 
 class TestNameContainer extends StatefulWidget {
-  const TestNameContainer({super.key});
+  final String testName;
+  const TestNameContainer({required this.testName,super.key});
 
   @override
   State<TestNameContainer> createState() => _TestNameContainerState();
@@ -17,7 +18,7 @@ class _TestNameContainerState extends State<TestNameContainer> {
     return InkWell(
       onTap: () {
         GoRouter router = GoRouter.of(context);
-        router.goNamed('examInformation',pathParameters: {'examName' : 'SSC_Typing_Tests'},);
+        router.goNamed('examInformation',pathParameters: {'examName' : widget.testName},);
       },
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovering = true),
@@ -38,9 +39,10 @@ class _TestNameContainerState extends State<TestNameContainer> {
               children: [
                 Image.asset("assets/images/ssc_icon.png", height: 46, width: 46),
                 const SizedBox(height: 10),
-                const Text(
-                  "SSC Typing Tests",
-                  style: TextStyle(
+                Text(
+                  widget.testName,
+                  // "SSC Typing Tests",
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),

@@ -18,6 +18,8 @@ class DynamicGridView extends StatelessWidget {
   } }
 
 Widget buildDesktopLayout(BuildContext context){
+  final List<String> testList = ["SSC CGL Typing Tests", "SSC CHSL Typing Tests"];
+
   return GridView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
@@ -27,14 +29,16 @@ Widget buildDesktopLayout(BuildContext context){
       mainAxisSpacing: 20,
       childAspectRatio: 250 / 140,
     ),
-    itemCount: 12,
+    itemCount: testList.length,
     itemBuilder: (context, index) {
-      return const TestNameContainer();
+      return TestNameContainer(testName: testList[index]);
     },
   );
 }
 
 Widget buildMobileLayout(BuildContext context){
+  final List<String> testList = ["SSC CGL Typing Tests", "SSC CHSL Typing Tests"];
+
   return GridView.builder(
     shrinkWrap: true,
     physics: const NeverScrollableScrollPhysics(),
@@ -44,9 +48,9 @@ Widget buildMobileLayout(BuildContext context){
       mainAxisSpacing: 15,
       childAspectRatio: 250 / 175,
     ),
-    itemCount: 12,
+    itemCount: testList.length,
     itemBuilder: (context, index) {
-      return const TestNameContainer();
+      return TestNameContainer(testName: testList[index]);
     },
   );
 }
