@@ -45,6 +45,8 @@ class LearnMenuScreen extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context){
+    final scrollController1 = ScrollController();
+
     final List<String> menuItems = Provider.of<LearnMenuProvider>(context).getMenuItems;
     return Scaffold(
       body: Padding(
@@ -56,12 +58,26 @@ class LearnMenuScreen extends StatelessWidget {
             const Text('Typing Lessons',style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
             const SizedBox(height: 20,),
             Expanded(
-              child: ListView.builder(
-                itemCount: menuItems.length,
-                itemBuilder: (context,index){
-                  return _buildDesktopMenuItem(context, menuItems[index], index);
-                }
-
+              child: Container(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0,bottom: 10,left: 20),
+                  child: Scrollbar(
+                    controller: scrollController1,
+                    interactive: false,
+                    thumbVisibility: true,
+                    child: ListView.builder(
+                      controller: scrollController1,
+                      itemCount: menuItems.length,
+                      itemBuilder: (context,index){
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 20.0),
+                          child: _buildDesktopMenuItem(context, menuItems[index], index),
+                        );
+                      }
+                    ),
+                  ),
+                ),
               ),
             ),
           ],

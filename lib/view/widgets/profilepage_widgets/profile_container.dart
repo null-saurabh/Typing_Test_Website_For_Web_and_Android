@@ -19,14 +19,7 @@ class ProfileContainer extends StatelessWidget {
                 const SizedBox(height: 20,),
                 Row(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: const Color(0xff17414F),
-                      radius: 55,
-                      child: Text(
-                        getInitials(isLoggedIn ? userProvider.user!.displayName ?? "No Name" : "Guest User"),
-                        style: const TextStyle(fontSize: 54, fontWeight: FontWeight.w500,color: Colors.white),
-                      ),
-                    ),
+                    buildProfileAvatar(isLoggedIn ? userProvider.user!.photoURL : null),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Padding(
@@ -49,6 +42,28 @@ class ProfileContainer extends StatelessWidget {
       );
     });
   }
+
+
+  Widget buildProfileAvatar(String? photoURL) {
+    return CircleAvatar(
+      backgroundColor: const Color(0xff17414F),
+      radius: 55,
+      child: photoURL != null
+          ? ClipOval(
+        child: Image.network(
+          photoURL,
+          width: 110,
+          height: 110,
+          fit: BoxFit.cover,
+        ),
+      )
+          : Text(
+        getInitials("Guest User"),
+        style: const TextStyle(fontSize: 54, fontWeight: FontWeight.w500, color: Colors.white),
+      ),
+    );
+  }
+
 
   Widget profileOption(String title, String result){
     return Column(

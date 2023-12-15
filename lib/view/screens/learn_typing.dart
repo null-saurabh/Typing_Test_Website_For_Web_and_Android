@@ -9,7 +9,37 @@ import 'package:typingtest/view/widgets/learn_typing_widgets/right_hand_image.da
 import 'package:typingtest/view/widgets/learn_typing_widgets/test_string_ui.dart';
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
+
+// void main() async {
+//   runApp(
+//   MultiProvider(
+//     providers: [
+//       ChangeNotifierProvider(
+//         create: (context) => LearnMenuProvider(),
+//       ),
+//     ],
+//     child: const MyApp(),
+//   ),);
+// }
+//
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+// // This widget is the root
+// // of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//         title: "ListView.builder",
+//         theme: ThemeData(primarySwatch: Colors.green),
+//         debugShowCheckedModeBanner: false,
+//         // home : new ListViewBuilder(),  NO Need To Use Unnecessary New Keyword
+//         home: const LearnMenuScreen());
+//   }
+// }
+
+
 class LearnTypingTestScreen extends StatefulWidget {
+  // final int index;
   final String testName;
   const LearnTypingTestScreen({required this.testName,super.key});
 
@@ -21,12 +51,17 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
   int currentIndex = 0;
   DateTime? startTime;
   int totalWordsTyped = 0;
+  late int testIndex;
   // String longString = "this is a game what are you doing sat your that";
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      int index = Provider.of<LearnMenuProvider>(context, listen: false).getMenuItems.indexOf(widget.testName);
+      Provider.of<LearnMenuProvider>(context, listen: false).setTestIndex(index);
+    });
     int index = Provider.of<LearnMenuProvider>(context, listen: false).getMenuItems.indexOf(widget.testName);
-    Provider.of<LearnMenuProvider>(context, listen: false).setTestIndex(index);
+    testIndex = index;
     super.initState();
   }
 
@@ -61,7 +96,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
             height: 15,
           ),
             Row(
-              mainAxisSize: MainAxisSize.min,
+              // mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(width: 10,),
                 InkWell(
@@ -88,10 +123,24 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 15,),
-                Text('Learn Keys: [ ${widget.testName} ]',style: TextStyle(fontSize: 18),),
-
-
+                Expanded(
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: const TextStyle(fontSize: 18, color: Colors.black),
+                        children: [
+                          TextSpan(
+                            text: '${testIndex + 1}. ',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: 'Learn Keys: [ ${widget.testName} ]',
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           const SizedBox(
