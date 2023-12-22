@@ -42,6 +42,8 @@ class TestCalculatorProvider with ChangeNotifier {
     final typedText = _testModel.typedText;
     final originalText = _testModel.originalText;
     final timerValue = _testModel.timeTaken;
+    print(typedText);
+    print(originalText);
 
     if (typedText.isEmpty) {
       _testModel.wordsTyped = 0;
@@ -53,6 +55,7 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.halfMistake = 0;
       _testModel.fullMistake = 0;
       _testModel.totalWords = originalText.split(' ').length;
+
     } else {
       List<String> typedWordsWithSpaces = typedText.split(' ');
       int extraSpaces = typedWordsWithSpaces.length -
@@ -65,9 +68,8 @@ class TestCalculatorProvider with ChangeNotifier {
       int maxComparisonLength = typedWords.length * 2 < originalWords.length
           ? (typedWords.length * 2) - 1
           : originalWords.length;
-      // print(originalWords.length);
-      // print('max $maxComparisonLength');
-      // List<String> originalWordsToCompare =originalWords;
+
+
       List<String> originalWordsToCompare =
           originalWords.sublist(0, maxComparisonLength);
       List<List<int>> matrix = List.generate(typedWords.length + 1,
@@ -88,7 +90,7 @@ class TestCalculatorProvider with ChangeNotifier {
                   : mismatch);
           int left = matrix[i][j - 1] + gap;
           int up = matrix[i - 1][j] + gap;
-          int maximum = [diagonal, left, up, 0].reduce(max);
+          int maximum = [diagonal, left, up].reduce(max);
 
           // Store the score in the matrix
           matrix[i][j] = maximum;
@@ -146,12 +148,12 @@ class TestCalculatorProvider with ChangeNotifier {
         if (alignedTypedWords[k] == alignedOriginalWords[k]) {
           String a = alignedTypedWords[k];
           // String b = alignedOriginalWords[k];
-          // print('a = $a');
+          print('a = $a');
           correctWords++;
           inlineSpans.add(TextSpan(text: '${alignedTypedWords[k]} '));
         } else if (alignedTypedWords[k] == '') {
-          // String a = alignedTypedWords[k];
-          // print('aa =$a');
+          String a = alignedTypedWords[k];
+          print('b =$a');
           omittedWords++;
           inlineSpans.add(
             TextSpan(
@@ -160,8 +162,8 @@ class TestCalculatorProvider with ChangeNotifier {
             ),
           );
         } else if (alignedOriginalWords[k] == '') {
-          // String b = alignedOriginalWords[k];
-          // print('bb = $b');
+          String a = alignedOriginalWords[k];
+          print('c = $a');
           incorrectWords++;
           extraWords++;
           inlineSpans.add(
@@ -172,9 +174,9 @@ class TestCalculatorProvider with ChangeNotifier {
           );
         } else {
           // print('in else');
-          // String a = alignedTypedWords[k];
+          String a = alignedTypedWords[k];
           // String b = alignedOriginalWords[k];
-          // print('aaa = $a ,bbb =$b');
+          print('d = $a');
           incorrectWords++;
           inlineSpans.add(
             TextSpan(
@@ -192,6 +194,7 @@ class TestCalculatorProvider with ChangeNotifier {
         }
       }
 
+
       _testModel.wordsTyped = typedWords.length;
       _testModel.correctWords = correctWords;
       _testModel.incorrectWords = incorrectWords;
@@ -199,7 +202,7 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.accuracy = ((correctWords / typedWords.length) * 100).toInt();
       // print('omitted: $omittedWords, original: $originalWords.length , max: $maxComparisonLength');
       _testModel.omittedWords = (typedWords.length * 2 < originalWords.length)
-          ? omittedWords + (originalWords.length - maxComparisonLength)
+          ? omittedWords
           : omittedWords;
       // _testModel.omittedWords = omittedWords;
       _testModel.halfMistake = halfMistakes;
@@ -209,10 +212,13 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.extraWords = extraWords;
       _testModel.markedTypedText = RichText(text: TextSpan(children: inlineSpans));
 
+
     }
 
     notifyListeners();
   }
+
+
 
   int levenshteinDistance(String a, String b) {
     int m = a.length;
@@ -242,4 +248,3 @@ class TestCalculatorProvider with ChangeNotifier {
     return dp[m][n];
   }
 }
-
