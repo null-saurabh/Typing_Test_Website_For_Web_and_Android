@@ -89,7 +89,7 @@ class HistoryListTile extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const ResultDialog(testId: 6344);
+              return const ResultDialog(testId: 6344,isPractice: false,);
             }
         );
         },

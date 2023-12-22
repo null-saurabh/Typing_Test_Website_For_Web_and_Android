@@ -6,8 +6,14 @@ import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class ResultDialog extends StatelessWidget {
   final int testId;
+  final bool isPractice;
+  final String? originalParagraph;
+  final RichText? typedParagraph;
   const ResultDialog({
     required this.testId,
+    required this.isPractice,
+    this.originalParagraph,
+    this.typedParagraph,
     super.key});
 
   @override
@@ -17,7 +23,6 @@ class ResultDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),
-
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.95,  // Adjust as needed
           height: MediaQuery.of(context).size.height * 0.95, // Adjust as needed
@@ -34,7 +39,7 @@ class ResultDialog extends StatelessWidget {
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Text('No ranking data available.');
                   } else {
-                    return ResultScreen(result: snapshot.data![0],);
+                    return ResultScreen(result: snapshot.data![0],isPractice:isPractice ,typedParagraph: typedParagraph ,originalParagraph: originalParagraph,);
                   }
                 },
               );

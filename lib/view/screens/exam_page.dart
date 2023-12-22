@@ -426,7 +426,8 @@ class ExamPage extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return ResultDialog(testId: testData.testId!);
+                                return ResultDialog(testId: testData.testId!,isPractice:
+                                false);
                               }
                           );
                     },

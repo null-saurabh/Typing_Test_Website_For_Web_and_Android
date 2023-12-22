@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/view/screens/learn_typing.dart';
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
 // void main() async {
@@ -166,7 +167,10 @@ class LearnMenuScreen extends StatelessWidget {
       onPressed: () async {
         Provider.of<LearnMenuProvider>(context, listen: false)
                   .setTestIndex(index);
-              GoRouter.of(context).go('/learn/$menuText');
+              // GoRouter.of(context).go('/learn/$menuText');
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LearnTypingTestScreen(testName: menuText)));
       },
       child: const Text('Start', style: TextStyle(color: Colors.white),),
     );

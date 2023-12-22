@@ -93,7 +93,7 @@ final _router = GoRouter(
   // ],
   redirect: (context, state){
     String originalLocation = state.matchedLocation;
-    print(originalLocation);
+    // print(originalLocation);
     if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
 
@@ -238,8 +238,8 @@ class GoRouteShellObserver extends NavigatorObserver {
       final String routeName = route.settings.name ?? '';
       var routeTitle  = route.settings.arguments as Map<String, dynamic>? ?? {};
       // var examName = routeTitle?['examName'];
-      print('a: $routeName');
-      print('b: $routeTitle');
+      // print('a: $routeName');
+      // print('b: $routeTitle');
 
       if (routeName == 'exam') {
         navigationProvider.updateCurrentPageFromUrl('/home');

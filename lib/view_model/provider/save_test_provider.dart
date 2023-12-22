@@ -111,7 +111,6 @@ class TestCalculatorProvider with ChangeNotifier {
         if (maximum == diagonal) {
           // Match or mismatch
           alignedTypedWords.add(typedWords[i - 1]);
-
           alignedOriginalWords.add(originalWordsToCompare[j - 1]);
           i--;
           j--;
@@ -122,7 +121,6 @@ class TestCalculatorProvider with ChangeNotifier {
           j--;
         } else {
           // Gap in the original word
-
           alignedTypedWords.add(typedWords[i - 1]);
           alignedOriginalWords.add('');
           i--;
@@ -140,30 +138,50 @@ class TestCalculatorProvider with ChangeNotifier {
       int halfMistakes = 0;
       int fullMistakes = 0;
       int extraWords = 0;
+      List<InlineSpan> inlineSpans = [];
 
       for (int k = 0;
           k < alignedTypedWords.length && k < alignedOriginalWords.length;
           k++) {
         if (alignedTypedWords[k] == alignedOriginalWords[k]) {
-          // String a = alignedTypedWords[k];
+          String a = alignedTypedWords[k];
           // String b = alignedOriginalWords[k];
-          // print('a = $a ,b =$b');
+          // print('a = $a');
           correctWords++;
+          inlineSpans.add(TextSpan(text: '${alignedTypedWords[k]} '));
         } else if (alignedTypedWords[k] == '') {
           // String a = alignedTypedWords[k];
           // print('aa =$a');
           omittedWords++;
+          inlineSpans.add(
+            TextSpan(
+              text: '${alignedOriginalWords[k]} ',
+              style: const TextStyle(color: Colors.blue),
+            ),
+          );
         } else if (alignedOriginalWords[k] == '') {
           // String b = alignedOriginalWords[k];
           // print('bb = $b');
           incorrectWords++;
           extraWords++;
+          inlineSpans.add(
+            TextSpan(
+              text: '${alignedTypedWords[k]} ',
+              style: const TextStyle(color: Colors.purple),
+            ),
+          );
         } else {
           // print('in else');
           // String a = alignedTypedWords[k];
           // String b = alignedOriginalWords[k];
           // print('aaa = $a ,bbb =$b');
           incorrectWords++;
+          inlineSpans.add(
+            TextSpan(
+              text: '${alignedTypedWords[k]} ',
+              style: const TextStyle(color: Colors.red),
+            ),
+          );
           int distance = levenshteinDistance(alignedTypedWords[k].toLowerCase(),
               alignedOriginalWords[k].toLowerCase());
           if (distance <= alignedTypedWords[k].length ~/ 2) {
@@ -188,6 +206,9 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.fullMistake = fullMistakes;
       _testModel.totalWords = originalWords.length;
       _testModel.extraSpaces = extraSpaces;
+      _testModel.extraWords = extraWords;
+      _testModel.markedTypedText = RichText(text: TextSpan(children: inlineSpans));
+
     }
 
     notifyListeners();
@@ -222,56 +243,3 @@ class TestCalculatorProvider with ChangeNotifier {
   }
 }
 
-// Death on a cross in the time of the Romans and previously was one of the ugliest and worst ways of execution, and the most painful.
-
-// Future<void> calculateWords() async {
-//   final typedText = _testModel.typedText;
-//   final originalText = _testModel.originalText;
-//   final timerValue = _testModel.timeTaken;
-//
-//   if (typedText.isEmpty) {
-//     _testModel.wordsTyped = 0;
-//     _testModel.correctWords = 0;
-//     _testModel.incorrectWords = 0;
-//     _testModel.wpm = 0;
-//     _testModel.accuracy = 100;
-//     _testModel.omittedWords = originalText.split(' ').length;
-//     _testModel.halfMistake = 0;
-//     _testModel.fullMistake = 0;
-//
-//   } else {
-//     List<String> typedWords = typedText.split(' ');
-//     List<String> originalWords = originalText.split(' ');
-//
-//     int correctWords = 0;
-//     int halfMistakes = 0;
-//     int fullMistakes = 0;
-//     for (int i = 0; i < typedWords.length && i < originalWords.length; i++) {
-//       if (typedWords[i] == originalWords[i]) {
-//         correctWords++;
-//       }
-//       else {
-//         // Call a function to determine if it's a half or full mistake
-//         int distance = levenshteinDistance(typedWords[i].toLowerCase(), originalWords[i].toLowerCase());
-//         if (distance <= typedWords[i].length ~/ 2) {
-//           halfMistakes++;
-//         } else {
-//           fullMistakes++;
-//         }
-//       }
-//     }
-//
-//     _testModel.wordsTyped = typedWords.length;
-//     _testModel.correctWords = correctWords;
-//     _testModel.incorrectWords = typedWords.length - correctWords;
-//     _testModel.wpm = ((typedWords.length / timerValue) * 60).toInt();
-//     _testModel.accuracy = ((correctWords / typedWords.length) * 100).toInt();
-//     _testModel.omittedWords =originalWords.length - typedWords.length;
-//     _testModel.halfMistake = halfMistakes;
-//     _testModel.fullMistake = fullMistakes;
-//   }
-//
-//   notifyListeners();
-// }
-
-// Smith-Waterman algorithm Needleman Wunsch algorithm

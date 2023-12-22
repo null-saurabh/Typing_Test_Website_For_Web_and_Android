@@ -70,6 +70,8 @@ class _TestScreenState extends State<TestScreen> {
 
       Provider.of<TestCalculatorProvider>(context, listen: false).updateTimeTaken(elapsed.inSeconds);
       await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
+      String originalParagraph = '';
+      RichText typedParagraph = RichText( text: const TextSpan (text: ''));
 
       if(context.mounted) {
         final String timeTaken = Provider
@@ -127,6 +129,15 @@ class _TestScreenState extends State<TestScreen> {
             .testModel
             .halfMistake
             .toString();
+        originalParagraph = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .originalText;
+        typedParagraph = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .markedTypedText;
+
         final String testId = widget.testData.testId.toString();
         Provider.of<ApiProvider>(context, listen: false).saveResult(
             timeTaken,
@@ -149,7 +160,7 @@ class _TestScreenState extends State<TestScreen> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return ResultDialog(testId: widget.testData.testId!);
+                  return ResultDialog(testId: widget.testData.testId!,isPractice: true,typedParagraph: typedParagraph,originalParagraph: originalParagraph,);
                 }
             );
           }

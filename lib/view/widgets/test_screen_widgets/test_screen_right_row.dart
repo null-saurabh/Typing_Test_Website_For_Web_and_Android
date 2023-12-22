@@ -75,6 +75,8 @@ class RightRow extends StatelessWidget {
 
           // Task 2: Submit the test
          await Provider.of<TestCalculatorProvider>(context, listen: false).submitTest();
+          String originalParagraph = '';
+          RichText typedParagraph = RichText( text: TextSpan (text: ''));
 
           // Task 3: Get necessary data from the provider and save results
           if(context.mounted) {
@@ -101,6 +103,14 @@ class RightRow extends StatelessWidget {
             final String fullMistake = testModel.fullMistake.toInt().toString();
             final String halfMistake = testModel.halfMistake.toInt().toString();
             final String testId = testData.testId.toString();
+            originalParagraph = Provider
+                .of<TestCalculatorProvider>(context, listen: false)
+                .testModel
+                .originalText;
+            typedParagraph = Provider
+                .of<TestCalculatorProvider>(context, listen: false)
+                .testModel
+                .markedTypedText;
 
             await Provider.of<ApiProvider>(context, listen: false).saveResult(
                 timeTaken,
@@ -120,13 +130,13 @@ class RightRow extends StatelessWidget {
           }
           // Task 4: Decide whether to show a dialog or call showTestEndedDialog
           if(context.mounted) {
-
             GoRouter.of(context).pop();
+
           if (testData.type == "PRACTICE") {
             showDialog(
               context: context,
               builder: (BuildContext context) {
-                return ResultDialog(testId: testData.testId!);
+                return ResultDialog(testId: testData.testId!,isPractice: true,typedParagraph: typedParagraph,originalParagraph: originalParagraph);
               },
             );
           } else if (testData.type == "LIVE") {
@@ -134,6 +144,7 @@ class RightRow extends StatelessWidget {
           }
          }
         } catch (e) {
+          rethrow;
         }
       },
       child: const Text('Submit', style: TextStyle(color: Colors.white),),

@@ -9,8 +9,14 @@ import 'package:typingtest/view/widgets/result_widgets/result_typing_paragraph.d
 
 class ResultScreen extends StatelessWidget {
   final ResultData result;
+  final bool isPractice;
+  final String? originalParagraph;
+  final RichText? typedParagraph;
   const ResultScreen({
     required this.result,
+    required this.isPractice,
+    this.originalParagraph,
+    this.typedParagraph,
     super.key});
 
   @override
@@ -76,10 +82,10 @@ class ResultScreen extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const ResultBox(
-                                      title: "Test Duration",
-                                      value: "2 mins 34 secs",
-                                    ),
+                                    // const ResultBox(
+                                    //   title: "Test Duration",
+                                    //   value: "2 mins 34 secs",
+                                    // ),
                                     ResultBox(
                                       title: "Net Speed",
                                       value: "${result.nwpm} WPM",
@@ -101,7 +107,9 @@ class ResultScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                ResultTypingParagraphContainer(),
+                                if(isPractice)
+                                ResultTypingParagraphContainer(originalParagraph: originalParagraph!, typedParagraph: typedParagraph!,),
+                                if(isPractice)
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -176,13 +184,13 @@ class ResultScreen extends StatelessWidget {
                               children: [
                                 Column(
                                   children: [
-                                    const ResultBox(
-                                      title: "Test Duration",
-                                      value: "2 mins 34 secs",
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
+                                    // const ResultBox(
+                                    //   title: "Test Duration",
+                                    //   value: "2 min 34 secs",
+                                    // ),
+                                    // const SizedBox(
+                                    //   height: 10,
+                                    // ),
                                     ResultBox(
                                       title: "Net Speed",
                                       value: "${result.nwpm} WPM",
@@ -210,7 +218,7 @@ class ResultScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 15,
                                 ),
-                                ResultTypingParagraphContainer(),
+                                ResultTypingParagraphContainer(typedParagraph: typedParagraph!,originalParagraph: originalParagraph!,),
                                 const SizedBox(
                                   height: 15,
                                 ),
@@ -226,7 +234,6 @@ class ResultScreen extends StatelessWidget {
               ),
             ),
           )
-
         ],
       ),
     );

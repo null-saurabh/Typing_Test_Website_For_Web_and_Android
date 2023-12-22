@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class TestModel {
   String typedText = "";
   String originalText = "";// Add the original text field
@@ -13,4 +15,6 @@ class TestModel {
   int fullMistake = 0;
   int omittedWords =0;
   int extraSpaces = 0;
+  int extraWords = 0;
+  RichText markedTypedText = RichText( text: const TextSpan (text: ''));
 }

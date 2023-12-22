@@ -151,6 +151,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                         builder: (BuildContext context) {
                           return ResultDialog(
                           testId: widget.testData.testId!,
+                            isPractice: false,
                           );
                         });
                   },
@@ -276,6 +277,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                               builder: (BuildContext context) {
                                 return ResultDialog(
                                   testId: widget.testData.testId!,
+                                  isPractice: false,
                                 );
                               });
                         },

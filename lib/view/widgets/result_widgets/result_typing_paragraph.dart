@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 class ResultTypingParagraphContainer extends StatelessWidget {
-  ResultTypingParagraphContainer({super.key});
+  final String originalParagraph;
+  final RichText typedParagraph;
+  ResultTypingParagraphContainer({
+    required this.originalParagraph,
+    required this.typedParagraph,
+    super.key});
 
   final String sampleText =
       "In the quiet town of Eldenwood, Emma wandered through the ancient forest, her footsteps barely making a sound on the fallen leaves. She had heard legends about a mysterious creature residing deep within the woods, "
@@ -65,8 +70,7 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 12.5),
                                   child: Text(
                                     textAlign: TextAlign.justify,
-
-                                    sampleText,
+                                      originalParagraph,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500),
@@ -107,13 +111,14 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                                 controller: _scrollController2,
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 12.5),
-                                  child: Text(
-                                    sampleText,
-                                    textAlign: TextAlign.justify,
-                                    style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  child: typedParagraph,
+                                  // child: Text(
+                                  //   typedSParagraph,
+                                  //   textAlign: TextAlign.justify,
+                                  //   style: const TextStyle(
+                                  //       fontSize: 16,
+                                  //       fontWeight: FontWeight.w500),
+                                  // ),
                                 ))),
                       ),
                     ],
@@ -162,7 +167,7 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.5),
                               child: Text(
-                                sampleText,
+                                originalParagraph,
                                 textAlign: TextAlign.justify,
                                 style: const TextStyle(
                                     fontSize: 16,
@@ -203,13 +208,14 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                             controller: _scrollController2,
                             child: Padding(
                               padding: const EdgeInsets.only(right: 12.5),
-                              child: Text(
-                                sampleText,
-                                textAlign: TextAlign.justify,
-                                style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500),
-                              ),
+                              child: typedParagraph,
+                              // child: Text(
+                              //   typedParagraph,
+                              //   textAlign: TextAlign.justify,
+                              //   style: const TextStyle(
+                              //       fontSize: 16,
+                              //       fontWeight: FontWeight.w500),
+                              // ),
                             ))),
                   ),
                 ],
