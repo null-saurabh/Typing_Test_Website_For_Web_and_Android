@@ -10,7 +10,7 @@ import 'package:typingtest/view/widgets/learn_typing_widgets/right_hand_image.da
 import 'package:typingtest/view/widgets/learn_typing_widgets/test_string_ui.dart';
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 
-import 'learn_menu.dart';
+// import 'learn_menu.dart';
 
 // void main() async {
 //   runApp(
@@ -196,7 +196,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return LearnResult(totalWordsTyped: totalWordsTyped, elapsedTime: elapsedTime,testName: '${testIndex + 1}. Learn Keys: [ ${widget.testName} ]');
+                              return LearnResult(totalWordsTyped: totalWordsTyped, elapsedTime: elapsedTime,testName: '${testIndex + 1}. Learn Keys: [ ${widget.testName} ]',typedParagraph: longString,);
                             }
                         ).then((_) {
                           resetTest(); // This will be called after the dialog is dismissed
@@ -313,7 +313,7 @@ class _LearnTypingTestScreenState extends State<LearnTypingTestScreen> {
                                     showDialog(
                                         context: context,
                                         builder: (BuildContext context) {
-                                          return LearnResult(totalWordsTyped: totalWordsTyped, elapsedTime: elapsedTime, testName: '${testIndex + 1}. Learn Keys: [ ${widget.testName} ]');
+                                          return LearnResult(totalWordsTyped: totalWordsTyped, elapsedTime: elapsedTime, testName: '${testIndex + 1}. Learn Keys: [ ${widget.testName} ]',typedParagraph: longString);
                                         }
                                     ).then((_) {
                                       resetTest();

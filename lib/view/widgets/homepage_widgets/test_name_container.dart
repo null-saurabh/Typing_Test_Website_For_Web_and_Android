@@ -18,7 +18,9 @@ class _TestNameContainerState extends State<TestNameContainer> {
     return InkWell(
       onTap: () {
         GoRouter router = GoRouter.of(context);
-        router.goNamed('examInformation',pathParameters: {'examName' : widget.testName},);
+        router.goNamed('exam',pathParameters: {'examName' : widget.testName});
+        // GoRouter router = GoRouter.of(context);
+        // router.goNamed('examInformation',pathParameters: {'examName' : widget.testName},);
       },
       child: MouseRegion(
         onEnter: (_) => setState(() => _isHovering = true),

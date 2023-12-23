@@ -21,11 +21,10 @@ class ApiProvider with ChangeNotifier {
   LiveTest? get practiceTests => _practiceTests;
 
 
-  Future<void> fetchLiveTest() async {
+  Future<LiveTest> fetchLiveTest() async {
     final userEmail = _userProvider.userEmail;
 
     if (userEmail == null) {
-      // print("useremail is null");
       throw Exception('User is not logged in');
     }
 
@@ -33,6 +32,7 @@ class ApiProvider with ChangeNotifier {
       // print("in try of provider live tests");
       final response = await apiService.liveTestData(userEmail);
       _liveTests = response;
+      return response;
       notifyListeners();
     } catch (e) {
       rethrow;

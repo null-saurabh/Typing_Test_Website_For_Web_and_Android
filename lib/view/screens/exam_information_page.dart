@@ -93,7 +93,7 @@ class ExamInformation extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                const GradiantStartButton(),
+                GradiantStartButton(targetExamName: targetExamName,),
                 const SizedBox(
                   height: 20,
                 ),
@@ -172,7 +172,7 @@ class ExamInformation extends StatelessWidget {
                 const SizedBox(height: 10,),
                 BulletPoints(stringPoints: halfMistakes),
                 const SizedBox(height: 20,),
-                const GradiantStartButton(),
+                GradiantStartButton(targetExamName: targetExamName,),
                 const SizedBox(height: 20,),
 
 

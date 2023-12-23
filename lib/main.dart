@@ -178,14 +178,14 @@ final _router = GoRouter(
               return ExamPage(
                   targetExamName: state.pathParameters["examName"] ?? "" );
             }),
-        GoRoute(
-            parentNavigatorKey: _shellNavigatorKey,
-            name: 'examInformation',
-            path: '/examinformation/:examName',
-            builder: (context, state) {
-              return ExamInformation(
-                  targetExamName: state.pathParameters["examName"] ?? "" );
-            }),
+        // GoRoute(
+        //     parentNavigatorKey: _shellNavigatorKey,
+        //     name: 'examInformation',
+        //     path: '/examinformation/:examName',
+        //     builder: (context, state) {
+        //       return ExamInformation(
+        //           targetExamName: state.pathParameters["examName"] ?? "" );
+        //     }),
         GoRoute(
           // parentNavigatorKey: _shellNavigatorKey,
             name: 'ranking',
@@ -238,7 +238,7 @@ class GoRouteShellObserver extends NavigatorObserver {
       final String routeName = route.settings.name ?? '';
       var routeTitle  = route.settings.arguments as Map<String, dynamic>? ?? {};
       // var examName = routeTitle?['examName'];
-      // print('a: $routeName');
+      print('a: $routeName');
       // print('b: $routeTitle');
 
       if (routeName == 'exam') {
@@ -246,7 +246,7 @@ class GoRouteShellObserver extends NavigatorObserver {
         navigationProvider.updateTitle(routeTitle['examName']);
       } else if (routeName == 'examInformation') {
         navigationProvider.updateCurrentPageFromUrl('/home');
-        navigationProvider.updateTitle('Leader Board');
+        navigationProvider.updateTitle('Exam Info');
       }else if (routeName == 'ranking') {
         navigationProvider.updateCurrentPageFromUrl('/history/false');
         navigationProvider.updateTitle('Leader Board');

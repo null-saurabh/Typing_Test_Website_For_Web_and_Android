@@ -167,10 +167,10 @@ class LearnMenuScreen extends StatelessWidget {
       onPressed: () async {
         Provider.of<LearnMenuProvider>(context, listen: false)
                   .setTestIndex(index);
-              // GoRouter.of(context).go('/learn/$menuText');
-        Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LearnTypingTestScreen(testName: menuText)));
+              GoRouter.of(context).go('/learn/$menuText');
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(builder: (context) => LearnTypingTestScreen(testName: menuText)));
       },
       child: const Text('Start', style: TextStyle(color: Colors.white),),
     );

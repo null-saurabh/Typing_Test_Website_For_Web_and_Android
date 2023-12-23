@@ -42,18 +42,6 @@ class ExamPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          // InkWell(
-                          //   onTap: () {
-                          //     Navigator.pop(context);
-                          //   },
-                          //   child: Container(
-                          //     height: 36,
-                          //     width: 36,
-                          //     color: Colors.white,
-                          //     child: const Icon(Icons.arrow_back),
-                          //   ),
-                          // ),
-                          // const SizedBox(width: 10),
                           Text(
                             targetExamName,
                             style: const TextStyle(
@@ -106,23 +94,30 @@ class ExamPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   Consumer<ApiProvider>(
                     builder: (context, testProvider, child) {
-                      final data= testProvider.liveTests;
-                      if (data == null) {
-                        return const CircularProgressIndicator(); // Loading indicator
-                      }
-                      return data.data.list.isNotEmpty
-                          ? ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: data.data.list.length,
-                              itemBuilder: (context, index) {
-                                // print(data.data.list.length);
-                                return LiveTestListTile(
-                                    testData: data.data.list[index]);
-                              },
-                            )
-                          : const Text(
-                              "No test available"); // Optional: show a loader when tests is null.
+                        return FutureBuilder<LiveTest>(
+                          future: testProvider.fetchLiveTest(), // Call fetchLiveTest in the future
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const CircularProgressIndicator();
+                            } else if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            } else if (!snapshot.hasData || snapshot.data!.data.list.isEmpty) {
+                              return const Text("No test available");
+                            } else {
+                              // Data is available, build the ListView
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: snapshot.data?.data.list.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  return LiveTestListTile(
+                                    testData: snapshot.data!.data.list[index],
+                                  );
+                                },
+                              );
+                            }
+                          },
+                        ); // Optional: show a loader when tests is null.
                     },
                   ),
                 ],
@@ -437,7 +432,7 @@ class ExamPage extends StatelessWidget {
                 if(testData.isAttempted!)
                   opaqueButton(
                     context,
-                    "Try Again",
+                    "Start Again",
                         () async {
                       showDialog(
                           context: context,
@@ -471,3 +466,15 @@ class ExamPage extends StatelessWidget {
     );
   }
 }
+
+
+//ListView.builder(
+//                               shrinkWrap: true,
+//                               physics: const NeverScrollableScrollPhysics(),
+//                               itemCount: data.data.list.length,
+//                               itemBuilder: (context, index) {
+//                                 // print(data.data.list.length);
+//                                 return LiveTestListTile(
+//                                     testData: data.data.list[index]);
+//                               },
+//                             )

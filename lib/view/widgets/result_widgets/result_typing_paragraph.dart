@@ -113,7 +113,7 @@ class ResultTypingParagraphContainer extends StatelessWidget {
                                   padding: const EdgeInsets.only(right: 12.5),
                                   child: typedParagraph,
                                   // child: Text(
-                                  //   typedSParagraph,
+                                  //   typedParagraph,
                                   //   textAlign: TextAlign.justify,
                                   //   style: const TextStyle(
                                   //       fontSize: 16,
