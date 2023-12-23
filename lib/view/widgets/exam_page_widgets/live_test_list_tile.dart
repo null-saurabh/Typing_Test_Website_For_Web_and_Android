@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:intl/intl.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class LiveTestListTile extends StatefulWidget {
   final LiveTestData testData;
@@ -39,6 +41,9 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
         widget.testData.isAvailable! ? endDateTime : startDateTime;
     if (now.isAfter(targetTime)) {
       _timer?.cancel();
+      Future.delayed(const Duration(seconds:1), () {
+        Provider.of<ApiProvider>(context, listen: false).refresh();
+      });
     } else {
       setState(() {
         _countdown = getTimeDifference(targetTime);
@@ -142,6 +147,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                 ],
               ),
             ),
+            SizedBox(height: 2,),
             Text(
               "${formatTimeFromServer(widget.testData.startDatetime!)} - ${formatTimeFromServer(widget.testData.endDatetime!)}",
               style: const TextStyle(

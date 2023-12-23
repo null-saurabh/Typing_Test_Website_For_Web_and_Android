@@ -24,7 +24,7 @@ class ApiService {
   Future<LiveTest> practiceTestData(String userEmail) async {
     final headers = {
       'Accept': 'application/json',
-      'Cookie': 'XSRF-TOKEN=eyJpdiI6IkZHYjJZZnJsQzY2dmI1dEZ3alBISEE9PSIsInZhbHVlIjoiUk5MSUtrWE5oUWFtcTVDVjNWVmh3ZEhvMkVNWWU1T090L2RZVkpkQjc4THVudk5FKzR5V3RPZkJHRCt2VitDQ1J0amYzNzU3MTJSYlFweGluVUsvRnQ0RHl5eTRBVWpoSU9rdDhKZGpYS21BTzBQaHJ6OCtFMHZUbEJBN0NMbVIiLCJtYWMiOiIwNjJhZWZmMTU3OTM1YWVlYmU2NzY2ZjNlM2JiMjEzNWZkMjJmOTU0MjFjMzQ4NThlMjUyYjg2MGE2OTdhNjQyIn0%3D; typing_master_session=eyJpdiI6Inl1bS9Ya0dwa0VtRTBJNVQxKzJzb3c9PSIsInZhbHVlIjoidWgxcTZIMXBYcThWcnJYSEJCRHFQK0lZVlFCNm1IeWVDY25DVkNiNitPa3BYRWZpWkxWNlNWelhnWjU1U2c5ZTdJU1dTeFY3eDVaZkFZL3ZKY1BFakl4QWFONWpGM3JRbjB3K0g1SzNmN2hMS05JbFhTd3NJZVZxcWpiVlYyS0QiLCJtYWMiOiJkMGVhMDIxN2Y5ZGExZGU4YzYzNzJhYjJiNzMxNGE4NzA3MGU4ODk3NzUxMDM4N2Y5MDg1NDEzODI1MmE1MTNjIn0%3D',
+      // 'Cookie': 'XSRF-TOKEN=eyJpdiI6IkZHYjJZZnJsQzY2dmI1dEZ3alBISEE9PSIsInZhbHVlIjoiUk5MSUtrWE5oUWFtcTVDVjNWVmh3ZEhvMkVNWWU1T090L2RZVkpkQjc4THVudk5FKzR5V3RPZkJHRCt2VitDQ1J0amYzNzU3MTJSYlFweGluVUsvRnQ0RHl5eTRBVWpoSU9rdDhKZGpYS21BTzBQaHJ6OCtFMHZUbEJBN0NMbVIiLCJtYWMiOiIwNjJhZWZmMTU3OTM1YWVlYmU2NzY2ZjNlM2JiMjEzNWZkMjJmOTU0MjFjMzQ4NThlMjUyYjg2MGE2OTdhNjQyIn0%3D; typing_master_session=eyJpdiI6Inl1bS9Ya0dwa0VtRTBJNVQxKzJzb3c9PSIsInZhbHVlIjoidWgxcTZIMXBYcThWcnJYSEJCRHFQK0lZVlFCNm1IeWVDY25DVkNiNitPa3BYRWZpWkxWNlNWelhnWjU1U2c5ZTdJU1dTeFY3eDVaZkFZL3ZKY1BFakl4QWFONWpGM3JRbjB3K0g1SzNmN2hMS05JbFhTd3NJZVZxcWpiVlYyS0QiLCJtYWMiOiJkMGVhMDIxN2Y5ZGExZGU4YzYzNzJhYjJiNzMxNGE4NzA3MGU4ODk3NzUxMDM4N2Y5MDg1NDEzODI1MmE1MTNjIn0%3D',
     };
 
     final response = await http.get(Uri.parse('$baseUrl/$userEmail/test/list?type=PRACTICE'),headers: headers,);
@@ -35,6 +35,22 @@ class ApiService {
       return LiveTest.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+
+  Future<void> markASOpen(String userEmail, String testId) async {
+    final headers = {
+      'Accept': 'application/json',
+    };
+
+    final response = await http.get(Uri.parse('$baseUrl/$userEmail/startTest/$testId'),headers: headers,);
+    // print("in api services");
+
+    if (response.statusCode == 200) {
+
+    } else {
+      throw Exception('Failed to open test');
     }
   }
 

@@ -33,6 +33,24 @@ class ApiProvider with ChangeNotifier {
       final response = await apiService.liveTestData(userEmail);
       _liveTests = response;
       return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  void refresh() {
+    notifyListeners();
+  }
+
+  Future<void> markAsOpen(String testId) async {
+    final userEmail = _userProvider.userEmail;
+
+    if (userEmail == null) {
+      throw Exception('User is not logged in');
+    }
+
+    try {
+      await apiService.markASOpen(userEmail,testId);
       notifyListeners();
     } catch (e) {
       rethrow;

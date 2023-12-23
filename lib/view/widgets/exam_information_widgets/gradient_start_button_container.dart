@@ -12,18 +12,27 @@ class GradiantStartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: (){
-        GoRouter router = GoRouter.of(context);
-        router.goNamed('exam',pathParameters: {'examName' : targetExamName});
-      },
-      child: const Center(
-        child: Text(
-          "Login to start the test",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+    return SizedBox(
+      height: 40,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            elevation: MaterialStateProperty.all(0),
+            backgroundColor: MaterialStateProperty.all(const Color(0xff369CBC)),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                side: const BorderSide(color: Color(0xff369CBC)),
+                borderRadius: BorderRadius.circular(5)))),
+        onPressed: (){
+          GoRouter router = GoRouter.of(context);
+          router.goNamed('exam',pathParameters: {'examName' : targetExamName});
+        },
+        child: const Center(
+          child: Text(
+            "Login to start the test",
+            style: TextStyle(
+              fontSize: 18,
+              // fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
           ),
         ),
       ),

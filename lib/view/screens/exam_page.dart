@@ -82,7 +82,7 @@ class ExamPage extends StatelessWidget {
                         builder: (context, apiProvider, child) {
                           return IconButton(
                             onPressed: () {
-                              apiProvider.fetchLiveTest();
+                              apiProvider.refresh();
                               // print("clicked refresh fetch live test");
                             },
                             icon: const Icon(Icons.refresh),

@@ -66,6 +66,14 @@ class ExamInformation extends StatelessWidget {
     List<String> halfMistakes = ["Spacing Errors: Where extra space is provided between two words.","For every spelling error committed by way of repetition, or addition or transposition or omission or substitution of a letter/letters.","Wrong Capitalisation: Wrong use of capital letter for small letter and vice-versa. (This does not apply to Hindi typewriting scripts)."];
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: SizedBox(width:350,child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GradiantStartButton(targetExamName: targetExamName,),
+          const SizedBox(height: 15)
+        ],
+      )),
       body: Scrollbar(
         controller: scrollController1,
         interactive: false,
@@ -172,7 +180,7 @@ class ExamInformation extends StatelessWidget {
                 const SizedBox(height: 10,),
                 BulletPoints(stringPoints: halfMistakes),
                 const SizedBox(height: 20,),
-                GradiantStartButton(targetExamName: targetExamName,),
+                // GradiantStartButton(targetExamName: targetExamName,),
                 const SizedBox(height: 20,),
 
 
