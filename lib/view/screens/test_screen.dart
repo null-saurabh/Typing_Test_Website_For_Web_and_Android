@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
+import 'package:typingtest/model/save_test_model.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/test_screen_right_row.dart';
 import 'package:typingtest/view/widgets/test_screen_widgets/text_field.dart';
@@ -285,9 +286,10 @@ class _TestScreenState extends State<TestScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 190,
-                        child: Text(widget.testData.targetExam!,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),)),
+                    // SizedBox(
+                    //   width: MediaQuery.of(context).size.width - 190,
+                    //     child: Text(widget.testData.targetExam!,style:const TextStyle(fontWeight: FontWeight.w500,fontSize: 18,color: Colors.white),)),
+                    submitButton(context),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
@@ -319,9 +321,9 @@ class _TestScreenState extends State<TestScreen> {
                       ],
                     ),
                   ),
-                  Center(
-                    child: RightRow(testData: widget.testData,startTime: _startTime),
-                  ),
+                  // Center(
+                  //   child: RightRow(testData: widget.testData,startTime: _startTime),
+                  // ),
                 ],
               ),
             ),
@@ -375,6 +377,19 @@ class _TestScreenState extends State<TestScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget submitButton(BuildContext context){
+    return ElevatedButton(
+      style: ButtonStyle(
+          elevation: MaterialStateProperty.all(0),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          shape: MaterialStateProperty.all(RoundedRectangleBorder(
+              side: const BorderSide(color: Colors.white),
+              borderRadius: BorderRadius.circular(5)))),
+      onPressed: _submitTest,
+      child: const Text('Submit', style: TextStyle(color: Colors.white),),
     );
   }
 

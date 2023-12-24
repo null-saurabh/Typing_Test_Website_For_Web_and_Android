@@ -95,7 +95,7 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
       height: MediaQuery
           .of(context)
           .size
-          .height * 0.35,
+          .height * 0.40,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
