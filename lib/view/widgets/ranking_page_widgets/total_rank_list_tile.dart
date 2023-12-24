@@ -5,9 +5,8 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/ranking_modal.dart';
 
 class TotalRankingListTile extends StatefulWidget {
-  final int index;
   final RankingData data;
-  const TotalRankingListTile({super.key,required this.index,required this.data});
+  const TotalRankingListTile({super.key,required this.data});
 
   @override
   State<TotalRankingListTile> createState() => _TotalRankingListTileState();
@@ -70,7 +69,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                         width: 47,
                         child: Padding(
                           padding: const EdgeInsets.only(left:  15.0),
-                          child: _buildChildBasedOnIndex(widget.index),
+                          child: _buildIconBasedOnRank(widget.data.rank ?? 0),
                         ),
                       ),
                       const SizedBox(width: 20,),
@@ -166,7 +165,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                   width: 47,
                   child: Padding(
                     padding: const EdgeInsets.only(left:  15.0),
-                    child: _buildChildBasedOnIndex(widget.index),
+                    child: _buildIconBasedOnRank(widget.data.rank ?? 0),
                   ),
                 ),
                 const SizedBox(width: 20,),
@@ -267,21 +266,21 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
     );
   }
 
-  Widget _buildChildBasedOnIndex(int index) {
-    if (index == 0) {
+  Widget _buildIconBasedOnRank(int rank) {
+    if (rank == 1) {
       return Image.asset(
         "assets/images/rank_1.png",
         height: 22,
         width: 22,
       );
-    } else if (index == 1) {
+    } else if (rank == 2) {
       return Image.asset(
         "assets/images/rank_2.png",
         height: 22,
         width: 22,
       );
     }
-    else if (index == 2) {
+    else if (rank == 3) {
       return Image.asset(
         "assets/images/rank_3.png",
         height: 22,
@@ -291,7 +290,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
     else {
       return Padding(
         padding: const EdgeInsets.only(left: 5.0,right: 5),
-        child: Text((index+1).toString(),style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black)),
+        child: Text((rank).toString(),style: const TextStyle(fontSize: 16,fontWeight: FontWeight.w600,color: Colors.black)),
       );
     }
   }

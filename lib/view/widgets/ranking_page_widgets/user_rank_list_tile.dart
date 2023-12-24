@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/model/ranking_modal.dart';
+import 'package:typingtest/model/result_api_modal.dart';
+import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class UserRankListTile extends StatefulWidget {
-  final RankingData data;
+  final ResultData resultData;
 
-  const UserRankListTile({required this.data ,super.key});
+  const UserRankListTile({required this.resultData ,super.key});
 
   @override
   State<UserRankListTile> createState() => _UserRankListTileState();
@@ -32,9 +34,9 @@ class _UserRankListTileState extends State<UserRankListTile> {
   @override
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
-      mobile: (BuildContext context) => buildMobileLayout(context),
-      desktop: (BuildContext context) =>  buildDesktopLayout(context),
-    );
+            mobile: (BuildContext context) => buildMobileLayout(context),
+            desktop: (BuildContext context) =>  buildDesktopLayout(context),
+          );
   }
 
   Widget buildDesktopLayout(BuildContext context){
@@ -55,13 +57,13 @@ class _UserRankListTileState extends State<UserRankListTile> {
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Row(
                   children: [
-                    const SizedBox(
+                     SizedBox(
                       width: 47,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 15.0),
+                        padding: const EdgeInsets.only(left: 15.0),
                         child: Text(
-                          "234",
-                          style: TextStyle(
+                          widget.resultData.rank.toString(),
+                          style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w600,
                               color: Colors.white),
@@ -77,7 +79,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             radius: 14,
                             backgroundColor: Colors.white,
                             child: Text(
-                              getInitials(widget.data.userName!),
+                              getInitials(widget.resultData.userName!),
                               style: const TextStyle(
                                   color: Color(0xff369CBC),
                                   fontWeight: FontWeight.w500,
@@ -112,11 +114,11 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                listTileData("Net Speed", widget.data.nwpm.toString()),
-                                listTileData("Min. passing Speed", widget.data.minimumSpeed.toString()),
-                                listTileData("Accuracy", widget.data.accuracy.toString()),
-                                listTileData("Words Typed",widget.data.wordsTyped.toString()),
-                                listTileData("Omitted Words", widget.data.marksObtained.toString()),
+                                listTileData("Net Speed", widget.resultData.nwpm.toString()),
+                                listTileData("Min. passing Speed", widget.resultData.minimumSpeed.toString()),
+                                listTileData("Accuracy", widget.resultData.accuracy.toString()),
+                                listTileData("Words Typed",widget.resultData.wordsTyped.toString()),
+                                listTileData("Omitted Words", widget.resultData.marksObtained.toString()),
 
                               ],
                             ),
@@ -140,10 +142,10 @@ class _UserRankListTileState extends State<UserRankListTile> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  listTileData("Correct Words", widget.data.wordsCorrect.toString()),
-                                  listTileData("Incorrect Words", widget.data.wordIncorrect.toString()),
-                                  listTileData("Full mistakes", widget.data.fullMistakes.toString()),
-                                  listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
+                                  listTileData("Correct Words", widget.resultData.wordsCorrect.toString()),
+                                  listTileData("Incorrect Words", widget.resultData.wordIncorrect.toString()),
+                                  listTileData("Full mistakes", widget.resultData.fullMistakes.toString()),
+                                  listTileData("Half Mistakes ", widget.resultData.halfMistakes.toString()),
                                   const SizedBox(width: 110+16),
 
                                 ],
@@ -212,7 +214,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
                               radius: 14,
                               backgroundColor: Colors.white,
                               child: Text(
-                                  getInitials(widget.data.userName!),
+                                  getInitials(widget.resultData.userName!),
                                 style: const TextStyle(
                                     color: Color(0xff369CBC),
                                     fontWeight: FontWeight.w500,
@@ -244,7 +246,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
                       // SizedBox(width: 33,),
                       const Text("Net Speed:",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white),),
                       const SizedBox(width: 10,),
-                      Text(widget.data.nwpm.toString(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.white),)
+                      Text(widget.resultData.nwpm.toString(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.white),)
                     ],
                   ),
                   if (_showDetails)
@@ -256,13 +258,13 @@ class _UserRankListTileState extends State<UserRankListTile> {
                         Column(
                           crossAxisAlignment:CrossAxisAlignment.start,
                           children: [
-                            listTileData("Omitted Words", widget.data.marksObtained.toString()),
+                            listTileData("Omitted Words", widget.resultData.marksObtained.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Min. passing Speed", widget.data.minimumSpeed.toString()),
+                            listTileData("Min. passing Speed", widget.resultData.minimumSpeed.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Correct Words",  widget.data.wordsCorrect.toString()),
+                            listTileData("Correct Words",  widget.resultData.wordsCorrect.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Full mistakes",widget.data.fullMistakes.toString()),
+                            listTileData("Full mistakes",widget.resultData.fullMistakes.toString()),
                           ],
                         ),
                         Row(
@@ -270,13 +272,13 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                listTileData("Accuracy", widget.data.accuracy.toString()),
+                                listTileData("Accuracy", widget.resultData.accuracy.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Words Typed", widget.data.wordsTyped.toString()),
+                                listTileData("Words Typed", widget.resultData.wordsTyped.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Incorrect Words", widget.data.wordIncorrect.toString()),
+                                listTileData("Incorrect Words", widget.resultData.wordIncorrect.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
+                                listTileData("Half Mistakes ", widget.resultData.halfMistakes.toString()),
 
                               ],
                             ),

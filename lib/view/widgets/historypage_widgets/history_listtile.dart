@@ -113,14 +113,14 @@ class HistoryListTile extends StatelessWidget {
            showDialog(
                context: context,
                builder: (BuildContext context) {
-              return const RankingDialog(
-                testId: 6310,
+              return  RankingDialog(
+                testId: resultData.testId!,
               );
             });
          }
         else{
     String resultDataString = jsonEncode(resultData.toJson());
-    GoRouter.of(context).goNamed('ranking',pathParameters: {'testId' : '6310','resultData':resultDataString});
+    GoRouter.of(context).goNamed('ranking',pathParameters: {'testId' : resultData.testId.toString(),'resultData':resultDataString});
 
     }
         // locator<NavigationProvider>().navigateToRankingPage(context, 6310);
