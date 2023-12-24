@@ -9,7 +9,8 @@ import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class InstructionPage extends StatelessWidget {
   final LiveTestData testData;
-  const InstructionPage({required this.testData, super.key});
+  final String targetExamName;
+  const InstructionPage({required this.testData,required this.targetExamName, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +53,8 @@ class InstructionPage extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("SSC Typing Test - Grade A - 1",
-                                  style: TextStyle(
+                              Text(targetExamName,
+                                  style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 20)),
                               const SizedBox(
@@ -63,25 +64,25 @@ class InstructionPage extends StatelessWidget {
                                   ? IntrinsicHeight(
                                       child: Row(
                                         children: [
-                                          rowItem("assets/images/ranking.png",
-                                              "90 Marks"),
-                                          requiredVerticalDivider(),
+                                          // rowItem("assets/images/ranking.png",
+                                          //     testData),
+                                          // requiredVerticalDivider(),
                                           rowItem("assets/images/question.png",
-                                              "30 questions"),
+                                              testData.language!),
                                           requiredVerticalDivider(),
                                           rowItem("assets/images/timer.png",
-                                              "30 mins"),
+                                              testData.duration.toString()),
                                         ],
                                       ),
                                     )
                                   : Column(
                                       children: [
-                                        rowItem("assets/images/ranking.png",
-                                            "90 Marks"),
+                                        // rowItem("assets/images/ranking.png",
+                                        //     "90 Marks"),
                                         rowItem("assets/images/question.png",
-                                            "30 questions"),
+                                            testData.language!),
                                         rowItem("assets/images/timer.png",
-                                            "30 mins"),
+                                            testData.duration.toString()),
                                       ],
                                     ),
                               MediaQuery.of(context).size.width > 500

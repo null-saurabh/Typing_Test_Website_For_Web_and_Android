@@ -39,6 +39,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   void refresh() {
+    print("refresh clicked");
     notifyListeners();
   }
 
@@ -83,6 +84,21 @@ class ApiProvider with ChangeNotifier {
     try {
       // print("trying practice in provider");
       final response = await apiService.oneResult(userEmail,testId);
+      return response.data!;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<ResultData>> fetchAllResult() async {
+    final userEmail = _userProvider.userEmail;
+    if (userEmail == null) {
+      // print("useremail is null");
+      throw Exception('User is not logged in');
+    }
+    try {
+      // print("trying practice in provider");
+      final response = await apiService.allResult(userEmail);
       return response.data!;
     } catch (e) {
       rethrow;

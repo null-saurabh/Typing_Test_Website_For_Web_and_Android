@@ -142,4 +142,49 @@ class ResultData {
     isSeen = json['is_seen'];
     testSubmitted = json['test_submitted'];
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['user_name'] = userName;
+    data['product_id'] = productId;
+    data['test_id'] = testId;
+    data['test_name'] = testName;
+    data['target_exam'] = targetExam;
+    data['target_exam_code'] = targetExamCode;
+    data['start_datetime'] = startDatetime;
+    data['end_datetime'] = endDatetime;
+    data['type'] = type;
+    data['language'] = language;
+    data['allow_backspace'] = allowBackspace;
+    data['word_count'] = wordCount;
+    data['highlight_type'] = highlightType;
+    data['allow_highlight'] = allowHighlight;
+    data['is_available'] = isAvailable;
+    data['maximum_marks'] = maximumMarks;
+    data['minimum_passing_marks'] = minimumPassingMarks;
+    data['total_candidate'] = totalCandidate;
+    data['minimum_speed'] = minimumSpeed;
+    data['minimum_words'] = minimumWords;
+    data['minimum_accuracy'] = minimumAccuracy;
+    data['result_type'] = resultType;
+    data['server_time'] = serverTime;
+    data['result_available'] = resultAvailable;
+    data['marks_obtained'] = marksObtained;
+    data['nwpm'] = nwpm;
+    data['ncpm'] = ncpm;
+    data['gwpm'] = gwpm;
+    data['gcpm'] = gcpm;
+    data['backspace_count'] = backspaceCount;
+    data['Accuracy'] = accuracy;
+    data['words_typed'] = wordsTyped;
+    data['words_correct'] = wordsCorrect;
+    data['word_incorrect'] = wordIncorrect;
+    data['total_user_count'] = totalUserCount;
+    data['rank'] = rank;
+    data['half_mistakes'] = halfMistakes;
+    data['full_mistakes'] = fullMistakes;
+    data['is_seen'] = isSeen;
+    data['test_submitted'] = testSubmitted;
+    return data;
+  }
 }

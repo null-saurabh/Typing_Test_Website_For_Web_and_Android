@@ -1,13 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 import 'package:typingtest/view/widgets/ranking_page_widgets/ranking_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 
 class HistoryListTile extends StatelessWidget {
   final bool popup;
-
-  const HistoryListTile({required this.popup,super.key});
+  final ResultData resultData;
+  const HistoryListTile({required this.popup,required this.resultData, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +29,12 @@ class HistoryListTile extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("SSC typing test -grade A - Test 1",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
+                Text(resultData.testName!,style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500),),
                 // SizedBox(height: 5,),
-                Text("All SSC Typing Test",style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
+                Text(resultData.targetExam!,style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
               ],
             ),
             Row(
@@ -59,9 +62,9 @@ class HistoryListTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("SSC typing test -grade A - Test 1",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+            Text(resultData.testName!,style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
             // SizedBox(height: 5,),
-            const Text("All SSC Typing Test",style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
+            Text(resultData.targetExam!,style: TextStyle(fontSize: 12.5,fontWeight: FontWeight.w400,color: Colors.grey),),
           const SizedBox(height: 15,),
             Row(
               mainAxisAlignment: MainAxisAlignment.end  ,
@@ -105,15 +108,21 @@ class HistoryListTile extends StatelessWidget {
               side: const BorderSide(color: Color(0xff369CBC)),borderRadius: BorderRadius.circular(5)
           ))),
       onPressed: () async {
-        popup
-        ? showDialog(
-            context: context,
-            builder: (BuildContext context) {
+        if(popup)
+         {
+           showDialog(
+               context: context,
+               builder: (BuildContext context) {
               return const RankingDialog(
                 testId: 6310,
               );
-            })
-        : GoRouter.of(context).goNamed('ranking',pathParameters: {'testId' : '6310'});
+            });
+         }
+        else{
+    String resultDataString = jsonEncode(resultData.toJson());
+    GoRouter.of(context).goNamed('ranking',pathParameters: {'testId' : '6310','resultData':resultDataString});
+
+    }
         // locator<NavigationProvider>().navigateToRankingPage(context, 6310);
         // Navigator.of(context).push(MaterialPageRoute(builder: (context) => const RankingScreen(testId: 6310)));
 

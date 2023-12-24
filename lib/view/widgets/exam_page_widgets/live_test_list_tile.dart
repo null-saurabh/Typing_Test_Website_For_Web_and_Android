@@ -11,7 +11,8 @@ import 'package:typingtest/view_model/provider/api_provider.dart';
 
 class LiveTestListTile extends StatefulWidget {
   final LiveTestData testData;
-  const LiveTestListTile({required this.testData, super.key});
+  final String targetExamName;
+  const  LiveTestListTile({required this.testData,required this.targetExamName, super.key});
 
   @override
   State<LiveTestListTile> createState() => _LiveTestListTileState();
@@ -147,7 +148,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                 ],
               ),
             ),
-            SizedBox(height: 2,),
+            const SizedBox(height: 2,),
             Text(
               "${formatTimeFromServer(widget.testData.startDatetime!)} - ${formatTimeFromServer(widget.testData.endDatetime!)}",
               style: const TextStyle(
@@ -195,6 +196,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                             builder: (BuildContext context) {
                               return InstructionDialog(
                                 testData: widget.testData,
+                                targetExamName: widget.targetExamName,
                               );
                             });
                       }),
@@ -236,7 +238,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                           ),
                           Text(
                             'Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey),
@@ -256,18 +258,6 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
 
   Widget buildMobileListTile() {
     return ListTile(
-      // onTap: widget.testData.isAvailable == true &&
-      //         widget.testData.isAttempted == false
-      //     ? () {
-      //         showDialog(
-      //             context: context,
-      //             builder: (BuildContext context) {
-      //               return InstructionDialog(
-      //                 testData: widget.testData,
-      //               );
-      //             });
-      //       }
-      //     : null,
       title: Text(
         widget.testData.targetExam!,
         style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -278,41 +268,51 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
           children: [
             Row(
               children: [
-                rowItem("assets/images/ranking.png", "350 Words"),
+                rowItem("assets/images/question.png", widget.testData.language ?? "English"),
                 requiredVerticalDivider(),
-                rowItem("assets/images/question.png", "English"),
+                rowItem("assets/images/timer.png", widget.testData.duration.toString()),
               ],
             ),
-            rowItem("assets/images/timer.png", "30 mins"),
+            const SizedBox(height: 2,),
+            Text(
+              "${formatTimeFromServer(widget.testData.startDatetime!)} - ${formatTimeFromServer(widget.testData.endDatetime!)}",
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xff929292)),
+            ),
             const SizedBox(
               height: 5,
             ),
-            widget.testData.isAttempted == true
+            widget.testData.isAvailable == false
                 ? Row(
-                    // mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      leaderBoardButton(context),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      opaqueButton(
-                        context,
-                        "View Result",
-                        () async {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ResultDialog(
-                                  testId: widget.testData.testId!,
-                                  isPractice: false,
-                                );
-                              });
-                        },
-                      ),
-                    ],
-                  )
-                : widget.testData.isAvailable == true
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "Start In :",
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey),
+                    ),
+                    Text(
+                      _countdown,
+                      style: const TextStyle(
+                          fontSize: 16.5,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
+                  ],
+                ),
+                const Icon(
+                  Icons.lock_open_outlined,
+                  color: Colors.grey,
+                ),
+              ],
+            )
+                : widget.testData.attendStatus == "ready_to_take"
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -342,39 +342,42 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                                   builder: (BuildContext context) {
                                     return InstructionDialog(
                                       testData: widget.testData,
+                                      targetExamName: widget.targetExamName,
                                     );
                                   });
                             }),
                           ),
                         ],
                       )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "Start In :",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey),
-                              ),
-                              Text(
-                                _countdown,
-                                style: const TextStyle(
-                                    fontSize: 16.5,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.grey),
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.lock_open_outlined,
-                            color: Colors.grey,
-                          ),
-                        ],
-                      ),
+                    : widget.testData.attendStatus == "result_awaiting"
+            ?Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Result Awaiting",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey),
+                ),
+                Text(
+                  'Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.grey),
+                )
+              ],
+            )
+                :widget.testData.attendStatus == "currently_open"
+            ?const Text(
+              "Currently Open",
+              style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey),
+            )
+                : const SizedBox()
           ],
         ),
       ),

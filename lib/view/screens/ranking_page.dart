@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 import 'package:typingtest/view/widgets/ranking_page_widgets/list_tile_container.dart';
 import 'package:typingtest/view/widgets/ranking_page_widgets/title_container.dart';
 
 class RankingScreen extends StatelessWidget {
   final int testId;
-  const RankingScreen({required this.testId,super.key});
+  final ResultData resultData;
+  const RankingScreen({required this.resultData,required this.testId,super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class RankingScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15,),
-          const TitleContainer(),
+          TitleContainer(resultData: resultData,),
           const SizedBox(height: 15,),
           Expanded(child: ListViewContainer(testId: testId,)),
 
@@ -53,16 +55,24 @@ class RankingScreen extends StatelessWidget {
   }
 
   Widget buildMobileLayout(BuildContext context){
+    final scrollController1 = ScrollController();
     return Padding(
       padding: const EdgeInsets.only(left: 10.0,right:10,top:10,bottom: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const TitleContainer(),
-          const SizedBox(height: 15,),
-          Expanded(child: ListViewContainer(testId: testId,)),
-
-        ],
+      child: Scrollbar(
+        controller: scrollController1,
+        interactive: false,
+        thumbVisibility: true,
+        child: SingleChildScrollView(
+          controller: scrollController1,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TitleContainer(resultData: resultData,),
+              const SizedBox(height: 15,),
+              ListViewContainer(testId: testId,),
+            ],
+          ),
+        ),
       ),
     );
   }

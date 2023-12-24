@@ -9,6 +9,7 @@ class PopUpScreensTopHeadingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(examName);
     return Container(
       width: double.infinity,
       height: 50,

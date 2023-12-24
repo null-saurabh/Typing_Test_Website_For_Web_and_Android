@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 
 class TitleContainer extends StatelessWidget {
+  final ResultData resultData;
   const TitleContainer({
+    required this.resultData,
     super.key,
   });
 
@@ -23,9 +27,9 @@ class TitleContainer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "SSC Typing Test - Grade A - 1",
-              style: TextStyle(
+            Text(
+              resultData.testName!,
+              style: const TextStyle(
                   fontSize: 16.9,
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
@@ -34,11 +38,12 @@ class TitleContainer extends StatelessWidget {
             IntrinsicHeight(
               child: Row(
                 children: [
-                  rowItem("assets/images/ranking.png", "90 Key Strokes"),
+                  rowItem("assets/images/question.png", resultData.language!),
                   requiredVerticalDivider(),
-                  rowItem("assets/images/question.png", "English"),
-                  requiredVerticalDivider(),
-                  rowItem("assets/images/timer.png", "30 mins"),
+                  rowItem("assets/images/ranking.png",resultData.totalCandidate.toString()),
+
+                  // requiredVerticalDivider(),
+                  // rowItem("assets/images/timer.png", resultData.dur),
                 ],
               ),
             ),
@@ -53,7 +58,7 @@ class TitleContainer extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       "Date and Time: ",
                       style: TextStyle(
                           fontSize: 14,
@@ -61,8 +66,8 @@ class TitleContainer extends StatelessWidget {
                           color: Colors.black),
                     ),
                     Text(
-                      "23 Oct 2023 , 10 : 00 am to 10 :00 pm",
-                      style: TextStyle(
+                      "${DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00").day} ${_getMonth(DateTime.parse(resultData.startDatetime??"2023-12-23 00:45:00").month)} ${DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00").year}, ${_formatTime(DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00"))} to ${_formatTime(DateTime.parse(resultData.endDatetime ?? "2023-12-25 17:41:00"))}",
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.black),
@@ -71,7 +76,7 @@ class TitleContainer extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Text(
+                    const Text(
                       "Total Participants: ",
                       style: TextStyle(
                           fontSize: 14,
@@ -79,8 +84,8 @@ class TitleContainer extends StatelessWidget {
                           color: Colors.black),
                     ),
                     Text(
-                      "24576",
-                      style: TextStyle(
+                      resultData.totalCandidate.toString(),
+                      style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.black),
@@ -104,9 +109,9 @@ class TitleContainer extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "SSC Typing Test - Grade A - 1",
-              style: TextStyle(
+            Text(
+              resultData.testName!,
+              style: const TextStyle(
                   fontSize: 16.9,
                   fontWeight: FontWeight.w500,
                   color: Colors.black),
@@ -115,13 +120,13 @@ class TitleContainer extends StatelessWidget {
             IntrinsicHeight(
               child: Row(
                 children: [
-                  rowItem("assets/images/ranking.png", "90 Key Strokes"),
+                  rowItem("assets/images/question.png", resultData.language!),
                   requiredVerticalDivider(),
-                  rowItem("assets/images/question.png", "English"),
+                  rowItem("assets/images/ranking.png",resultData.totalCandidate.toString()),
                 ],
               ),
             ),
-            rowItem("assets/images/timer.png", "30 mins"),
+            // rowItem("assets/images/timer.png", "30 mins"),
             const SizedBox(height: 8),
             Divider(
               thickness: 1,
@@ -130,7 +135,7 @@ class TitleContainer extends StatelessWidget {
             const SizedBox(height: 8),
             Row(
               children: [
-                Text(
+                const Text(
                   "Date:",
                   style: TextStyle(
                       fontSize: 14,
@@ -138,8 +143,8 @@ class TitleContainer extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(
-                  "23 Oct 2023",
-                  style: TextStyle(
+                    "${DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00").day} ${_getMonth(DateTime.parse(resultData.startDatetime??"2023-12-23 00:45:00").month)} ${DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00").year}",
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
@@ -148,7 +153,7 @@ class TitleContainer extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Time:",
                   style: TextStyle(
                       fontSize: 14,
@@ -156,8 +161,8 @@ class TitleContainer extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(
-                  "10:00 am to 10:10 pm",
-                  style: TextStyle(
+                  "${_formatTime(DateTime.parse(resultData.startDatetime ?? "2023-12-23 00:45:00"))} to ${_formatTime(DateTime.parse(resultData.endDatetime ?? "2023-12-25 17:41:00"))}",
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
@@ -166,7 +171,7 @@ class TitleContainer extends StatelessWidget {
             ),
             Row(
               children: [
-                Text(
+                const Text(
                   "Total Participants: ",
                   style: TextStyle(
                       fontSize: 14,
@@ -174,8 +179,8 @@ class TitleContainer extends StatelessWidget {
                       color: Colors.black),
                 ),
                 Text(
-                  "24576",
-                  style: TextStyle(
+                  resultData.totalCandidate.toString(),
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: Colors.black),
@@ -220,4 +225,37 @@ class TitleContainer extends StatelessWidget {
       ),
     );
   }
+
+
+  String _getMonth(int? month) {
+    if (month != null && month >= 1 && month <= 12) {
+      List<String> months = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+      ];
+      return months[month - 1];
+    } else {
+      return "";
+    }
+  }
+
+  String _formatTime(DateTime? dateTime) {
+    if (dateTime != null) {
+      String period = "am";
+      int hour = dateTime.hour;
+      if (hour >= 12) {
+        period = "pm";
+        if (hour > 12) {
+          hour -= 12;
+        }
+      }
+      return "${hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')} $period";
+    } else {
+      return "";
+    }
+  }
+
+
+
+
 }

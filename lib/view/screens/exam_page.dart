@@ -112,6 +112,7 @@ class ExamPage extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return LiveTestListTile(
                                     testData: snapshot.data!.data.list[index],
+                                    targetExamName: targetExamName,
                                   );
                                 },
                               );
@@ -225,7 +226,7 @@ class ExamPage extends StatelessWidget {
                         builder: (context, apiProvider, child) {
                           return IconButton(
                             onPressed: () {
-                              apiProvider.fetchLiveTest();
+                              apiProvider.refresh();
                             },
                             icon: const Icon(Icons.refresh),
                           );
@@ -236,23 +237,31 @@ class ExamPage extends StatelessWidget {
                   const SizedBox(height: 10),
                   Consumer<ApiProvider>(
                     builder: (context, testProvider, child) {
-                      final data = testProvider.liveTests;
-
-                      if (data == null) {
-                        return const CircularProgressIndicator(); // Loading indicator
-                      }
-
-                      return data.data.list.isNotEmpty
-                          ? ListView.builder(
+                      return FutureBuilder<LiveTest>(
+                        future: testProvider.fetchLiveTest(), // Call fetchLiveTest in the future
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return const CircularProgressIndicator();
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (!snapshot.hasData || snapshot.data!.data.list.isEmpty) {
+                            return const Text("No test available");
+                          } else {
+                            // Data is available, build the ListView
+                            return ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: data.data.list.length,
+                              itemCount: snapshot.data?.data.list.length ?? 0,
                               itemBuilder: (context, index) {
                                 return LiveTestListTile(
-                                    testData: data.data.list[index]);
+                                  testData: snapshot.data!.data.list[index],
+                                  targetExamName: targetExamName,
+                                );
                               },
-                            )
-                          : const CircularProgressIndicator(); // Optional: show a loader when tests is null.
+                            );
+                          }
+                        },
+                      );
                     },
                   ),
                 ],
@@ -437,8 +446,11 @@ class ExamPage extends StatelessWidget {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
+                            // print(targetExamName);
                             return InstructionDialog(
                               testData: testData,
+                              targetExamName: targetExamName,
+
                             );
                           });
                     },
@@ -454,6 +466,8 @@ class ExamPage extends StatelessWidget {
                         builder: (BuildContext context) {
                           return InstructionDialog(
                             testData: testData,
+                            targetExamName: targetExamName,
+
                           );
                         });
                   },

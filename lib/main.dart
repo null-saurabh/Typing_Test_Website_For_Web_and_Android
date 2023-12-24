@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
+import 'package:typingtest/model/result_api_modal.dart';
 import 'package:typingtest/view/screens/Homepage_screen.dart';
 import 'package:typingtest/view/screens/error_page.dart';
 import 'package:typingtest/view/screens/exam_information_page.dart';
@@ -189,10 +190,14 @@ final _router = GoRouter(
         GoRoute(
           // parentNavigatorKey: _shellNavigatorKey,
             name: 'ranking',
-            path: '/ranking/:testId',
+            path: '/ranking/:testId/:resultData',
             builder: (context, state) {
+              String resultDataString = state.pathParameters["resultData"] as String;
+              ResultData resultData = ResultData.fromJson(jsonDecode(resultDataString));
               return RankingScreen(
-                  testId: int.tryParse(state.pathParameters["testId"]!) as int);
+                  testId: int.tryParse(state.pathParameters["testId"]!) as int,
+                resultData: resultData,
+              );
             }),
       ],
     ),
