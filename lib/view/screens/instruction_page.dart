@@ -114,7 +114,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",
+                                    "This is a computer-based typing test that requires a minimum typing speed of 35 words per minute in English and 30 words per minute in Hindi",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -133,7 +133,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris. At nunc ullamcorper viverra id ",
+                                    "Candidates can choose the language of typing (English or Hindi) and the keyboard layout (Hindi Inscript, Hindi Krutidev, Hindi Remington GAIL, or Hindi Remington CBI) before starting the test. The keyboard layout can also be changed during the test.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -152,7 +152,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",
+                                    "Candidates can use the backspace key and the arrow keys to correct any mistakes in the typed text. However, they should avoid making too many errors as they will affect the accuracy and the final score.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -171,7 +171,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris. At nunc ullamcorper viverra id sagittis sit. Risus nibh nisl scelerisque in phasellus lectus. Vitae ullamcorper odio lacus egestas mus donec eu.",
+                                    "Candidates who are visually impaired or have a scribe (passage reader) will be given an extra time of 5 minutes in each typing test.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -190,7 +190,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur. Iaculis diam iaculis nisl mauris.",
+                                    "The duration of the typing test is 10 minutes for LDC/JSA/PA/SA posts and 15 minutes for DEO posts.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,
@@ -209,7 +209,7 @@ class InstructionPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                       child: Text(
-                                    "Lorem ipsum dolor sit amet consectetur",
+                                    "Candidates should read the instructions carefully before starting the test and follow them strictly. They should not use any unfair means or indulge in any misconduct during the test.",
                                     textAlign: TextAlign.justify,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w400,

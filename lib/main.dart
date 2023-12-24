@@ -243,7 +243,7 @@ class GoRouteShellObserver extends NavigatorObserver {
       final String routeName = route.settings.name ?? '';
       var routeTitle  = route.settings.arguments as Map<String, dynamic>? ?? {};
       // var examName = routeTitle?['examName'];
-      print('a: $routeName');
+      // print('a: $routeName');
       // print('b: $routeTitle');
 
       if (routeName == 'exam') {
