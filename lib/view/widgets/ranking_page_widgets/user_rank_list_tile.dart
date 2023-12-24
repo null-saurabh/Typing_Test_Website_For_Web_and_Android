@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:typingtest/model/ranking_modal.dart';
 
 class UserRankListTile extends StatefulWidget {
-  const UserRankListTile({super.key});
+  final RankingData data;
+
+  const UserRankListTile({required this.data ,super.key});
 
   @override
   State<UserRankListTile> createState() => _UserRankListTileState();
@@ -10,6 +13,21 @@ class UserRankListTile extends StatefulWidget {
 
 class _UserRankListTileState extends State<UserRankListTile> {
   bool _showDetails = false;
+
+  String getInitials(String fullName) {
+    List<String> names = fullName.split(" ");
+    String initials = "";
+
+    if (names.isNotEmpty) {
+      initials += names[0][0];
+    }
+
+    if (names.length > 1) {
+      initials += names[1][0];
+    }
+
+    return initials.toUpperCase();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +55,9 @@ class _UserRankListTileState extends State<UserRankListTile> {
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Row(
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 47,
-                      child: const Padding(
+                      child: Padding(
                         padding: EdgeInsets.only(left: 15.0),
                         child: Text(
                           "234",
@@ -51,7 +69,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
                       ),
                     ),
                     const SizedBox(width: 20,),
-                    const SizedBox(
+                    SizedBox(
                       width: 220,
                       child: Row(
                         children: [
@@ -59,17 +77,17 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             radius: 14,
                             backgroundColor: Colors.white,
                             child: Text(
-                              "AB",
-                              style: TextStyle(
+                              getInitials(widget.data.userName!),
+                              style: const TextStyle(
                                   color: Color(0xff369CBC),
                                   fontWeight: FontWeight.w500,
                                   fontSize: 12),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             "You",
                             style: TextStyle(
                                 fontSize: 16,
@@ -94,11 +112,12 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                listTileData("Net Speed", "32WPM"),
-                                listTileData("Gross Speed", "32WPM"),
-                                listTileData("Min. passing Speed", "32WPM"),
-                                listTileData("Accuracy", "95.95%"),
-                                listTileData("Words Typed", "234"),
+                                listTileData("Net Speed", widget.data.nwpm.toString()),
+                                listTileData("Min. passing Speed", widget.data.minimumSpeed.toString()),
+                                listTileData("Accuracy", widget.data.accuracy.toString()),
+                                listTileData("Words Typed",widget.data.wordsTyped.toString()),
+                                listTileData("Omitted Words", widget.data.marksObtained.toString()),
+
                               ],
                             ),
                           ),
@@ -121,10 +140,10 @@ class _UserRankListTileState extends State<UserRankListTile> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  listTileData("Correct Words", "24"),
-                                  listTileData("Incorrect Words", "14"),
-                                  listTileData("Full mistakes", "2"),
-                                  listTileData("Half Mistakes ", "2"),
+                                  listTileData("Correct Words", widget.data.wordsCorrect.toString()),
+                                  listTileData("Incorrect Words", widget.data.wordIncorrect.toString()),
+                                  listTileData("Full mistakes", widget.data.fullMistakes.toString()),
+                                  listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
                                   const SizedBox(width: 110+16),
 
                                 ],
@@ -162,9 +181,9 @@ class _UserRankListTileState extends State<UserRankListTile> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
+              const SizedBox(
                 width: 47,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.only(left: 15.0),
                   child: Text(
                     "234",
@@ -187,23 +206,23 @@ class _UserRankListTileState extends State<UserRankListTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-                        const Row(
+                         Row(
                           children: [
                             CircleAvatar(
                               radius: 14,
                               backgroundColor: Colors.white,
                               child: Text(
-                                "AB",
-                                style: TextStyle(
+                                  getInitials(widget.data.userName!),
+                                style: const TextStyle(
                                     color: Color(0xff369CBC),
                                     fontWeight: FontWeight.w500,
                                     fontSize: 12),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
-                            Text(
+                            const Text(
                               "You",
                               style: TextStyle(
                                   fontSize: 16,
@@ -220,12 +239,12 @@ class _UserRankListTileState extends State<UserRankListTile> {
                       ],
                     ),
                   ),
-                  const Row(
+                   Row(
                     children: [
                       // SizedBox(width: 33,),
-                      Text("Net Speed:",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white),),
-                      SizedBox(width: 10,),
-                      Text("32 WPM",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.white),)
+                      const Text("Net Speed:",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white),),
+                      const SizedBox(width: 10,),
+                      Text(widget.data.nwpm.toString(),style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.white),)
                     ],
                   ),
                   if (_showDetails)
@@ -237,13 +256,13 @@ class _UserRankListTileState extends State<UserRankListTile> {
                         Column(
                           crossAxisAlignment:CrossAxisAlignment.start,
                           children: [
-                            listTileData("Gross Speed", "32WPM"),
+                            listTileData("Omitted Words", widget.data.marksObtained.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Min. passing Speed", "32WPM"),
+                            listTileData("Min. passing Speed", widget.data.minimumSpeed.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Correct Words", "24"),
+                            listTileData("Correct Words",  widget.data.wordsCorrect.toString()),
                             const SizedBox(height:5,),
-                            listTileData("Full mistakes", "2"),
+                            listTileData("Full mistakes",widget.data.fullMistakes.toString()),
                           ],
                         ),
                         Row(
@@ -251,13 +270,13 @@ class _UserRankListTileState extends State<UserRankListTile> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                listTileData("Accuracy", "95.95%"),
+                                listTileData("Accuracy", widget.data.accuracy.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Words Typed", "234"),
+                                listTileData("Words Typed", widget.data.wordsTyped.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Incorrect Words", "14"),
+                                listTileData("Incorrect Words", widget.data.wordIncorrect.toString()),
                                 const SizedBox(height:5,),
-                                listTileData("Half Mistakes ", "2"),
+                                listTileData("Half Mistakes ", widget.data.halfMistakes.toString()),
 
                               ],
                             ),
@@ -283,7 +302,7 @@ class _UserRankListTileState extends State<UserRankListTile> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(key,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 12,color: Color(0xffEBEBEB)),),
+          Text(key,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 12,color: Color(0xffEBEBEB)),maxLines: 1,),
           Text(value,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color: Colors.white),)
         ],
       ),

@@ -92,25 +92,37 @@ class _TextFieldContainerState extends State<TextFieldContainer> {
 
   Widget buildMobileLayout(BuildContext context) {
     return Container(
-      height: 50,
+      height: MediaQuery
+          .of(context)
+          .size
+          .height * 0.35,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: TextField(
-            focusNode: _focusNode,
-            controller: _controller,
-            onChanged: (value) {
-              setState(() {
-                userInput = value;
-              });
-              widget.onTextChanged(value);
-            },
-            maxLines: 1,
-            decoration: const InputDecoration.collapsed(
-                hintText: "Start typing here..."),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 5,bottom: 10),
+        child: Scrollbar(
+          interactive: false,
+          thumbVisibility: true,
+          controller: _scrollController1,
+          child: SingleChildScrollView(
+            controller: _scrollController1,
+            child: Padding(
+              padding: const EdgeInsets.only(right:10.0),
+              child: TextField(
+                focusNode: _focusNode,
+                controller: _controller,
+                onChanged: (value) {
+                  setState(() {
+                    userInput = value;
+                  });
+                  widget.onTextChanged(value);
+                },
+                maxLines: null,
+                decoration: const InputDecoration.collapsed(
+                    hintText: "Start typing here..."),
+              ),
+            ),
           ),
         ),
       ),

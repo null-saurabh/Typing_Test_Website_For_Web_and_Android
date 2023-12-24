@@ -100,7 +100,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   listTileData("Net Speed", widget.data.nwpm!.toString()),
-                                  listTileData("Gross Speed", widget.data.gwpm!.toString()),
+                                  listTileData("Omitted Words", widget.data.marksObtained.toString()),
                                   listTileData("Min. passing Speed", widget.data.minimumSpeed!.toString()),
                                   listTileData("Accuracy", widget.data.accuracy!.toInt().toString()),
                                   listTileData("Words Typed", widget.data.wordsTyped!.toString()),
@@ -213,7 +213,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
                           Column(
                             crossAxisAlignment:CrossAxisAlignment.start,
                             children: [
-                              listTileData("Gross Speed", widget.data.gwpm!.toString()),
+                              listTileData("Omitted Words", widget.data.marksObtained.toString()),
                               const SizedBox(height:5,),
                               listTileData("Min. passing Speed", widget.data.minimumSpeed!.toString()),
                               const SizedBox(height:5,),
@@ -260,7 +260,7 @@ class _TotalRankingListTileState extends State<TotalRankingListTile> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(key,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 12,color: Colors.grey),),
+          Text(key,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 12,color: Colors.grey),maxLines: 1,),
           Text(value,style: const TextStyle(fontWeight: FontWeight.w500,fontSize: 15,color:Colors.black ),)
         ],
       ),

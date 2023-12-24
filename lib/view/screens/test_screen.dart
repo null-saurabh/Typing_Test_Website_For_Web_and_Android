@@ -292,7 +292,6 @@ class _TestScreenState extends State<TestScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(color: Colors.white),
-
                       ),
                       child:timer() ,
                     )

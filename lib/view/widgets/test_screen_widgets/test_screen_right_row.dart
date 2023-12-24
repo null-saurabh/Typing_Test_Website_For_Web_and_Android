@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:typingtest/model/live_test_api_model.dart';
 import 'package:typingtest/model/save_test_model.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
@@ -18,6 +19,12 @@ class RightRow extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => buildMobileLayout(context),
+      desktop: (BuildContext context) => buildDesktopLayout(context),
+    );
+  }
+  Widget buildDesktopLayout(BuildContext context){
     return Column(
       children: [
         Container(
@@ -49,6 +56,14 @@ class RightRow extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20,),
+        submitButton(context),
+      ],
+    );
+  }
+
+  Widget buildMobileLayout(BuildContext context){
+    return Column(
+      children: [
         submitButton(context),
       ],
     );
@@ -128,7 +143,6 @@ class RightRow extends StatelessWidget {
             // print("after save result");
 
           }
-          // Task 4: Decide whether to show a dialog or call showTestEndedDialog
           if(context.mounted) {
             GoRouter.of(context).pop();
 
@@ -150,7 +164,6 @@ class RightRow extends StatelessWidget {
       child: const Text('Submit', style: TextStyle(color: Colors.white),),
     );
   }
-
 
   void showTestEndedDialog(BuildContext context) {
     showDialog(

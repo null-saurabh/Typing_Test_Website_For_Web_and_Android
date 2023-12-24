@@ -31,24 +31,27 @@ class _TextToWriteState extends State<TextToWrite> {
           .of(context)
           .size
           .height * 0.35,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
-      child: Scrollbar(
-          controller: _scrollController1,
-          interactive: false,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-              controller: _scrollController1,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Text(
-                  widget.testData.paragraph!,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ))),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 5,bottom: 10),
+        child: Scrollbar(
+            controller: _scrollController1,
+            interactive: false,
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+                controller: _scrollController1,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Text(
+                    widget.testData.paragraph!,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ))),
+      ),
     );
   }
 
@@ -57,25 +60,28 @@ class _TextToWriteState extends State<TextToWrite> {
       height: MediaQuery
           .of(context)
           .size
-          .height * 0.30,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          .height * 0.40,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: const Color(0xff369CBC).withOpacity(0.5))),
-      child: Scrollbar(
-          controller: _scrollController1,
-          interactive: false,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-              controller: _scrollController1,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10.0),
-                child: Text(
-                  widget.testData.paragraph!,
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w500),
-                ),
-              ))),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 5,bottom: 10),
+        child: Scrollbar(
+            controller: _scrollController1,
+            interactive: false,
+            thumbVisibility: true,
+            child: SingleChildScrollView(
+                controller: _scrollController1,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Text(
+                    widget.testData.paragraph!,
+                    textAlign: TextAlign.justify,
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ))),
+      ),
     );
   }
 
