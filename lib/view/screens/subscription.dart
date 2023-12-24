@@ -209,11 +209,11 @@ class SubscriptionPage extends StatelessWidget {
             // final orderId = orderResponse.id;
 
             razorPayProvider.onSuccess = () {
-              print('Payment Successful');
+              showTestEndedDialog(context,true);
             };
 
             razorPayProvider.onError = () {
-              print('Payment Error');
+              showTestEndedDialog(context,false);
             };
 
             razorPayProvider.openCheckout(
@@ -259,4 +259,35 @@ class SubscriptionPage extends StatelessWidget {
       ],
     );
   }
+
+  void showTestEndedDialog(BuildContext context,bool paymentStatus) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: paymentStatus ?const Text('Payment Successful'):const Text('Payment Failed'),
+          content:  Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              paymentStatus
+              ?const Text('Thank You For Buying Our Subscription')
+            :const Text('Thank You For showing interest in our Subscription, Please try again'),
+
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                GoRouter.of(context).go('/home');
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
