@@ -33,6 +33,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
     });
   }
 
+
   void _updateCountdown() {
     DateTime now = DateTime.now();
     DateTime startDateTime = DateTime.parse(widget.testData.startDatetime!);
@@ -40,12 +41,16 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
 
     DateTime targetTime =
         widget.testData.isAvailable! ? endDateTime : startDateTime;
-    if (now.isAfter(targetTime)) {
+
+    Duration difference = targetTime.difference(now);
+
+    if (difference.inSeconds == 0 && difference.inSeconds > -5) {
       _timer?.cancel();
+      // print('timer cancel');
+      print(_timer ==null);
       Future.delayed(const Duration(seconds:1), () {
-        Provider.of<ApiProvider>(context, listen: false).refresh();
-      });
-    } else {
+        Provider.of<ApiProvider>(context, listen: false).refresh();});
+    } else if(difference.inSeconds > 0) {
       setState(() {
         _countdown = getTimeDifference(targetTime);
       });

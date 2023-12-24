@@ -222,15 +222,11 @@ class ExamPage extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Consumer<ApiProvider>(
-                        builder: (context, apiProvider, child) {
-                          return IconButton(
-                            onPressed: () {
-                              apiProvider.refresh();
-                            },
-                            icon: const Icon(Icons.refresh),
-                          );
+                      IconButton(
+                        onPressed: () {
+                          Provider.of<ApiProvider>(context,listen: false).refresh();
                         },
+                        icon: const Icon(Icons.refresh),
                       )
                     ],
                   ),
