@@ -24,13 +24,13 @@ class _TestScreenState extends State<TestScreen> {
 
   bool testCompleted = false;
   late Timer _timer;
-  int _start = 10 * 60;
+  int _start = 0;
   late DateTime _startTime;
 
 
   @override
   void initState() {
-    super.initState();
+    _start = (widget.testData.duration ?? 10) * 60;
     Future.delayed(Duration.zero, () {
       Provider.of<TestCalculatorProvider>(context, listen: false).startNewTest();
       Provider.of<TestCalculatorProvider>(context, listen: false).updateOriginalText(widget.testData.paragraph!);
@@ -39,7 +39,7 @@ class _TestScreenState extends State<TestScreen> {
     });
     _startTime = DateTime.now();
       _startTimer();
-
+    super.initState();
   }
 
   void _startTimer() {
