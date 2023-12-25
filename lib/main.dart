@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 import 'package:typingtest/view_model/provider/save_test_provider.dart';
 import 'package:typingtest/view_model/provider/navigation_provider.dart';
+import 'package:typingtest/view_model/services/firebase_services.dart';
 
 
 void main() async {
@@ -53,8 +55,9 @@ void main() async {
         )
     );
   }
+  await FirebaseAuthService.instance.initialize();
 
-
+  // print("Current user: ${FirebaseAuth.instance.currentUser?.displayName}");
   runApp(
     MultiProvider(
       providers: [
@@ -95,7 +98,7 @@ final _router = GoRouter(
   redirect: (context, state){
     String originalLocation = state.matchedLocation;
     // print(originalLocation);
-    if(Provider.of<LoginUserProvider>(context, listen: false).user == null){
+    if(FirebaseAuth.instance.currentUser == null){
       Provider.of<NavigationProvider>(context, listen: false).addOriginalLocation(originalLocation);
 
       final List<String> allowedRoutes = [
