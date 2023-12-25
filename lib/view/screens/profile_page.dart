@@ -15,8 +15,8 @@ class ProfilePage extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 28.0,vertical: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,15 +24,15 @@ class ProfilePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 "My Profile",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
-              editButton(context),
+              // editButton(context),
             ],
           ),
-          const SizedBox(height: 15,),
-          const Expanded(
+          SizedBox(height: 15,),
+          Expanded(
             child:
             ProfileContainer(),
           )
