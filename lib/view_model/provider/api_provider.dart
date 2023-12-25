@@ -22,7 +22,7 @@ class ApiProvider with ChangeNotifier {
 
 
   Future<LiveTest> fetchLiveTest() async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
 
     if (userEmail == null) {
       throw Exception('User is not logged in');
@@ -44,7 +44,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<void> markAsOpen(String testId) async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
 
     if (userEmail == null) {
       throw Exception('User is not logged in');
@@ -59,7 +59,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<void> fetchPracticeTest() async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
     // print(userEmail);
     if (userEmail == null) {
       // print("useremail is null");
@@ -76,7 +76,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<List<ResultData>> fetchOneResult(int testId) async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
     if (userEmail == null) {
       // print("useremail is null");
       throw Exception('User is not logged in');
@@ -91,7 +91,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<List<ResultData>> fetchAllResult() async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
     if (userEmail == null) {
       // print("useremail is null");
       throw Exception('User is not logged in');
@@ -106,7 +106,7 @@ class ApiProvider with ChangeNotifier {
   }
 
   Future<List<RankingData>> fetchRanking(int testId) async {
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
     if (userEmail == null) {
       throw Exception('User is not logged in');
     }
@@ -135,7 +135,7 @@ class ApiProvider with ChangeNotifier {
       ) async {
 
     // print('data $timeTaken,$speed,$accuracy,$correctWords,$testId');
-    final userEmail = _userProvider.userEmail;
+    final userEmail = _userProvider.user?.email;
 
     if (userEmail == null) {
       throw Exception('User is not logged in');
