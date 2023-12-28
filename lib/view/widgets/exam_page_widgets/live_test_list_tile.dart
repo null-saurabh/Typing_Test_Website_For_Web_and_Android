@@ -149,7 +149,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                       widget.testData.language ?? "English"),
                   requiredVerticalDivider(),
                   rowItem("assets/images/timer.png",
-                      widget.testData.duration.toString()),
+                      '${widget.testData.duration} min'),
                 ],
               ),
             ),
@@ -170,17 +170,29 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                 ? Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        "Result Awaiting",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.grey),
+                      SizedBox(
+                        height: 30,
+                        child: ElevatedButton(
+                          style:ButtonStyle(
+                              elevation: MaterialStateProperty.all(0),
+                              backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  side: const BorderSide(color: Colors.grey),
+                                  borderRadius: BorderRadius.circular(5)))),
+                          onPressed: (){},
+                          child: const Text(
+                            "Result Awaiting",
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.grey),
+                          ),
+                        ),
                       ),
                       Text(
-                        'Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
+                        'Result Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
                         style: const TextStyle(
-                            fontSize: 14,
+                            fontSize: 12.5,
                             fontWeight: FontWeight.w400,
                             color: Colors.grey),
                       )
@@ -256,17 +268,28 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                     ? Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            "Result Awaiting",
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.grey),
-                          ),
+                           SizedBox(
+                             height: 30,
+                             child: ElevatedButton(
+                               style: ButtonStyle(
+                                   elevation: MaterialStateProperty.all(0),
+                                   backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                       side: const BorderSide(color: Colors.grey),
+                                       borderRadius: BorderRadius.circular(5)))),
+                               onPressed: (){},
+                               child: const Text(
+                              "Result Awaiting",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.grey),
+                          ),),
+                           ),
                           Text(
-                            'Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
+                            'Result Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
                             style: const TextStyle(
-                                fontSize: 14,
+                                fontSize: 12.5,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.grey),
                           )
@@ -395,7 +418,7 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                     widget.testData.language ?? "English"),
                 requiredVerticalDivider(),
                 rowItem("assets/images/timer.png",
-                    widget.testData.duration.toString()),
+                    '${widget.testData.duration} min'),
               ],
             ),
             const SizedBox(
@@ -480,15 +503,28 @@ class _LiveTestListTileState extends State<LiveTestListTile> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                "Result Awaiting",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.grey),
+                              SizedBox(
+                                height: 27.5,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                      elevation: MaterialStateProperty.all(0),
+                                      backgroundColor: MaterialStateProperty.all(Colors.transparent),
+                                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                          side: const BorderSide(color: Colors.grey),
+                                          borderRadius: BorderRadius.circular(5)))),
+
+                                  onPressed: (){},
+                                  child: const Text(
+                                    "Result Awaiting",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.grey),
+                                  ),
+                                ),
                               ),
                               Text(
-                                'Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
+                                'Result Time - ${formatTimeFromServer(widget.testData.endDatetime!)}',
                                 style: const TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w400,

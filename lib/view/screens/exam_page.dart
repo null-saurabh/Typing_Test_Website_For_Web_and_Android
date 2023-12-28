@@ -145,7 +145,6 @@ class ExamPage extends StatelessWidget {
                             return IconButton(
                               onPressed: () {
                                 apiProvider.fetchPracticeTest();
-                                // print("clicked refresh fetch live test");
                               },
                               icon: const Icon(Icons.refresh),
                             );

@@ -30,7 +30,7 @@ class RankingDialog extends StatelessWidget {
                 } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                   return const Text('No ranking data available.');
                 } else {
-                  return RankingScreen(testId: testId,resultData: snapshot.data![0]);
+                  return RankingScreen(testId: testId,resultData: snapshot.data![0],popup:true,);
                 }
               },
             );

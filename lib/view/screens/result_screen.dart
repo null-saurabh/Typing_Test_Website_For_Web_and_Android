@@ -113,6 +113,7 @@ class ResultScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 15,
                                 ),
+                                if(isPractice)
                                 const ResultErrorRepresentation()
                               ],
                             ),
@@ -218,10 +219,13 @@ class ResultScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 15,
                                 ),
+                                if(isPractice)
                                 ResultTypingParagraphContainer(typedParagraph: typedParagraph!,originalParagraph: originalParagraph!,),
+                                if(isPractice)
                                 const SizedBox(
                                   height: 15,
                                 ),
+                                if(isPractice)
                                 const ResultErrorRepresentation()
                               ],
                             ),

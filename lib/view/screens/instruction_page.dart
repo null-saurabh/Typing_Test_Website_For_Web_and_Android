@@ -71,7 +71,7 @@ class InstructionPage extends StatelessWidget {
                                               testData.language!),
                                           requiredVerticalDivider(),
                                           rowItem("assets/images/timer.png",
-                                              testData.duration.toString()),
+                                              testData.duration.toString() + ' min'),
                                         ],
                                       ),
                                     )

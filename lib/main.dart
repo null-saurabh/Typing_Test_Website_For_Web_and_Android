@@ -200,6 +200,7 @@ final _router = GoRouter(
               return RankingScreen(
                   testId: int.tryParse(state.pathParameters["testId"]!) as int,
                 resultData: resultData,
+                popup: false,
               );
             }),
       ],

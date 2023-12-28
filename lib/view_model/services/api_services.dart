@@ -14,7 +14,7 @@ class ApiService {
     final response = await http.get(Uri.parse('$baseUrl/$userEmail/steno-tests/testschedule?type=LIVE'));
 
     if (response.statusCode == 200) {
-      print("got live test response");
+      // print("got live test response");
       return LiveTest.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');

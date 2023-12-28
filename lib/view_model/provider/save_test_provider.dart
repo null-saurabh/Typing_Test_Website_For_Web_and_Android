@@ -304,8 +304,8 @@ class TestCalculatorProvider with ChangeNotifier {
     final typedText = _testModel.typedText;
     final originalText = _testModel.originalText;
     final timerValue = _testModel.timeTaken;
-    print(typedText);
-    print(originalText);
+    // print(typedText);
+    // print(originalText);
 
     if (typedText.isEmpty) {
       _testModel.wordsTyped = 0;
@@ -405,6 +405,7 @@ class TestCalculatorProvider with ChangeNotifier {
       int fullMistakes = 0;
       int extraWords = 0;
       List<InlineSpan> inlineSpans = [];
+      int overOmitted = 0;
 
       for (int k = 0;
       k < alignedTypedWords.length && k < alignedOriginalWords.length;
@@ -413,20 +414,24 @@ class TestCalculatorProvider with ChangeNotifier {
           // String a = alignedTypedWords[k];
           // print('a = $a');
           correctWords++;
+          overOmitted =0;
           inlineSpans.add(TextSpan(text: '${alignedTypedWords[k]} '));
         } else if (alignedTypedWords[k].isEmpty) {
           // String a = alignedTypedWords[k];
           // print('b =$a');
           omittedWords++;
+          overOmitted++;
           inlineSpans.add(
             TextSpan(
-              text: '${alignedOriginalWords[k]} ',
+              text: '[${alignedOriginalWords[k]}] ',
               style: const TextStyle(color: Colors.blue),
             ),
           );
         } else if (extraWordFlags[k]) {
           // The word is extra
+          // print('in extra');
           extraWords++;
+          // negativeOmitted++;
           inlineSpans.add(
             TextSpan(
               text: '${alignedTypedWords[k]} ',
@@ -435,8 +440,8 @@ class TestCalculatorProvider with ChangeNotifier {
           );
         } else {
           // print('in else');
-          String a = alignedTypedWords[k];
-          print('d = $a');
+          // String a = alignedTypedWords[k];
+          // print('d = $a');
           incorrectWords++;
           inlineSpans.add(
             TextSpan(
@@ -454,14 +459,16 @@ class TestCalculatorProvider with ChangeNotifier {
         }
       }
 
+
       _testModel.wordsTyped = typedWords.length;
       _testModel.correctWords = correctWords;
       _testModel.incorrectWords = incorrectWords;
       _testModel.wpm = ((typedWords.length / timerValue) * 60).toInt();
       _testModel.accuracy = ((correctWords / typedWords.length) * 100).toInt();
-      // print('omitted: $omittedWords, original: $originalWords.length , max: $maxComparisonLength');
+      print(' max: $maxComparisonLength  over:$overOmitted',);
+      print('omitted: $omittedWords, typed: $typedWords.length , incorrect: $incorrectWords');
       _testModel.omittedWords = (typedWords.length * 2 < originalWords.length)
-          ? omittedWords
+          ? omittedWords - overOmitted - incorrectWords
           : omittedWords;
       // _testModel.omittedWords = omittedWords;
       _testModel.halfMistake = halfMistakes;
@@ -469,9 +476,11 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.totalWords = originalWords.length;
       _testModel.extraSpaces = extraSpaces;
       _testModel.extraWords = extraWords;
-      _testModel.markedTypedText = RichText(text: TextSpan(children: inlineSpans));
 
-      print(RichText(text: TextSpan(children: inlineSpans)));
+      List<InlineSpan> slicedInlineSpans = inlineSpans.sublist(0, inlineSpans.length - overOmitted);
+      _testModel.markedTypedText = RichText(text: TextSpan(children: slicedInlineSpans));
+
+      // print(RichText(text: TextSpan(children: inlineSpans)));
 
 
     }
