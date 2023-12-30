@@ -26,24 +26,20 @@ class ResultDialog extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.95,  // Adjust as needed
           height: MediaQuery.of(context).size.height * 0.95, // Adjust as needed
-          child: Consumer<ApiProvider>(
-            builder: (ctx, apiProvider, _) {
-              return FutureBuilder<List<ResultData>>(
-                future: apiProvider.fetchOneResult(testId),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else
-                  if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Text('No ranking data available.');
-                  } else {
-                    print("result future builder");
-                    return ResultScreen(result: snapshot.data![0],isPractice:isPractice ,typedParagraph: typedParagraph ,originalParagraph: originalParagraph,);
-                  }
-                },
-              );
+          child: FutureBuilder<List<ResultData>>(
+            future: Provider.of<ApiProvider>(context,listen: false).fetchOneResult(testId),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else
+              if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Text('No ranking data available.');
+              } else {
+                print("result future builder");
+                return ResultScreen(result: snapshot.data![0],isPractice:isPractice ,typedParagraph: typedParagraph ,originalParagraph: originalParagraph,);
+              }
             },
           ),  // Your current ResultScreen content
         ),

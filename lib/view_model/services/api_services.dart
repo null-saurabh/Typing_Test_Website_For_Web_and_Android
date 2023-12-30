@@ -62,9 +62,10 @@ class ApiService {
     final response = await http.get(Uri.parse('$baseUrl/$userEmail/result/$testId'),headers: headers,);
     // print("in api services");
     if (response.statusCode == 200) {
-      // print("status code");
+      print("status code");
       return TestResult.fromJson(json.decode(response.body));
     } else {
+      print("else");
       throw Exception('Failed to load data');
     }
   }

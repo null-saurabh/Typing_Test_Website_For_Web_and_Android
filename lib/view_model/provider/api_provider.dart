@@ -61,6 +61,7 @@ class ApiProvider with ChangeNotifier {
       throw Exception('User is not logged in');
     }
     try {
+      print('in result provider');
       final response = await apiService.oneResult(userEmail,testId);
       return response.data!;
     } catch (e) {
