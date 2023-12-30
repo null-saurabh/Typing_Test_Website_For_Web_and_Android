@@ -121,7 +121,7 @@ class ErrorHeadingRow extends StatelessWidget {
               width: 5,
             ),
             const Text(
-              "Half Mistakes Mistakes",
+              "Half Mistakes",
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
@@ -174,7 +174,7 @@ class ErrorHeadingRow extends StatelessWidget {
               width: 5,
             ),
             const Text(
-              "Half Mistakes Mistakes",
+              "Half Mistakes",
               style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
