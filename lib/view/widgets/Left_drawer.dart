@@ -18,16 +18,16 @@ class LeftDrawer extends StatelessWidget {
       return Container(
         width: 220,
         height: double.infinity,
-        color: Colors.white,
+        color: Colors.black,
         child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 20),
               const SizedBox(height: 5),
-              const Text("LOGO", style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, color: Colors.black)),
+              const Text("LOGO", style: TextStyle(fontSize: 32, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600, color: Colors.white)),
               // const SizedBox(height: 20),
               if (isLoggedIn) ...[
-                Text(userProvider.user!.displayName ?? 'No Name', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.black)),
+                Text(userProvider.user!.displayName ?? 'No Name', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Colors.white)),
                 // const SizedBox(height: 5),
                 Text(userProvider.user!.email ?? 'No Email', style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.grey)),
               ],
@@ -53,10 +53,10 @@ class LeftDrawer extends StatelessWidget {
 
 
     return Container(
-          color: isSelected ? const Color(0xff369CBC).withOpacity(0.08) : null,
+          color: isSelected ? const Color(0xff369CBC).withOpacity(0.2) : null,
           child: ListTile(
-            leading: Icon(icon, color: isSelected ? const Color(0xff369CBC) : Colors.grey),
-            title: Text(title, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16.5, color: isSelected ? const Color(0xff369CBC) : Colors.grey)),
+            leading: Icon(icon, color: isSelected ? const Color(0xff369CBC) : Colors.white),
+            title: Text(title, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16.5, color: isSelected ? const Color(0xff369CBC) : Colors.white)),
             onTap: () async {
               if (pageId == 'logout') {
                 await FirebaseAuthService.instance.signOut();

@@ -23,6 +23,7 @@ import 'package:typingtest/view/screens/welcome_login_screen.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/learn_menu_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
+import 'package:typingtest/view_model/provider/practice_test_provider.dart';
 import 'package:typingtest/view_model/provider/razorpay_provider.dart';
 import 'package:typingtest/view_model/provider/save_test_provider.dart';
 import 'package:typingtest/view_model/provider/navigation_provider.dart';
@@ -66,6 +67,10 @@ void main() async {
         ),
         ChangeNotifierProvider(
             create: (context) => ApiProvider(
+              context.read<LoginUserProvider>(),
+            )),
+        ChangeNotifierProvider(
+            create: (context) => PracticeProvider(
               context.read<LoginUserProvider>(),
             )),
         ChangeNotifierProvider(

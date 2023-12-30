@@ -39,6 +39,7 @@ class ResultDialog extends StatelessWidget {
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Text('No ranking data available.');
                   } else {
+                    print("result future builder");
                     return ResultScreen(result: snapshot.data![0],isPractice:isPractice ,typedParagraph: typedParagraph ,originalParagraph: originalParagraph,);
                   }
                 },

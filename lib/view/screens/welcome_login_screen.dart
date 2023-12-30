@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:typingtest/view_model/provider/api_provider.dart';
+// import 'package:typingtest/view_model/provider/api_provider.dart';
 import 'package:typingtest/view_model/provider/login_provider.dart';
 import 'package:typingtest/view_model/services/api_services.dart';
 import 'package:typingtest/view_model/services/firebase_services.dart';
@@ -38,7 +38,7 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
   Widget buildDesktopLayout(BuildContext context) {
     final scrollController1 = ScrollController();
     final ApiService apiService = ApiService();
-    final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    // final apiProvider = Provider.of<ApiProvider>(context, listen: false);
     final userProvider = Provider.of<LoginUserProvider>(context, listen: false);
 
 
@@ -95,13 +95,13 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
 
                           final registrationFuture = apiService.registerUser(
                               user!.email ?? '', user.displayName ?? '');
-                          final liveTestFuture = apiProvider.fetchLiveTest();
-                          final practiceTestFuture =
-                              apiProvider.fetchPracticeTest();
+                          // final liveTestFuture = apiProvider.fetchLiveTest();
+                          // final practiceTestFuture =
+                          //     apiProvider.fetchPracticeTest();
                           await Future.wait([
                             registrationFuture,
-                            liveTestFuture,
-                            practiceTestFuture
+                            // liveTestFuture,
+                            // practiceTestFuture
                           ]);
 
                           if (userProvider.user != null) {
@@ -157,7 +157,7 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
   Widget buildMobileLayout(BuildContext context) {
     final scrollController1 = ScrollController();
     final ApiService apiService = ApiService();
-    final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    // final apiProvider = Provider.of<ApiProvider>(context, listen: false);
     final userProvider = Provider.of<LoginUserProvider>(context, listen: false);
 
     return Scaffold(
@@ -205,11 +205,11 @@ class _WelcomeLoginScreenState extends State<WelcomeLoginScreen> {
 
                   final registrationFuture = apiService.registerUser(
                       user!.email ?? '', user.displayName ?? '');
-                  final liveTestFuture = apiProvider.fetchLiveTest();
-                  final practiceTestFuture = apiProvider.fetchPracticeTest();
+                  // final liveTestFuture = apiProvider.fetchLiveTest();
+                  // final practiceTestFuture = apiProvider.fetchPracticeTest();
 
                   await Future.wait(
-                      [registrationFuture, liveTestFuture, practiceTestFuture]);
+                      [registrationFuture]);
 
                   if (userProvider.user != null) {
                     String path = Provider.of<NavigationProvider>(context,

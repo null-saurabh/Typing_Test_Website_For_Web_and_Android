@@ -250,18 +250,6 @@
 // }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:typingtest/model/save_test_model.dart';
@@ -311,7 +299,8 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.wordsTyped = 0;
       _testModel.correctWords = 0;
       _testModel.incorrectWords = 0;
-      _testModel.wpm = 0;
+      _testModel.grossWpm = 0;
+      _testModel.netWpm = 0;
       _testModel.accuracy = 100;
       _testModel.omittedWords = originalText.split(' ').length;
       _testModel.halfMistake = 0;
@@ -463,14 +452,14 @@ class TestCalculatorProvider with ChangeNotifier {
       _testModel.wordsTyped = typedWords.length;
       _testModel.correctWords = correctWords;
       _testModel.incorrectWords = incorrectWords;
-      _testModel.wpm = ((typedWords.length / timerValue) * 60).toInt();
+      _testModel.grossWpm = ((typedWords.length / timerValue) * 60).toInt();
+      _testModel.netWpm = (((typedWords.length - incorrectWords) / timerValue) * 60).toInt();
       _testModel.accuracy = ((correctWords / typedWords.length) * 100).toInt();
-      print(' max: $maxComparisonLength  over:$overOmitted',);
-      print('omitted: $omittedWords, typed: $typedWords.length , incorrect: $incorrectWords');
+      // print(' max: $maxComparisonLength  over:$overOmitted',);
+      // print('omitted: $omittedWords, typed: $typedWords.length , incorrect: $incorrectWords');
       _testModel.omittedWords = (typedWords.length * 2 < originalWords.length)
           ? omittedWords - overOmitted - incorrectWords
           : omittedWords;
-      // _testModel.omittedWords = omittedWords;
       _testModel.halfMistake = halfMistakes;
       _testModel.fullMistake = fullMistakes;
       _testModel.totalWords = originalWords.length;

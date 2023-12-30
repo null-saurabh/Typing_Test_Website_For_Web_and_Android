@@ -7,6 +7,7 @@ import 'package:typingtest/view/widgets/historypage_widgets/history_dialog.dart'
 import 'package:typingtest/view/widgets/instruction_page_widgets/instruction_dialog.dart';
 import 'package:typingtest/view/widgets/result_widgets/result_dialog.dart';
 import 'package:typingtest/view_model/provider/api_provider.dart';
+import 'package:typingtest/view_model/provider/practice_test_provider.dart';
 
 class ExamPage extends StatelessWidget {
   final String targetExamName;
@@ -21,8 +22,8 @@ class ExamPage extends StatelessWidget {
   }
 
   Widget buildDesktopLayout(BuildContext context) {
-    // print("in exam page");
     final scrollController1 = ScrollController();
+    // ApiProvider apiProvider = Provider.of<ApiProvider>(context, listen: false);
     return Scrollbar(
       controller: scrollController1,
       interactive: false,
@@ -33,7 +34,8 @@ class ExamPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0,vertical: 20),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -78,49 +80,35 @@ class ExamPage extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      Consumer<ApiProvider>(
-                        builder: (context, apiProvider, child) {
-                          return IconButton(
-                            onPressed: () {
-                              apiProvider.refresh();
-                              // print("clicked refresh fetch live test");
-                            },
-                            icon: const Icon(Icons.refresh),
-                          );
+                      IconButton(
+                        onPressed: () {
+                          Provider.of<ApiProvider>(context, listen: false).refresh();
                         },
-                      )
+                        icon: const Icon(Icons.refresh),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
                   Consumer<ApiProvider>(
-                    builder: (context, testProvider, child) {
-                        return FutureBuilder<LiveTest>(
-                          future: testProvider.fetchLiveTest(), // Call fetchLiveTest in the future
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
-                            } else if (snapshot.hasError) {
-                              return Text('Error: ${snapshot.error}');
-                            } else if (!snapshot.hasData || snapshot.data!.data.list.isEmpty) {
-                              return const Text("No test available");
-                            } else {
-                              // Data is available, build the ListView
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                itemCount: snapshot.data?.data.list.length ?? 0,
-                                itemBuilder: (context, index) {
-                                  return LiveTestListTile(
-                                    testData: snapshot.data!.data.list[index],
-                                    targetExamName: targetExamName,
-                                  );
-                                },
-                              );
-                            }
-                          },
-                        ); // Optional: show a loader when tests is null.
-                    },
-                  ),
+                      builder: (context, apiProvider, child) {
+                    apiProvider.fetchLiveTest();
+                    LiveTest? testData = apiProvider.liveTests;
+                    if (testData == null) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: testData.data.list.length,
+                        itemBuilder: (context, index) {
+                          return LiveTestListTile(
+                            testData: testData.data.list[index],
+                            targetExamName: targetExamName,
+                          );
+                        },
+                      );
+                    }
+                  })
                 ],
               ),
             ),
@@ -140,50 +128,44 @@ class ExamPage extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Consumer<ApiProvider>(
-                          builder: (context, apiProvider, child) {
-                            return IconButton(
+
+                            IconButton(
                               onPressed: () {
-                                apiProvider.fetchPracticeTest();
+                                Provider.of<PracticeProvider>(context, listen: false).refresh();
                               },
                               icon: const Icon(Icons.refresh),
-                            );
-                          },
-                        )
+                            )
                       ]),
                   const SizedBox(
                     height: 19,
                   ),
-                  Consumer<ApiProvider>(builder: (context, apiProvider, child) {
-                    final data = apiProvider.practiceTests;
-
-                    if (data == null) {
-                      return const CircularProgressIndicator(); // Loading indicator
-                    }
-                    // print(data.data.list.length);
-                    return data.data.list.isNotEmpty
-                    ?GridView.builder(
+                  Consumer<PracticeProvider>(
+                      builder: (context, practiceProvider, child) {
+                        practiceProvider.fetchPracticeTest();
+                        LiveTest? testData = practiceProvider.practiceTests;
+                        if (testData == null) {
+                          return const CircularProgressIndicator();
+                        }
+                        else {
+                          return GridView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                      const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 325,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
                         childAspectRatio: 275 / 135,
                       ),
-                      itemCount: data.data.list.length,
+                      itemCount: testData.data.list.length,
                       itemBuilder: (context, index) {
                         // return dailyTest(data.data.list[index], context);
-                        return dailyTest(data.data.list[index],
-                            context);
+                        return dailyTest(
+                            testData.data.list[index], context);
                       },
-                    )
-                        :const Text(
-                        "No test available");
+                    ); // Optional: show a loader when tests is null.
+                        }
                   }),
-
-
                 ],
               ),
             )
@@ -192,7 +174,6 @@ class ExamPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget buildMobileLayout(BuildContext context) {
     final scrollController1 = ScrollController();
@@ -223,7 +204,8 @@ class ExamPage extends StatelessWidget {
                       ),
                       IconButton(
                         onPressed: () {
-                          Provider.of<ApiProvider>(context,listen: false).refresh();
+                          Provider.of<ApiProvider>(context, listen: false)
+                              .refresh();
                         },
                         icon: const Icon(Icons.refresh),
                       )
@@ -231,32 +213,23 @@ class ExamPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Consumer<ApiProvider>(
-                    builder: (context, testProvider, child) {
-                      return FutureBuilder<LiveTest>(
-                        future: testProvider.fetchLiveTest(), // Call fetchLiveTest in the future
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return const CircularProgressIndicator();
-                          } else if (snapshot.hasError) {
-                            return Text('Error: ${snapshot.error}');
-                          } else if (!snapshot.hasData || snapshot.data!.data.list.isEmpty) {
-                            return const Text("No test available");
-                          } else {
-                            // Data is available, build the ListView
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data?.data.list.length ?? 0,
-                              itemBuilder: (context, index) {
-                                return LiveTestListTile(
-                                  testData: snapshot.data!.data.list[index],
-                                  targetExamName: targetExamName,
-                                );
-                              },
-                            );
-                          }
+                    builder: (context, apiProvider, child) {
+                      apiProvider.fetchLiveTest();
+                      LiveTest? testData = apiProvider.liveTests;
+                      if (testData == null) {
+                        return const CircularProgressIndicator();
+                      } else {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: testData.data.list.length,
+                        itemBuilder: (context, index) {
+                          return LiveTestListTile(
+                            testData: testData.data.list[index],
+                            targetExamName: targetExamName,
+                          );
                         },
-                      );
+                      );}
                     },
                   ),
                 ],
@@ -278,16 +251,11 @@ class ExamPage extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Consumer<ApiProvider>(
-                          builder: (context, apiProvider, child) {
-                            return IconButton(
-                              onPressed: () {
-                                apiProvider.fetchPracticeTest();
-                                // print("clicked refresh fetch live test");
-                              },
-                              icon: const Icon(Icons.refresh),
-                            );
+                        IconButton(
+                          onPressed: () {
+                            Provider.of<PracticeProvider>(context, listen: false).refresh();
                           },
+                          icon: const Icon(Icons.refresh),
                         )
                       ]),
                   const SizedBox(
@@ -295,60 +263,38 @@ class ExamPage extends StatelessWidget {
                   ),
                   LayoutBuilder(
                     builder: (context, constraints) {
-                      return Consumer<ApiProvider>(
-                        builder: (context, apiProvider, child) {
-                          final data = apiProvider.practiceTests;
+                      return Consumer<PracticeProvider>(
+                          builder: (context,   practiceProvider, child) {
+                        return Consumer<PracticeProvider>(
+                            builder: (context,   practiceProvider, child) {
+                              practiceProvider.fetchPracticeTest();
+                              LiveTest? testData = practiceProvider.practiceTests;
+                              if (testData == null) {
+                                return const CircularProgressIndicator();
+                              }
+                              else {
+                                int crossAxisCount = constraints.maxWidth ~/ 250;
+                                return GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: crossAxisCount,
+                                    crossAxisSpacing: 20,
+                                    mainAxisSpacing: 20,
+                                    childAspectRatio: 250 / 100,
+                                  ),
+                                  itemCount: testData.data.list.length,
+                                  itemBuilder: (context, index) {
+                                    return dailyTest(
+                                       testData.data.list[index], context);
+                                  },
+                                );} // Optional: show a loader when tests is null.
+                            });
 
-                          if (data == null) {
-                            return const CircularProgressIndicator(); // Loading indicator
-                          }
-
-                          int crossAxisCount = constraints.maxWidth ~/
-                              250; // Number of items per row
-
-                          return data.data.list.isNotEmpty
-                          ?GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: crossAxisCount,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
-                              childAspectRatio: 250 / 100,
-                            ),
-                            itemCount: data.data.list.length,
-                            itemBuilder: (context, index) {
-                              return dailyTest(data.data.list[index],
-                                  context);
-                            },
-                          )
-                              : const Text(
-                              "No test available");
-                        },
-                      );
+                      });
                     },
                   ),
-                  // LayoutBuilder(
-                  //   builder: (context, constraints) {
-                  //     int crossAxisCount =constraints.maxWidth ~/ 250; // Number of items per row
-                  //
-                  //     return GridView.builder(
-                  //       shrinkWrap: true,
-                  //       physics: const NeverScrollableScrollPhysics(),
-                  //       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  //         crossAxisCount: crossAxisCount,
-                  //         crossAxisSpacing: 20,
-                  //         mainAxisSpacing: 20,
-                  //         childAspectRatio: 250 / 100,
-                  //       ),
-                  //       itemCount: 5,
-                  //       itemBuilder: (context, index) {
-                  //         return dailyTest((index+1).toString(), context);
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                 ],
               ),
             )
@@ -386,7 +332,8 @@ class ExamPage extends StatelessWidget {
         const end = Offset.zero;
         const curve = Curves.easeInOutQuad;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         var offsetAnimation = animation.drive(tween);
 
         return SlideTransition(position: offsetAnimation, child: child);
@@ -398,7 +345,8 @@ class ExamPage extends StatelessWidget {
     return Container(
       height: 110,
       width: 275,
-      color: testData.isAttempted!? Colors.grey.withOpacity(0.08) :Colors.white,
+      color:
+          testData.isAttempted! ? Colors.grey.withOpacity(0.08) : Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
@@ -408,7 +356,10 @@ class ExamPage extends StatelessWidget {
               testData.testName!,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18,color: testData.isAttempted! ? Colors.black : Colors.black ),
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 18,
+                  color: testData.isAttempted! ? Colors.black : Colors.black),
             ),
             // const SizedBox(
             //   height: 10,
@@ -417,27 +368,28 @@ class ExamPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if(testData.isAttempted!)
+                if (testData.isAttempted!)
                   opaqueButton(
                     context,
                     "Result",
-                        () async {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return ResultDialog(testId: testData.testId!,isPractice:
-                                false);
-                              }
-                          );
+                    () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ResultDialog(
+                                testId: testData.testId!, isPractice: false);
+                          });
                     },
                   ),
-                if(testData.isAttempted!)
-                  const SizedBox(width: 5,),
-                if(testData.isAttempted!)
+                if (testData.isAttempted!)
+                  const SizedBox(
+                    width: 5,
+                  ),
+                if (testData.isAttempted!)
                   opaqueButton(
                     context,
                     "Start Again",
-                        () async {
+                    () async {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -445,28 +397,25 @@ class ExamPage extends StatelessWidget {
                             return InstructionDialog(
                               testData: testData,
                               targetExamName: targetExamName,
-
                             );
                           });
                     },
                   ),
-
-                if(!testData.isAttempted!)
-                opaqueButton(
-                  context,
-                  "Start Now",
-                  () async {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return InstructionDialog(
-                            testData: testData,
-                            targetExamName: targetExamName,
-
-                          );
-                        });
-                  },
-                ),
+                if (!testData.isAttempted!)
+                  opaqueButton(
+                    context,
+                    "Start Now",
+                    () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return InstructionDialog(
+                              testData: testData,
+                              targetExamName: targetExamName,
+                            );
+                          });
+                    },
+                  ),
               ],
             ),
           ],
@@ -475,15 +424,3 @@ class ExamPage extends StatelessWidget {
     );
   }
 }
-
-
-//ListView.builder(
-//                               shrinkWrap: true,
-//                               physics: const NeverScrollableScrollPhysics(),
-//                               itemCount: data.data.list.length,
-//                               itemBuilder: (context, index) {
-//                                 // print(data.data.list.length);
-//                                 return LiveTestListTile(
-//                                     testData: data.data.list[index]);
-//                               },
-//                             )

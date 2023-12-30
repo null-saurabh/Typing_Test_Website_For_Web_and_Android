@@ -85,10 +85,15 @@ class _TestScreenState extends State<TestScreen> {
             .testModel
             .omittedWords
             .toString();
-        final String speed = Provider
+        final String grossSpeed = Provider
             .of<TestCalculatorProvider>(context, listen: false)
             .testModel
-            .wpm
+            .grossWpm
+            .toString();
+        final String netSpeed = Provider
+            .of<TestCalculatorProvider>(context, listen: false)
+            .testModel
+            .netWpm
             .toString();
         final String totalWords = Provider
             .of<TestCalculatorProvider>(context, listen: false)
@@ -143,7 +148,8 @@ class _TestScreenState extends State<TestScreen> {
         Provider.of<ApiProvider>(context, listen: false).saveResult(
             timeTaken,
             omittedWords,
-            speed,
+            grossSpeed,
+            netSpeed,
             totalWords,
             backspaceCount,
             accuracy,

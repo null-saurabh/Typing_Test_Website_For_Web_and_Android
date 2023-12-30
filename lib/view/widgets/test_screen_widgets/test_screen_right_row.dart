@@ -101,7 +101,8 @@ class RightRow extends StatelessWidget {
 
             final String timeTaken = testModel.timeTaken.toInt().toString();
             final String omittedWords = testModel.omittedWords.toString();
-            final String speed = testModel.wpm.toInt().toString();
+            final String grossSpeed = testModel.grossWpm.toInt().toString();
+            final String netSpeed = testModel.netWpm.toInt().toString();
             final String totalWords = Provider
                 .of<TestCalculatorProvider>(context, listen: false)
                 .testModel
@@ -130,7 +131,8 @@ class RightRow extends StatelessWidget {
             await Provider.of<ApiProvider>(context, listen: false).saveResult(
                 timeTaken,
                 omittedWords,
-                speed,
+                grossSpeed,
+                netSpeed,
                 totalWords,
                 backspaceCount,
                 accuracy,

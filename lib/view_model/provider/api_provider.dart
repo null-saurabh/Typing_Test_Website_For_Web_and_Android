@@ -10,28 +10,24 @@ import 'package:typingtest/view_model/services/api_services.dart';
 class ApiProvider with ChangeNotifier {
   final ApiService apiService = ApiService();
   LiveTest? _liveTests;
-  LiveTest? _practiceTests;
-  String? userEmail;
+  // String? userEmail;
 
   final LoginUserProvider _userProvider;
 
   ApiProvider(this._userProvider);
 
   LiveTest? get liveTests => _liveTests;
-  LiveTest? get practiceTests => _practiceTests;
 
 
   Future<LiveTest> fetchLiveTest() async {
     final userEmail = _userProvider.user?.email;
-
     if (userEmail == null) {
       throw Exception('User is not logged in');
     }
-
     try {
-      // print("in try of provider live tests");
       final response = await apiService.liveTestData(userEmail);
       _liveTests = response;
+      notifyListeners();
       return response;
     } catch (e) {
       rethrow;
@@ -39,8 +35,9 @@ class ApiProvider with ChangeNotifier {
   }
 
   void refresh() {
-    print("refresh clicked");
+    _liveTests = null;
     notifyListeners();
+    fetchLiveTest();
   }
 
   Future<void> markAsOpen(String testId) async {
@@ -58,31 +55,12 @@ class ApiProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchPracticeTest() async {
-    final userEmail = _userProvider.user?.email;
-    // print(userEmail);
-    if (userEmail == null) {
-      // print("useremail is null");
-      throw Exception('User is not logged in');
-    }
-    try {
-      // print("trying practice in provider");
-      final response = await apiService.practiceTestData(userEmail);
-      _practiceTests = response;
-      notifyListeners();
-    } catch (e) {
-      rethrow;
-    }
-  }
-
   Future<List<ResultData>> fetchOneResult(int testId) async {
     final userEmail = _userProvider.user?.email;
     if (userEmail == null) {
-      // print("useremail is null");
       throw Exception('User is not logged in');
     }
     try {
-      // print("trying practice in provider");
       final response = await apiService.oneResult(userEmail,testId);
       return response.data!;
     } catch (e) {
@@ -122,7 +100,8 @@ class ApiProvider with ChangeNotifier {
   Future<bool> saveResult(
       String timeTaken,
       String omittedWords,
-      String speed,
+      String grossSpeed,
+      String netSpeed,
       String totalWords,
       String backspaceCount,
       String accuracy,
@@ -148,7 +127,8 @@ class ApiProvider with ChangeNotifier {
         userEmail,
         timeTaken,
         omittedWords,
-        speed,
+        grossSpeed,
+        netSpeed,
         totalWords,
         backspaceCount,
         accuracy,
